@@ -1,0 +1,110 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+         
+    .group-detail-top{
+        margin:20rpx 20rpx 20rpx 20rpx;
+        padding:20rpx 20rpx 20rpx 20rpx;
+        background-color: #fff; 
+        border:0.5px grey solid;
+        height:210rpx;
+        font-size:13px;
+
+        image{
+            width:250rpx;
+            height:190rpx;
+            float:left;
+            display:block;
+        }
+        .img{
+            float:left;
+            position:relative;
+        }
+
+        .car-num{
+            position:absolute;
+            bottom:0;
+            height:15px;
+            width:38px;
+            background-color:#cfd4d4;
+            right:0;
+            overflow:hidden;
+            font-size:10px;
+            opacity:0.6;
+            }            
+        
+        .content{
+            margin-left: 135px;
+            .title{
+                color: black;
+                padding-bottom:10rpx;
+            }
+            .desc{
+                font-size: 11px;
+            }
+            .price{
+                color: red;
+                padding-top:10rpx;
+                font-size: 12px;
+            }
+            .marketPrice{
+                color: darkgray;
+                font-size: 11px;
+            }
+            .desc1{
+                color: dodgerblue; 
+                float: right;  
+                line-height: 7px;  
+                font-size: 11px;   
+            }
+        }        
+        .car-title .desc {
+            color:#d43030;
+            font-size:11px;
+            margin-left:20rpx
+        }
+        .car-title .title {
+            color:#000000;
+            margin:30rpx 30rpx 30rpx 20rpx;
+            font-size:14px;
+        }         
+    }        
+</style>
+<template>    
+    <view class='group-detail-top'>
+        <view class='img'>
+            <image src="{{item.thumb}}" @tap='goto_picture({{item.goods_id}})'/>
+            <view class='car-num'>{{item.num}}</view>                
+        </view>            
+        <view class="content">
+            <view class="title">{{item.brand_name}}</view>
+            <view class="desc">{{item.goods_title}}</view>
+            <view class="desc">{{item.goods_name}}</view>
+            <view class="price">售价：¥{{item.sell_price}}</view>
+            <view class="marketPrice">市场价：¥{{item.market_price}}</view>
+            <view class='desc1' @tap='goto_detail({{item.goods_id}})'>{{item.desc}}</view>
+        </view>                  
+    </view>
+</template>
+<script>
+    import wepy from 'wepy';
+
+    export default class GroupDetailTop extends wepy.component {
+
+        props = {
+            item: {}
+        }
+        
+        methods = {
+            click (evt) {
+                
+            },
+            goto_picture(id){
+                this.$root.$navigate({url: 'picture?goods_id='+id});
+            },
+            goto_detail(goods_id){
+                this.$root.$navigate({url: 'car?goods_id='+goods_id});
+            }
+        };
+    }
+</script>

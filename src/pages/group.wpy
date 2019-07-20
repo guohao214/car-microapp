@@ -1,0 +1,338 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+    .group {  
+        .title-desc{
+            font-size:11px;
+            margin-left:33rpx;
+            margin-top:33rpx;            
+            color: rgb(49, 48, 48);
+        }      
+        .group-buy{
+            margin:20rpx 20rpx 20rpx 20rpx;
+            padding:20rpx 20rpx 20rpx 20rpx;
+            background-color: #fff; 
+            border:0.5px grey solid;
+            height:190rpx;
+            font-size:13px;
+
+            image{
+                width:250rpx;
+                height:190rpx;
+                float:left;
+                display:block;
+            }
+            .img{
+                float:left;
+                position:relative;
+            }
+
+            .car-num{
+                position:absolute;
+                bottom:0;
+                height:15px;
+                width:38px;
+                background-color:#cfd4d4;
+                right:0;
+                overflow:hidden;
+                font-size:10px;
+                opacity:0.6;
+                }            
+            .content{
+                margin-left:280rpx;
+                .title{
+                    color:#d43030;
+                }
+                .desc{
+                    font-size:11px;
+                }
+                .btt{
+                    color:white;
+                    background-color: darkblue;
+                    width: 120px;
+                    height: 15px;
+                    margin:15rpx 15rpx 15rpx 15rpx;
+                    border-radius:35px;
+                    text-align: center;
+                }                
+            }  
+            .car-title .desc {
+                color:#d43030;
+                font-size:11px;
+                margin-left:20rpx
+            }
+            .car-title .title {
+                color:#000000;
+                margin:30rpx 30rpx 30rpx 20rpx;
+                font-size:14px;
+            }         
+        }
+        .car-detail{
+            border-style:none;
+        }
+        .list{
+            margin:20rpx 20rpx 20rpx 20rpx;
+            margin-bottom:150rpx;
+
+            .item{
+                width:300rpx;
+                height:370rpx;
+                display: inline-block;
+                margin-right:40rpx;
+                marign-bottom:20rpx;
+                border:0rpx;
+
+                image{
+                    width:300rpx;
+                    height:260rpx;
+                }
+                .title{
+
+                }
+                
+            }
+        }
+        .group-list{
+
+        }
+    }
+    .line{
+        height:1px; 
+        background:rgb(172, 169, 169);        
+    }
+    .line-margin{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    .years-list{
+        margin:33rpx 33rpx 33rpx 33rpx;
+        .item{
+            width:120rpx;
+            height:20rpx;
+            display: inline-block;
+            margin-right:10rpx;
+            marign-bottom:0rpx;
+            border:0rpx;
+            .title{
+                font-size: 11px;
+            }
+            
+        }
+    }
+    .group-list{        
+        display: inline-block;   
+        width:100%;
+        .header{
+            width: 30px;
+            height: 30px;
+            border-radius:100px;
+            vertical-align:middle;
+        }
+        
+        .group-row{
+            .item{
+                margin:30rpx 13rpx 30rpx 30rpx;
+                float: left;
+                width:30px;
+                vertical-align:middle;
+                font-size: 9px;
+                display: block;                
+                .span-1{
+                    display: block;
+                    white-space:pre-wrap;
+                    overflow:hidden;
+                    word-break:normal;
+                }
+                .price{
+                    color:red;
+                    position:absolute;
+                    left:38%;
+                }
+            }        
+        }
+        .item-contact-send{
+            float: right;
+            margin:20rpx 20rpx 20rpx 20rpx;
+            width:15%;
+            .send-btn{
+                color:white;       
+                height: 25px;
+                line-height:25px;
+                border-radius:5px;
+                text-align: center;
+                font-size:12px;
+                font-weight:bold;
+                background:orange;
+            }     
+        }        
+    }
+    .send{
+        position:fixed; 
+        margin-left: 13px;
+        margin-top: -230px;
+        z-index: 1000;
+        height: 170px;
+        background:gray;
+        text-align: center;
+        .send-btn{
+            width: 70px;
+            color:white;       
+            height: 25px;
+            line-height:25px;
+            border-radius:5px;
+            text-align: center;
+            font-size:12px;
+            font-weight:bold;
+            background:orange;     
+            margin-top:30px; 
+            margin-left: 35%;
+        }    
+        .title{
+            font-size: 14px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+        .text{
+            font-size: 12px;
+            span{
+                display: block;
+            }
+        }
+    }
+   
+    .footer{
+        position:fixed;
+        bottom:0;
+        height:40px;
+        line-height: 40px;
+        text-align: center;
+        width:100%;
+        background:orange;
+        color:white;
+    }
+</style>
+<template>
+    <view class="group">
+        <groupTop :item.sync="group_buy"/>
+        <view class='line'></view>
+        <view class='title-desc'>
+            {{group_buy.brand_name}} {{group_buy.goods_title}} {{group_buy.goods_name}}
+        </view>
+        <view class='title-desc'>
+            {{group.group_name}} 还差 <font style='color:red;'> {{group.count}} </font> 人拼成
+        </view>
+        <view class="group-list" @tap="click">
+            <view class="group-row" wx:for="{{group_user_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="item">
+                    <image class='header' src="{{item.user_profile}}"/>
+                    <span class="title">{{item.name}}</span>                        
+                </view>                
+            </view>
+        </view>
+        
+        <view class='footer' hidden="{{is_me}}">
+            <button class='footer' open-type="share">邀请好友入团</button>
+        </view>
+
+        <view class='footer' @tap='goto_in({{is_me}})' hidden="{{!is_me}}">
+            加入申请
+        </view>
+        
+    </view>
+</template>
+<script>
+    import wepy from 'wepy';
+    import GroupTop from '../components/groupTop';
+    import api from '../common/api.js'
+
+    export default class Group extends wepy.page {
+
+        // 子组件
+        components = {
+            groupTop: GroupTop
+        }
+        data = {
+            // 团购
+            group_buy:{},
+            group:{},
+            group_user_list: [
+                {
+                    name: '十人团',
+                    user_profile:'/images/main/header.png',     
+                    uid:1,               
+                },
+            ],
+            group_user_list:[],
+            is_me: false,
+        }
+
+        onShareAppMessage(res){
+            let userInfo = wepy.getStorageSync('userInfo');   
+            return {
+                title: '买鑫车小程序',
+                path: '/pages/group?userInfo=' + JSON.stringify(userInfo.data) + '&group=' + JSON.stringify(this.group) + '&group_buy=' + JSON.stringify(this.group_buy),
+                imageUrl: userInfo.qrcode,
+                success: function (res1) {
+                },
+                fail: function (res1) {
+                }
+            }
+        }
+        
+        onLoad(options) {
+            let showFirstWelcomePage = wepy.getStorageSync('_showFirstWelcomePage');
+            if(showFirstWelcomePage === ""){
+                this.$root.$navigate({ url: 'welcome' });
+            }
+           
+            wx.showShareMenu({
+                withShareTicket: true,
+            });
+            
+            var self = this;         
+            if(typeof options.userInfo != 'undefined'){
+                let userInfo = JSON.parse(options.userInfo)
+                if(wepy.getStorageSync('openId') !== userInfo.open_id){
+                    self.is_me = true                    
+                    let _userInfo = wepy.getStorageSync('userInfo');
+                    if(_userInfo.uid !== userInfo.uid){
+                        wx.request({
+                            url:api.baseUrl + "index.php?m=home&c=user&a=appUpdateUser",//请求地址
+                            data:{parent_id:userInfo.uid,uid:_userInfo.uid},
+                            header:{"Content-Type":"applciation/json"},
+                            method:"GET",//get为默认方法/POST
+                        });
+                    }                    
+                }                
+            }
+            
+            self.group_buy = JSON.parse(options.group_buy)
+            self.group = JSON.parse(options.group)
+            self.group_buy.price = self.group_buy.sell_price - self.group.price  
+            self.$apply();
+            wx.request({
+                url:api.baseUrl + "index.php?m=home&c=group&a=appGroupUsers",//请求地址
+                data:{group_id:self.group.group_id},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){
+                    self.group_user_list = res.data.group_user_list; 
+                    self.group.count = res.data.num; 
+                    self.$apply();
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+
+        methods = {
+            click (evt) {
+                
+            },
+            goto_in(){
+                this.$root.$navigate({url: 'in?group_id='+this.group.group_id + '&group_buy=' + JSON.stringify(this.group_buy)});
+            }
+        };
+    }
+</script>

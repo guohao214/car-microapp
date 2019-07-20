@@ -1,0 +1,173 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+    .line{
+        height:1px; 
+        background:rgb(172, 169, 169);        
+    }
+    .car{
+        margin:25rpx 25rpx 25rpx 25rpx;
+        padding-bottom:25rpx;
+
+        .price{
+            margin-top:30rpx;
+            margin-left: 22rpx;
+            color:red;
+            font-size: 28rpx;
+        }
+        .color{
+            font-size: 28rpx;
+            margin-left: 22rpx;
+            margin-top:30rpx;
+        }
+    }
+    .car-list{ 
+        display: inline-block;   
+        width:100%;
+        color: darkgrey;
+        font-size: 11px;
+        .car-row{
+            .item{
+                margin:25rpx 25rpx 25rpx 25rpx;
+                width:55%;
+                line-height:30rpx;
+                display: inline-block; 
+            }
+            .item-contact{
+                float: right; 
+                margin-right: 30rpx;
+                color: black;
+            }
+        }
+    }
+    .footer{
+        position:fixed;
+        bottom:0;
+        height:40px;
+        line-height: 40px;
+        text-align: center;
+        width:100%;
+        background:rgb(12, 97, 224);
+        color:white;
+    }
+</style>
+
+<template>
+    <view class="car-detail">
+        <view class='group-buy'>
+            <view class='img'>
+                <image src="{{group_buy.thumb}}"/>               
+            </view>          
+                      
+        </view>
+        <view class='line'></view>
+        <view class='car'>
+            <view>【{{group_buy.brand_name}}】{{group_buy.goods_title}} {{group_buy.goods_name}}</view>
+            <view class='price'>售价：{{group_buy.sell_price}}万</view>
+            <view class='color'>
+                <view>颜色：</view>
+                <view class="color-row" wx:for="{{color_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                    <view class="item">
+                        <view style="background: {{item.color}};float:left; margin-top:-30rpx; width: 30rpx;height: 30rpx; margin-left:{{index*40 + 80}}rpx"></view>             
+                    </view>        
+                </view>
+            </view>
+        </view>
+        <view class='line'></view>
+        <view class="car-list" @tap="click">
+            <view class="car-row" wx:for="{{car_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="item">
+                    <view class="title">{{item.title}}</view>             
+                </view>
+                <view class="item-contact">
+                    {{item.content}}                
+                </view>                
+            </view>
+        </view>
+        <view class='footer' @tap='goto_contact()'>
+            联系看车
+        </view>
+    </view>
+</template>
+<script>
+    import wepy from 'wepy';
+    import api from '../common/api.js'
+
+    export default class Detail extends wepy.page {
+
+        props = {
+            item: {},
+            index: {},
+        }
+
+        data = {
+            // 团购
+            group_buy:{},
+            
+            //车详情
+            car_list: [
+                {
+                    title:'最大功率',
+                    tag:'',
+                    content:'188W'
+                },
+            ],
+            color_list:[
+                {
+                    color:'#000000'
+                },
+                {
+                    color:'#ff00ff'
+                },
+                {
+                    color:'#ccaacc'
+                },
+                {
+                    color:'#aaaacc'
+                },
+                {
+                    color:'#abaacc'
+                }
+            ]
+        }
+        onLoad(options) {
+            var self = this;
+            wx.request({
+                url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsDetail",//请求地址
+                data:{goods_id:options.goods_id},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){                    
+                    self.group_buy = res.data;                    
+                    //console.log(res.data);
+                    self.$apply();
+                    //callback();
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+            wx.request({
+                url:api.baseUrl + "index.php?m=home&c=goods&a=appCarDetail",//请求地址
+                data:{goods_id:options.goods_id},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){                    
+                    self.car_list = res.data;                    
+                    console.log(res.data);
+                    self.$apply();
+                    //callback();
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+        methods = {
+            click (evt) {
+                
+            },
+            goto_contact(){
+                this.$root.$navigate({url: 'contact?goods_id=' + this.group_buy.goods_id});
+            },
+        };
+    }
+</script>

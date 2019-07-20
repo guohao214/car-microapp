@@ -1,0 +1,352 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+    .group {  
+        .title-desc{
+            font-size:14px;
+            margin-left:33rpx;
+            margin-top:33rpx;   
+            display:inline;
+            float: left;    
+            width:100%;
+            border-bottom:0.5px grey solid;   
+        }  
+        .btn{
+            width: 190px;
+            color:white;       
+            height: 30px;
+            line-height:30px;
+            border-radius:2px;
+            text-align: center;
+            font-size:12px;
+            font-weight:bold;
+            background:#f57a07;     
+            margin-top:70%; 
+            margin-left: 20%;
+        }    
+        .group-buy{
+            margin:20rpx 20rpx 20rpx 20rpx;
+            padding:20rpx 20rpx 20rpx 20rpx;
+            background-color: #fff; 
+            border:0.5px grey solid;
+            height:190rpx;
+            font-size:13px;
+
+            image{
+                width:250rpx;
+                height:190rpx;
+                float:left;
+                display:block;
+            }
+            .img{
+                float:left;
+                position:relative;
+            }
+
+            .car-num{
+                position:absolute;
+                bottom:0;
+                height:15px;
+                width:38px;
+                background-color:#cfd4d4;
+                right:0;
+                overflow:hidden;
+                font-size:10px;
+                opacity:0.6;
+                }            
+            .content{
+                margin-left:280rpx;
+                .title{
+                    color:#d43030;
+                }
+                .desc{
+                    font-size:11px;
+                }
+                .btt{
+                    color:white;
+                    background-color: darkblue;
+                    width: 120px;
+                    height: 15px;
+                    margin:15rpx 15rpx 15rpx 15rpx;
+                    border-radius:35px;
+                    text-align: center;
+                }                
+            }  
+            .car-title .desc {
+                color:#d43030;
+                font-size:11px;
+                margin-left:20rpx
+            }
+            .car-title .title {
+                color:#000000;
+                margin:30rpx 30rpx 30rpx 20rpx;
+                font-size:14px;
+            }         
+        }
+        .car-detail{
+            border-style:none;
+        }
+        .list{
+            margin:20rpx 20rpx 20rpx 20rpx;
+            margin-bottom:150rpx;
+
+            .item{
+                width:300rpx;
+                height:370rpx;
+                display: inline-block;
+                margin-right:40rpx;
+                marign-bottom:20rpx;
+                border:0rpx;
+
+                image{
+                    width:300rpx;
+                    height:260rpx;
+                }
+                .title{
+
+                }
+                
+            }
+        }
+        .group-list{
+
+        }
+    }
+    .line{
+        height:1px; 
+        background:rgb(172, 169, 169);        
+    }
+    .line-margin{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    .years-list{
+        margin:33rpx 33rpx 33rpx 33rpx;
+        .item{
+            width:120rpx;
+            height:20rpx;
+            display: inline-block;
+            margin-right:10rpx;
+            marign-bottom:0rpx;
+            border:0rpx;
+            .title{
+                font-size: 11px;
+            }
+            
+        }
+    }
+    .group-list{        
+        display: inline-block;   
+        width:100%;
+        .header{
+            width: 30px;
+            height: 30px;
+            border-radius:100px;
+            vertical-align:middle;
+        }
+        
+        .group-row{
+            .item{
+                margin:30rpx 13rpx 30rpx 30rpx;
+                float: left;
+                width:30px;
+                vertical-align:middle;
+                font-size: 9px;
+                display: block;                
+                .span-1{
+                    display: block;
+                    white-space:pre-wrap;
+                    overflow:hidden;
+                    word-break:normal;
+                }
+                .price{
+                    color:red;
+                    position:absolute;
+                    left:38%;
+                }
+            }        
+        }
+        .item-contact-send{
+            float: right;
+            margin:20rpx 20rpx 20rpx 20rpx;
+            width:15%;
+            .send-btn{
+                color:white;       
+                height: 25px;
+                line-height:25px;
+                border-radius:5px;
+                text-align: center;
+                font-size:12px;
+                font-weight:bold;
+                background:orange;
+            }     
+        }        
+    }
+    .send{
+        position:fixed; 
+        margin-left: 25%;
+        margin-top: -230px;
+        z-index: 1000;
+        height: 100px;
+        background:gray;
+        text-align: center;
+        .ok{
+            padding-top:10px;
+            color:red;
+        }
+      
+        .title{
+            font-size: 14px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+        .text{
+            font-size: 12px;
+            span{
+                display: block;
+            }
+        }
+    }
+   
+    .footer{
+        position:fixed;
+        bottom:0;
+        height:40px;
+        line-height: 40px;
+        text-align: center;
+        width:100%;
+        background:orange;
+        color:white;
+    }
+    .input-desc {
+        float: right;
+        width: 80%;
+        margin-top: -8rpx;
+    }
+    .input-desc-get {
+        margin-top: -40rpx;
+        margin-right: -360rpx;
+        color: steelblue;
+    }
+</style>
+<template>
+    <view class="group">
+        <groupTop :item.sync="group_buy"/>
+        <view class='line'></view>
+        <view class='title-desc'>
+           <span>姓名</span>
+           <span class='input-desc'><input @input="input" id='name' bindinput='inputWacth' placeholder="输入姓名" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
+        </view>
+        <view class='title-desc'>
+           <span>手机号</span>
+           <span class='input-desc'><input @input="input" id='mobile' bindinput='inputWacth' placeholder="输入手机号" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
+        </view>
+        <!-- <view class='title-desc'>
+           <span>验证码</span>
+           <span class='input-desc'><input @input="input" id='msg' bindinput='inputWacth' placeholder="输入验证码" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
+           <span class='input-desc input-desc-get'>获取验证码</span>
+        </view> -->
+        <view class='title-desc'>
+           <span>城市</span>
+           <span class='input-desc'><input @input="input" id='city' bindinput='inputWacth' placeholder="输入城市" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
+        </view>
+        
+        <view class="btn" @tap='send()'>提交入团</view> 
+
+        <dialog :dialogInfo="dialogInfo"></dialog>
+    </view>
+</template>
+<script>
+    import wepy from 'wepy';
+    import GroupTop from '../components/groupTop';
+    import Dialog from '../components/dialog';
+    import api from '../common/api.js'
+
+    export default class In extends wepy.page {
+
+        // 子组件
+        components = {
+            groupTop: GroupTop,
+            dialog:Dialog
+        };
+        data = {
+            // 团购
+            group_buy:{},
+            group_user:{
+                mobile:'',
+                name:'',
+                uid:'',
+                user_profile:'',
+                city:'',
+                is_group: 2,
+                goods_id:'',
+                open_id:'',
+                group_id:'',
+                parent_id:0,
+            }, 
+            dialogInfo:{
+                title:'',
+                content:'',
+            },
+        }
+        onLoad(options) {
+            var self = this;
+            self.group_buy = JSON.parse(options.group_buy)
+            //self.group_buy.price = self.group_buy.sell_price - self.group.price 
+            self.group_user.group_id = options.group_id
+            self.group_user.parent_id = options.parent_id
+            self.group_user.goods_id = self.group_buy.goods_id
+            self.$apply();
+            console.log(self.group_user)
+        }
+        methods = {
+            click (evt) {
+                
+            },
+            inputWacth(e){
+                let item = e.currentTarget.id;
+                if(item == 'name'){
+                    this.group_user.name = e.detail.value;
+                }
+                if(item == 'mobile'){
+                    this.group_user.mobile = e.detail.value;
+                }
+                if(item == 'city'){
+                    this.group_user.city = e.detail.value;
+                }
+                this.$apply();
+            },
+            send (evt) {
+                let self = this;
+                let sendData = self.group_user;
+                sendData.open_id = wepy.getStorageSync('openId');
+                wx.request({
+                    url:api.baseUrl + "index.php?m=home&c=group&a=appAddGroupUser",//请求地址
+                    data:sendData,
+                    header:{"Content-Type":"application/x-www-form-urlencoded"},
+                    method:"POST",//get为默认方法/POST
+                    success:function(res){          
+                     
+                        let title = '提示';
+                        let content = {
+                            'group_name':'拼团成功，',
+                            'title':'销售顾问将在48小时内联系您'
+                            };
+                        if(res.data.status == 1){
+                            self.$invoke('dialog', 'showDialog', title, content, {
+                                hasCancel:false,
+                                ok:'确认',
+                                finish:function(){
+                                   // self.$root.$navigate({url: 'group?group_id=' + sendData.group_id});
+                                }
+                            });      
+                        }
+                    },
+                    fail:function(err){},//请求失败
+                    complete:function(){}//请求完成后执行的函数
+                });     
+            }
+        };
+    }
+</script>

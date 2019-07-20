@@ -1,0 +1,210 @@
+<style lang="scss">
+page {
+    min-height: 100%;
+}
+.shade-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9996;
+    color: #979797;
+    background: rgba(18,17,16,.3);
+    .shop-box {
+        position: relative;
+        height: 100%;
+        .item {
+            position: absolute;
+            left: 10%;
+            right: 10%;
+            top:30%;
+            height:180px;
+            padding: 30rpx 40rpx;
+            background: #fff;
+            font-size: 13px;
+            .shade-hd .img-box {
+                position:absolute;
+                top:0rpx;
+                right:0rpx;
+                width:80rpx;
+                height:80rpx;
+                opacity:.6;
+                padding-top:20rpx;
+                padding-left:40rpx;
+                .img{
+                    display:inline-block;
+                    height:30rpx;
+                    width:30rpx;
+                }
+            }
+
+            .dlg-content{
+                min-height: 170rpx;
+                padding:40rpx 40rpx 40rpx 40rpx;
+                font-size: 12px;
+                text-align: center;
+                span{
+                    display: block;
+                }
+            }
+
+            .one-btn-ok{
+                width:200rpx;
+                height:30rpx;
+                padding:20rpx 20rpx 20rpx 20rpx;
+                border-radius:40rpx;
+                background-color:#407ff3;
+                margin:auto;
+                color:#FFFFFF;
+                text-align:center;
+
+            }
+        }
+    }   
+}
+
+.text-center{
+    text-align: center;
+}
+</style>
+
+<template>
+<view class='shade-box' hidden='{{!show}}'>
+    <view class='shop-box'>
+        <view class='item backg-white'>
+            <view class='shade-hd'>
+                <view class='weui-cell'>
+                    <view class='weui-cell-bd text-center'>
+                        <label class="font-md font-wg">{{dialogInfo.title}}</label>
+                        <view class='img-box' @tap='hideDialog'>
+                            <image src='/images/main/close.png' class='img'></image>
+                        </view>
+                    </view>
+                   
+                </view>
+            </view>
+            <view class="dlg-content">
+                <!-- {{dialogInfo.content}} -->
+                <view class="text">
+                    <span>{{dialogInfo.content.group_name}}</span>
+                    <span>{{dialogInfo.content.group_price}}
+                        {{dialogInfo.content.brand}}{{dialogInfo.content.title}}
+                    </span>
+                    <span>{{dialogInfo.content.type}}</span>
+                    <span>{{dialogInfo.content.desc}}</span>
+                </view>  
+            </view>
+
+            <view>
+                <view hidden="{{dialogInfo.config.hasCancel}}">
+                    <button class="one-btn-ok" open-type="share" @tap='hideDialog'>
+                        {{dialogInfo.config.ok}}
+                    </button>
+                </view>
+
+                <view hidden="{{!dialogInfo.config.hasOkCancel}}">
+                    <view class="btn-ok">{{dialogInfo.config.button}}</view>
+                </view>
+
+                <view hidden="{{!dialogInfo.config.hasCancel}}">
+                    <view class="btn-ok">{{dialogInfo.config.button}}</view>
+                    <view class="btn-cancel">{{dialogInfo.config.cancel}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+</template>
+
+
+<script>
+  import wepy from 'wepy';
+  export default class Dialog extends wepy.component {
+    config = {
+    }
+    data = {
+        show:false,
+    }
+    props = {
+        dialogInfo:{
+            type:'',
+            content:'',
+            config:{
+                hasCancel:false,
+                hasOkCancel:false,
+                ok:'',
+                cancel:'',
+                finish:null,
+            }
+        }
+    }
+
+    onShareAppMessage(res){
+        let userInfo = wepy.getStorageSync('userInfo');
+        console.log(userInfo,'userinfo')
+    
+        if (res.from === 'button') {
+        // 通过按钮触发
+            return {
+                title: '',
+                path: '/pages/group?userInfo=' + JSON.stringify(userInfo.data) + '&group=' + JSON.stringify(this.group) + '&group_buy=' + JSON.stringify(this.group_buy),
+                imageUrl: userInfo.qrcode,
+                success: function (res1) {
+                // 转发成功
+                console.log('转发成功')
+                },
+                fail: function (res1) {
+                // 转发失败
+                console.log('转发失败')
+                }
+            }
+        }
+        //通过右上角菜单触发
+        return {
+            title: '开普勒小程序',
+            path: "/pages/researches/index",
+            imageUrl: '/images/aikepler-logo.jpeg'
+        };
+    }
+    methods = {        
+        // 关闭弹窗
+        showDialog: function (...args) {
+           // console.log(args);
+            this.dialogInfo.title = args[0];
+            this.dialogInfo.content = args[1];
+            this.dialogInfo.config = args[2];
+            var that = this
+            that.show = true;
+            that.$apply();
+        },
+
+        // 关闭弹窗
+        hideDialog: function (e) {
+            var that = this
+            that.show = false;
+            that.$apply();
+            var ok_msg = e.source.data.$dialog$dialogInfo.config.ok
+            if(ok_msg == '确认'){
+                wx.navigateBack({//返回
+                    delta: 1
+                });
+            }
+            if(ok_msg == '一键邀请'){
+                wx.showShareMenu({
+                    withShareTicket: true,
+                    success: function (res) {
+                        // 分享成功
+                        console.log('shareMenu share success')
+                        console.log(res)
+                    },
+                    fail: function (res) {
+                        // 分享失败
+                        console.log(res)
+                    }
+                })
+            }    
+        }
+    }
+  }
+</script>

@@ -1,0 +1,150 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+    .picture-detail{
+        background: #ffffff;
+        .group-buy{
+            margin:20rpx 20rpx 20rpx 20rpx;
+            padding:20rpx 20rpx 20rpx 20rpx;
+            border:0.5px grey solid;
+            height:190rpx;
+            font-size:13px;
+        }
+    }
+    
+    .years-list{
+        margin:0rpx 0rpx 0rpx 0rpx;
+        border-bottom:solid 1px #ddd;
+        padding:25rpx 25rpx 25rpx 25rpx;
+        background: #cfd4d4;
+        text-align: center;
+        .item{
+            width:150rpx;
+            height:20rpx;
+            display: inline-block;
+            margin-right:10rpx;
+            marign-bottom:0rpx;
+            border:0rpx;
+            .title{
+                font-size: 11px;
+            }
+            
+        }        
+    }
+    
+    .pic-list{        
+        display: inline; 
+        .group-row{
+            .item{
+                float: left;
+                display: inline;  
+                .header{
+                    width: 70px;
+                    height: 70px;
+                    margin:15px 15px 15px 20px;
+                }
+            }        
+        }
+    }
+</style>
+
+<template>
+    <view class="picture-detail">        
+        <view class='years-list'>
+            <block wx:for="{{list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="item" @tap="goto_image({{item.type}})">
+                    <view class="title">{{item.title}}</view>
+                </view>
+            </block>
+        </view>
+        <view class="pic-list" @tap="click">
+            <view class="group-row" wx:for="{{img_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="item">
+                    <image class='header' src="{{item}}" data-index='{{index}}' bindtap='previewImg'/>                       
+                </view>                
+            </view>
+        </view>
+    </view>
+</template>
+<script>
+    import wepy from 'wepy';
+    import api from '../common/api.js'
+
+    export default class Detail extends wepy.page {
+
+        props = {
+            item: {},
+            index: {},
+        }
+
+        data = {
+            // 团购
+            goods_id:'',
+            // 年份列表
+            list: [
+                {
+                    title:'车身外观',
+                    type:'upload_list_1'
+                },
+                {
+                    title:'中控方向盘',
+                    type:'upload_list_2'
+                },
+                {
+                    title:'车箱坐椅',
+                    type:'upload_list_3'
+                },
+                {
+                    title:'其它细节',
+                    type:'upload_list_4'
+                }
+            ],
+            // 车图片列表
+            img_list: [],
+            all_img_list: [],
+        }
+        onLoad(options) {
+            this.goods_id = options.goods_id;
+            this.$apply();
+            var type = 'upload_list_1';
+            var self = this;
+            wx.request({
+                url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsImage",//请求地址
+                data:{goods_id:self.goods_id,type:'upload_list_1'},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){                    
+                    self.img_list = res.data[type]; 
+                    self.all_img_list = res.data;
+                    self.$apply();                     
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+        methods = {
+            click (evt) {
+                
+            },
+            previewImg(e){
+                let index = e.currentTarget.dataset.index;
+                let imgArr = this.data.img_list;
+                let newImg = []
+                imgArr.forEach(ele => {
+                    newImg.push(ele.img);
+                });
+                wx.previewImage({
+                    current: newImg[index],     //当前图片地址
+                    urls: newImg,               //所有要预览的图片的地址集合 数组形式
+                    success: function(res) {},
+                    fail: function(res) {},
+                    complete: function(res) {},
+                })
+            },
+            goto_image(type){
+                this.img_list = this.all_img_list[type]; 
+                this.$apply()
+            }
+        };
+    }
+</script>

@@ -1,0 +1,151 @@
+<style type="scss">
+    page{
+        background-color:#F9F9F9;
+    }
+    .welcome {
+        text-align: center;        
+        height:100%;
+        padding-top:100rpx;
+
+        .logo{
+            width:250rpx;
+            height:300rpx;
+            margin:auto;
+            
+            image{
+                width:100%;
+                height:300rpx;
+            }
+        }
+
+        .logo_txt{
+            width:100%;
+            text-align: center;
+        }
+
+        .center{
+            margin-top:200rpx;
+        }
+    }
+</style>
+<template>
+    <view class="welcome">
+        
+        <view class='logo'>
+            <image src='http://www.maixc.cn/qrcode/firstPage.jpeg'/>
+        </view>
+
+        <view class='logo_txt'>
+            <view hidden="{{showLoginButton != 1}}">
+                Hi, 为了更好的体验请授权登录
+            </view>
+
+            <view hidden="{{showPhoneButton != 1}}">
+                请绑定手机号
+            </view>
+        </view>
+        
+        <view class='center'>
+            <button hidden="{{showLoginButton != 1}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" style='background-color:green;color:#FFF'>授权登录</button>
+            <button hidden="{{showPhoneButton != 1}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意绑定手机号</button>
+        </view>
+
+       
+        
+    </view>
+</template>
+<script>
+    import wepy from 'wepy';
+    import GroupTop from '../components/groupTop';
+    import api from '../common/api.js'
+
+    export default class Group extends wepy.page {
+
+        // 子组件
+        components = {
+            groupTop: GroupTop
+        };
+        data = {
+            showLoginButton: 1,
+            showPhoneButton: 0
+        };
+
+        onLoad(options) {
+            var self = this;           
+        }
+
+        bindGetUserInfo (e) {
+            let self = this;
+            self.userInfo = e.detail.userInfo;
+            
+            wepy.login()
+                .then(res => {
+                const code = res.code;
+
+                let rawData = e.detail.rawData;
+                let iv = e.detail.iv;
+                let signature = e.detail.signature;
+                let encryptedData = e.detail.encryptedData;
+                wx.request({
+                    url:api.baseUrl + "index.php?m=home&c=user&a=wxLogin",//请求地址
+                    header:{"Content-Type":"application/x-www-form-urlencoded"},
+                    method:"POST",//get为默认方法/POST
+                    data: {
+                        'code': encodeURIComponent(code),
+                        'encryptedData': encodeURIComponent(encryptedData),
+                        'iv': encodeURIComponent(iv),
+                        'rawData':encodeURIComponent(rawData),
+                        'signature':encodeURIComponent(signature)
+                    },
+                    success:function(userinfoEx){
+                        if(userinfoEx['data'].openId !== undefined){
+                            let userData = userinfoEx['data'];
+                            wepy.setStorageSync('openId', userData.openId);
+                            wepy.setStorageSync('nickName', userData.nickName);
+                            wepy.setStorageSync('avatarUrl', userData.avatarUrl);
+
+                            wx.request({
+                                url:api.baseUrl + "index.php?m=home&c=user&a=appAddUser",//请求地址
+                                data:userData,
+                                header:{"Content-Type":"application/x-www-form-urlencoded"},
+                                method:"POST",//get为默认方法/POST
+                                success:function(res){  
+                                    console.log(res.data.data,'data')
+                                    wepy.setStorageSync('userInfo', res.data.data);
+                                    self.showLoginButton = 0;
+                                    self.showPhoneButton = 1;
+                                    self.$apply();
+                                },
+                                fail:function(err){},//请求失败
+                                complete:function(){}//请求完成后执行的函数
+                            });
+                        }
+                    },
+                    fail:function(err){
+                        debugger;
+                    },//请求失败
+                    complete:function(){}//请求完成后执行的函数
+                });
+                
+            });   
+            
+            
+        }
+
+        getPhoneNumber(e) {
+            console.log("============getPhoneNumber ============");
+            console.log(e);
+            wepy.setStorageSync('_showFirstWelcomePage', 'finish');
+            this.$root.$navigate({ url: 'index' });
+        }
+
+        methods = {
+            click (evt) {
+                
+            },
+            goto_in(){
+                this.$root.$navigate({url: 'in?group_id='+this.group.group_id + '&group_buy=' + JSON.stringify(this.group_buy)});
+            }
+        };
+    }
+</script>

@@ -1,0 +1,550 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+    .category{
+        background: #ffffff;
+        margin:0rpx 0rpx 0rpx 0rpx;
+        height: 100%;
+        .search{
+            display: block;            
+            .item{
+                float: left;
+                background:#E9E9E9;
+                margin:20rpx 20rpx 20rpx 20rpx;
+                font-size: 20rpx;
+                height: 30rpx;
+                line-height: 30rpx;
+                padding: 10rpx 10rpx 10rpx 10rpx;
+            }
+            .item1{
+                background: #ffffff;
+            }
+        }
+        .quick-search{   
+            clear: both;
+            font-size: 26rpx;    
+            position: relative;
+            padding: 10rpx;
+            .item1{
+                color: red;
+                display: inline;
+                padding-left: 20rpx;
+            }
+            .item2{
+                display: inline;
+            }
+            .item3{
+                display: inline;
+                float: right;            
+                display: inline;
+                image{
+                    width:45rpx;
+                    height: 40rpx;
+                }
+                .title{
+                    display: inline;
+                    vertical-align: top;
+                }
+            }
+            .item{
+                width:120rpx;
+                height:20rpx;
+                display: inline-block;
+                margin-right:10rpx;
+                marign-bottom:0rpx;
+                border:0rpx;
+                .title{
+                    font-size: 11px;
+                }
+                
+            }
+        }
+        .type-search{
+            position: relative;
+            padding: 10rpx;
+            display: block;        
+            height:70rpx;    
+            .item{
+                float: left;
+                background: #E9E9E9;
+                margin:20rpx 20rpx 20rpx 20rpx;
+                font-size: 20rpx;
+                height: 30rpx;
+                line-height: 30rpx;
+                width: 122rpx;
+                padding: 10rpx 10rpx 10rpx 10rpx;
+                text-align::center;
+            }
+            .item1{
+                background: #ffffff;
+            }
+        }
+        
+    }
+    
+    
+    .car-list{ 
+        display: inline-block;   
+        width:100%;
+        .car-row{
+            border-bottom:solid 1px #ddd;
+            .item{
+                margin:25rpx 25rpx 25rpx 25rpx;
+                width:55%;
+                line-height:40rpx;
+                display: inline-block;
+                font-size: 11px;
+                .price{
+                    color: red;
+                }
+                .desc{
+                    color: steelblue;
+                }            
+            }
+            .item-contact{
+                float: right;
+                margin:83rpx 25rpx 25rpx 25rpx;
+                width: 25%;
+                .btn{
+                    color:white;
+                    background-color: blue;
+                    width: 70%;
+                    height: 20px;
+                    line-height:20px;
+                    border-radius:35px;
+                    text-align: center;
+                    font-size:11px;
+                }     
+            }
+        }
+    }
+
+
+    .catgoryCarList {
+        margin-top:40rpx;
+        padding-left: 20rpx;
+        padding-right: 20rpx;
+        padding-bottom: 100rpx;
+        background: white;
+        
+        .sep {
+            background-color: #f1f0f6;
+            color: #7e7d83;
+            height: 45rpx;
+            padding: 6rpx 0 10rpx 20rpx;
+            font-size: 26rpx;
+            font-weight: bold;
+            box-sizing: border-box;
+            margin-left: -20rpx;
+            margin-right: -20rpx;
+        }
+        .car {
+            height: 110rpx;
+            border-bottom: 1px solid #dad9d6;
+            box-sizing: border-box;
+            padding: 20rpx;
+            position: relative;
+            .car_icon {
+                width: 70rpx;
+                height: 70rpx;
+                position: absolute;
+                border-radius: 10rpx;
+            }
+            .car_name {
+                margin-left: 90rpx;
+                margin-top: 10rpx;
+                font-size: 33rpx;
+                line-height: 70rpx;
+            }
+        }
+        .total {
+            height: 120rpx;
+            background-color: #eee;
+            margin-left: -20rpx;
+            margin-right: -20rpx;
+            text-align: center;
+            line-height: 140rpx;
+            color: $fontcolor;
+            font-size: 33rpx;
+        }
+    }
+
+    ::-webkit-scrollbar
+    {
+        width: 0;
+        height: 0;
+        color: transparent;
+    }
+
+    .mask{
+        position: fixed;
+        top:0px;
+        right:0px;
+        width:100%;
+        height:100%;
+        background-color:#000;
+        opacity:0.3;
+    }
+
+    .rightPanel{
+        position: fixed;
+        top:0px;
+        right:0px;
+        width:0%;
+        height:100%;
+        background-color:#eee;
+        .right_item_icon{
+            width: 200rpx;
+            height: 140rpx;
+            margin-top: 50rpx;
+            float: left;
+            margin-left:20rpx;
+        }
+        .content{
+            font-size: 25rpx;
+            padding-top:80rpx;
+            .price{
+                color:red;
+            }
+        }
+    }
+
+    @keyframes fadeIn {
+        0% { width: 0%; }
+        100% { width: 60%; }
+    }
+
+    @keyframes fadeOut {
+        0% { width: 60%; }
+        100% { width: 0%; }
+    }
+
+    .fade_in {
+        animation: fadeIn 0.5s both;
+    }
+
+    .fade_out {
+        animation: fadeOut 0.5s both;
+    }
+
+    .none{
+        display: none;
+    }
+
+</style>
+
+<template>
+
+    <view class="category">
+        <view class='search'>            
+            <block wx:for="{{historyList}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view hidden="{{index}}" class="item item1">
+                    <view class="title">最近看过</view>
+                </view>
+                <view class="item">
+                    <view class="title" @tap="goto_url({{item}})">{{item.title}}</view>
+                </view>
+            </block>
+        </view>
+        
+        <view class='quick-search'>
+            <view class="item1">
+                |
+            </view>
+            <view class="item2">
+                快速找车
+            </view>
+            <view class="item3">
+                <image src="/images/main/huo.png"/>
+                <view class="title">热销汽车</view>
+            </view>
+        </view>
+        <view class='type-search'>            
+            <block wx:for="{{priceList}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="item">
+                    <view class="title" @tap="goto_search({{item.start}}, {{item.end}})" >{{item.start}} - {{item.end}} 万</view>
+                </view>
+            </block>
+        </view>
+
+
+        <view class='type-search'>            
+            <block wx:for="{{typeList}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="item">
+                    <view class="title" @tap="goto_search_type({{item.title}})">{{item.title}}</view>
+                </view>
+            </block>
+        </view>
+
+        <scroll-view bindscroll="scroll" style="height: 400px;" scroll-y scroll-into-view="{{jumpToPos}}" >
+        <view class="catgoryCarList">
+            <block wx:for="{{carList}}" wx:key="index" wx:for-index="alpha" wx:for-item="lists">
+                <view id="{{'POS_' + alpha}}">
+                <view  class="sep">{{alpha}}</view>
+                    <block wx:for="{{lists}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                        <view class="car">
+                            <image src="{{item.logo}}" class="car_icon"></image>
+                            <text class="car_name">{{item.cn_name}}</text>
+                        </view>
+                    </block>
+                </view>
+            </block>
+            <view class="total">{{total}}种车型</view>
+        </view>
+        </scroll-view>
+
+        <alpha />
+
+
+        <view class="mask {{maskCss}}" @tap="closeRightPanel()"></view>
+        <view class="rightPanel {{rightPanelCss}}">            
+                
+            <scroll-view bindscroll="scroll" style="height: 400px;" scroll-y>
+            <view wx:for="{{searchRightData}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="car">
+                    <image src="{{item.thumb}}"  @tap="goto_detail({{item.goods_id}})" class="right_item_icon"/>                    
+                </view>
+                <view class="content">
+                    <view class="desc"> {{item.goods_name}}</view>
+                    <view class="price"> 售价：¥{{item.sell_price}}</view>
+                </view> 
+            </view>
+            </scroll-view>
+        </view>
+
+    </view>
+    <!-- <dialog :dialogInfo="dialogInfo"></dialog> -->
+</template>
+<script>
+    import wepy from 'wepy';
+    import Alpha from './alpha';
+    import Dialog from '../components/dialog';
+    import api from '../common/api.js'
+
+    export default class Detail extends wepy.page {
+        // 子组件
+        components = {
+            dialog:Dialog,
+            alpha: Alpha
+        };
+        props = {
+            item: {},
+            index: {},
+            indexWepyGotoUrl: {
+                type: Function,
+                default: null
+            }
+        }
+        
+        data = {
+            // 团购
+            group_buy:{
+                img:'/images/main/group_car.jpg',
+                title:'奔驰 G级',
+                desc1:'售价: 100.5 ~ 123.5万',
+                num:'1232张',
+            },
+            // 列表
+            historyList: [{
+                title:'',
+                url:''
+            }],
+            priceList:[
+                {
+                    start:2,
+                    end:8
+                },
+                {
+                    start:8,
+                    end:15
+                },
+                {
+                    start:15,
+                    end:30
+                },
+                {
+                    start:30,
+                    end:200
+                },
+            ],
+            // 车型列表
+            typeList: [
+                {
+                    title:'紧凑车型',
+                },
+                {
+                    title:'中型车',
+                },
+                {
+                    title:'中型SUV',
+                },
+                {
+                    title:'中大型车',
+                },
+            ],
+            dialogInfo:{
+                title:'',
+                content:'',
+            },
+            total:0,
+            carList:[],
+            scrollY:true,
+            jumpToPos:'POS_A',
+            maskCss:'none',
+            rightPanelCss:'',
+            searchRightData:[],
+        }
+        
+        methods = {
+            click (evt) {
+                
+            },
+            goto_url(item){
+                let url = "";
+                if(item.url == 'detail'){
+                    url = url + item.url + '?goods_id=' + item.goods_id
+                }
+                this.$emit('gotoUrl', url);
+            },
+            goto_detail (id) {
+                //this.$root.$navigate({url: 'detail?goods_id=' + id});
+            },
+            goto_contact(evt){
+                this.$root.$navigate({url: 'contact'});
+            }, 
+            goto_search(start, end){
+                var self = this;
+                
+                wx.request({ 
+                    url: api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
+                    data:{
+                        searchType:'search_by_price', 
+                        start:start,
+                        end:end
+                    },
+                    header:{"Content-Type":"applciation/json"},
+                    method:"GET",//get为默认方法/POST
+                    success:function(res){
+                        console.log(res.data);
+                        self.searchRightData = res.data;
+                        self.maskCss = 'show';
+                        self.rightPanelCss = 'fade_in';
+                        self.$apply();
+                    },
+                    fail:function(err){},//请求失败
+                    complete:function(){}//请求完成后执行的函数
+                });
+                //this.$root.$navigate({url: 'contact'});
+
+            }, 
+            goto_search_type(type){
+                var self = this;
+                wx.request({ 
+                    url: api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
+                    data:{searchType:'search_by_grade', grade:type},
+                    header:{"Content-Type":"applciation/json"},
+                    method:"GET",//get为默认方法/POST
+                    success:function(res){                  
+                        //self.goods_list = res.data
+                        console.log(res)
+                        //self.$apply()    
+                    },
+                    fail:function(err){},//请求失败
+                    complete:function(){}//请求完成后执行的函数
+                });
+                //this.$root.$navigate({url: 'contact'});
+            },
+            closeRightPanel(){
+                this.maskCss = 'none';
+                this.rightPanelCss = 'fade_out';
+                this.$apply();
+            },
+        };
+
+        events = {
+            onAphaSelect(key,event){
+                console.log('category',key);
+                this.jumpToPos = "POS_" + key;
+                this.$apply();                
+                this.jumpToPos = "";
+                this.$apply();
+            }
+        }
+
+        
+
+        format (arr) {
+            if(arr === undefined || arr == null){
+                arr = [];
+            }
+            let c, obj = {};
+            arr.forEach((item) => {
+                c = item.name[0].toUpperCase();
+                if (obj[c]) {
+                    obj[c].push(item);
+                } else {
+                    obj[c] = [item];
+                }
+            });
+            return obj;
+        }
+        loadHistoryList(){
+            var self = this;
+            wx.request({ 
+                url: api.baseUrl + "index.php?m=home&c=member&a=appMemberScanList",//请求地址
+                data:{uid:1},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){   
+                    self.historyList = res.data;
+                    console.log(res,1212)
+                    self.$apply();           
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+        async loadCarList() {
+            // let arr = [
+            //     {name: 'aodi',   icon:'', cn_name: '奥迪'},
+            //     {name: 'asidun', icon:'', cn_name: '阿斯顿马丁'},
+            //     {name: 'auxun',  icon:'', cn_name: 'AUXUN傲旋'},
+            //     {name: 'aurus',  icon:'', cn_name: 'Aurus'},
+            //     {name: 'futian',  icon:'', cn_name: '福田'},
+            //     {name: 'baoma',  icon:'', cn_name: '宝马'},
+            //     {name: 'jili',   icon:'', cn_name: '吉利'},
+            // ];
+            let self = this;
+            wx.request({
+                url:api.baseUrl + "index.php?m=home&c=brand&a=appBrandList",//请求地址
+                data:{},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){
+                    console.log(res);
+                    let arr = res.data;
+                    if(arr === undefined || arr == null){
+                        arr = [];
+                    }
+                    arr.forEach((v) => {
+                        arr[v.name] = v;
+                    });
+
+                    self.total = arr.length;
+                    self.carList = self.format(arr);
+
+                    console.log(self.carList);
+                    self.$apply();
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+            
+        }
+
+        onLoad () {
+            this.loadCarList();
+            //this.$apply();
+        }
+    }
+</script>

@@ -1,0 +1,105 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+         
+    .group-top{
+        margin:20rpx 20rpx 20rpx 20rpx;
+        padding:20rpx 20rpx 20rpx 20rpx;
+        background-color: #fff; 
+
+        height:240rpx;
+        font-size:13px;
+
+        image{
+            width:250rpx;
+            height:190rpx;
+            float:left;
+            display:block;
+        }
+        .img{
+            float:left;
+            position:relative;
+        }
+
+        .car-num{
+            position:absolute;
+            bottom:0;
+            height:15px;
+            width:38px;
+            background-color:#cfd4d4;
+            right:0;
+            overflow:hidden;
+            font-size:10px;
+            opacity:0.6;
+            }            
+        .content{
+            margin-left: 135px;
+            .title{
+                color: black;
+                padding-bottom:20rpx;
+            }
+            .desc{
+                font-size: 11px;
+                line-height: 14px;
+            }
+            .price{
+                color:rgb(49, 48, 48);
+                padding-top:20rpx;
+                font-size: 11px;
+                line-height: 14px;
+            }
+            .marketPrice{
+                color: rgb(49, 48, 48);
+                font-size: 11px;
+                line-height: 14px;
+            }
+            .groupPrice{
+                color: red;
+                padding-top:10rpx;
+                font-size: 13px;
+            }
+        }  
+        .car-title .desc {
+            color:#d43030;
+            font-size:11px;
+            margin-left:20rpx
+        }
+        .car-title .title {
+            color:#000000;
+            margin:30rpx 30rpx 30rpx 20rpx;
+            font-size:14px;
+        }         
+    }        
+</style>
+<template>    
+    <view class='group-top'>
+        <view class='img'>
+            <image src="{{item.thumb}}"/>
+            <view class='car-num'>{{item.num}}</view>                
+        </view>            
+        <view class="content">
+            <view class="title">{{item.brand_name}}</view>
+            <view class="desc">{{item.goods_title}}</view>
+            <view class="desc">{{item.goods_name}}</view>
+            <view class="price">售价：¥{{item.sell_price}}</view>
+            <view class="marketPrice">市场价：¥{{item.market_price}}</view>
+            <view class='groupPrice'>拼团价：¥{{item.price}}</view>
+        </view>                  
+    </view>
+</template>
+<script>
+    import wepy from 'wepy';
+
+    export default class GroupTop extends wepy.component {
+
+        props = {
+            item: {}
+        }
+       
+        methods = {
+            click (evt) {
+                
+            },
+        };
+    }
+</script>

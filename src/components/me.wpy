@@ -1,0 +1,467 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+         
+    .me{
+        margin:0rpx 0rpx 0rpx 0rpx;
+        background-color: rgb(241, 61, 6); 
+        height:25%;
+        font-size:30rpx;        
+        image{
+            width:150rpx;
+            height:150rpx;
+            border-radius: 100rpx;
+            text-align:center;
+        }
+        .img{
+            left:40%;
+            position:relative;
+        }
+        .right-top{
+            color:white;
+            left: 80%;
+            top:10%;
+            font-size:30rpx;
+            position: relative;
+        }
+        .title{
+            color:white;
+            padding-top: 15rpx;
+            text-align: center;
+            font-size: 28rpx;
+        }
+        .command{
+            color:white;
+            padding-top: 10rpx;
+            padding-bottom: 10rpx;
+            text-align: center;
+            font-size: 20rpx;
+        }        
+        .middle{    
+            background: #dfdbdb;
+            width:100%;  
+            height: 50%; 
+            top:10%;
+            .tab1{
+                float: left;
+                position:absolute;
+                width:50%;
+                text-align:center;
+                font-size: 30rpx;
+                margin-top:46rpx;
+            } 
+
+            .tab2{
+                float: right;
+                position:absolute;
+                width:50%;
+                color: black;
+                text-align:center;
+                font-size: 30rpx;
+                margin-top:46rpx;
+                margin-left:24%;
+            } 
+            .tab3{
+                float: right;
+                position:absolute;
+                width:50%;
+                color: black;
+                text-align:center;
+                font-size: 30rpx;
+                margin-top:46rpx;
+                margin-left:50%;
+            }
+            .active{
+                color:#d43030;
+            }
+        }
+        .content{
+            margin-left: 125px;
+            .title{
+                color: black;
+                padding-bottom:10rpx;
+            }
+            .desc{
+                font-size: 11px;
+            }
+            .price{
+                color: red;
+                padding-top:10rpx;
+                font-size: 12px;
+            }
+            .marketPrice{
+                color: darkgray;
+                font-size: 11px;
+            }
+            .desc1{
+                color: dodgerblue; 
+                float: right;  
+                line-height: 7px;  
+                font-size: 11px;   
+            }
+        }        
+        .car-title .desc {
+            color:#d43030;
+            font-size:11px;
+            margin-left:20rpx
+        }
+        .car-title .title {
+            color:#000000;
+            margin:30rpx 30rpx 30rpx 20rpx;
+            font-size:14px;
+        }         
+    }   
+   .group-list{
+        display: inline-block;   
+        width:100%;
+        .header{
+            width: 30px;
+            height: 30px;
+            border-radius:100px;
+            vertical-align:middle;
+        }
+        
+        .group-row{
+            position: relative;
+            width:100%;
+            height:150rpx;
+
+            .item{
+                margin:33rpx 13rpx 33rpx 33rpx;
+                float: left;
+                width:60%;
+                vertical-align:middle;
+                font-size: 20rpx;
+                display: inline;
+                .title{
+                    padding-left: 15px; 
+                    padding-right: 30px;   
+                    font-size:12px;  
+                    color: #000000;            
+                }
+                .span-1{
+                    display: block;
+                    white-space:pre-wrap;
+                    overflow:hidden;
+                    word-break:normal;
+                    position:absolute;
+                    left:40%;
+                    color: #000000;
+                    top:30rpx;
+                }                
+            }
+
+            .item-contact{
+                float: right;
+                margin:35rpx 25rpx 25rpx 15rpx;
+                width:18%;
+                .btn{
+                    color:white;
+                    background-color: red;
+                    height: 50rpx;
+                    line-height:50rpx;
+                    border-radius:5px;
+                    text-align: center;
+                    font-size:28rpx;
+                }
+            }
+        }
+    }
+
+
+    .qrcode{
+        position: fixed;
+        top:440rpx;
+        left:0rpx;
+        width:100%;
+        height:100%;
+        background-color:#FFFFFF;
+
+        text-align: center;
+        padding-top:40rpx;
+        image{
+            width: 300rpx;
+            height: 300rpx;
+            position: relative;
+        }
+        .btn{
+            margin-left:250rpx;
+            margin-top:50rpx;
+            color:white;
+            background-color: red;                
+            height: 70rpx;
+            width: 254rpx;
+            line-height:65rpx;
+            text-align: center;
+            font-size:36rpx;
+        }        
+    }
+
+    .none{
+        display: none;
+    }
+</style>
+<template>    
+    <view class='me'>
+        <view class='right-top' @tap="goto_group()">
+            我的拼团
+        </view> 
+        <view class='img'>
+            <image src="{{userInfo.avatarUrl}}"/>                
+        </view>  
+        
+        <view class='title'>
+            {{userInfo.nickName}}
+        </view>   
+        <view class='command'>
+            推荐人：小晨
+        </view>       
+        <view class="middle">
+            <view class='tab1 {{left_active}}' @tap="change_tab('left_active')">
+                我的团队
+            </view>  
+            <view class='tab2'>
+                |
+            </view>   
+            <view class='tab3 {{right_active}}' @tap="change_tab('right_active')">
+                推广二维码
+            </view>
+        </view>   
+        <scroll-view scroll-y="true" style="height: 400px;" bindscrolltolower="loadMore" class="list">
+        <view class="group-list {{show_group}}" @tap="click">
+            <view class="group-row" wx:for="{{group_user_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="item">
+                    <image class='header' src="{{item.user_profile}}"/>
+                    <span class="title">{{item.name}}</span> 
+                    <span class="title span-1">                      
+                        <view>注册成功</view> 
+                    </span>                        
+                </view>
+                <view class="item-contact">
+                    <view class="btn" @tap='get_phone_fee()'>领取话费</view>
+                </view>
+            </view>
+        </view>
+        </scroll-view>
+        <!-- 加载动画结构代码 -->
+        <view class="loadMoreGif" wx:if="{{loadingShow}}">
+        <image src="../images/loadding.gif" />
+        <text>正在加载中</text>
+        </view>
+        <view class="weui-loadmore weui-loadmore_line" wx:if="{{ noMoreData }}">
+          <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多数据</view>
+        </view>
+    </view>
+
+    <view class='qrcode {{show_qrcode}}'>
+        <image src="{{qrcodeUrl}}"/>
+        <view> 将二维码分享给好友好友注册获得话费奖励 </view>
+        <view> 促成交易可获得交易佣金 </view>
+        <button open-type='share' class="btn">立即分享</button>
+        <!-- <view class="btn">立即分享</view> -->
+    </view>
+
+    <dialog :dialogInfo="dialogInfo"></dialog>
+</template>
+<script>
+    import wepy from 'wepy';
+    import Dialog from '../components/dialog';
+    import api from '../common/api.js'
+
+    export default class GroupDetailTop extends wepy.component {
+
+        props = {
+            item: {}
+        }
+
+        // 子组件
+        components = {
+            dialog:Dialog
+        };
+
+        data = {
+            // 显示二维码
+            showQrcode :false,
+
+            left_active : 'active',
+            right_active : '',
+            show_qrcode : 'none',
+            show_group:'',
+            qrcodeUrl:'',
+
+            noMoreData: false,
+            // 是否在加载中
+            isLoading: false ,
+            page :1, // 页数 给予默认值1
+            // 拼团列表
+            group_user_list: [
+                {
+                    name: '十人团',
+                    user_profile:'/images/main/header.png',     
+                    uid:1,               
+                },
+            ],
+            dialogInfo:{
+                title:'',
+                content:'',
+            },
+
+            userInfo:{
+                avatarUrl:'',
+                nickName:'',
+                openId:'',
+            }
+        }
+        onShareAppMessage(res) {
+            if (res.from === 'button') {
+            // 来自页面内转发按钮
+            console.log(res.target,1111111111111)
+            }
+            return {
+                title: '自定义转发标题',
+                path: '/page/user?id=123',
+                
+            }
+        }
+        onLoad(options) {
+            wx.showShareMenu({
+                withShareTicket: true,
+                success:function(res){
+                    console.log(res,100)
+                },
+                fail:function(res){
+                    console.log(res,200)
+                },
+                complete:function(res){
+                    console.log(res,300)
+                }
+            })
+            var self = this;
+            wx.request({
+                url:api.baseUrl + "index.php?m=home&c=group&a=appGroupUsers",//请求地址
+                data:{group_id:109,page:self.page,size:12},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){
+                    console.log(res,2);                    
+                    self.group_user_list = res.data.group_user_list; 
+                    self.$apply();
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+            //index.php?m=home&c=brand&a=createQrcode&url=xxx
+        }
+        loadMore(){
+            var self = this;
+            self.page = self.page + 1
+            wx.request({
+                url:api.baseUrl + "index.php?m=home&c=group&a=appGroupUsers",//请求地址
+                data:{group_id:29,page:self.page,size:12},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){
+                    console.log(res);                    
+                    self.group_user_list = res.data.group_user_list; 
+                    self.$apply();
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+        methods = {
+            click (evt) {
+                
+            },
+            goto_group(){
+                // wx.request({
+                //     url:api.baseUrl + "index.php?m=home&c=goods&a=appMyGroup",//请求地址
+                //     data:{uid:1},
+                //     header:{"Content-Type":"applciation/json"},
+                //     method:"GET",//get为默认方法/POST
+                //     success:function(res){                    
+                //         self.group_buy = res.data;                    
+                //         //console.log(res.data);
+                //         self.$apply();
+                //         //callback();
+                //     },
+                //     fail:function(err){},//请求失败
+                //     complete:function(){}//请求完成后执行的函数
+                // });
+                this.$root.$navigate({url: 'group'});
+                //?group=' + JSON.stringify(group) + '&group_buy=' + JSON.stringify(this.group_buy)}
+            },
+            get_phone_fee(){
+                let title = '提示';
+                let content = {
+                    'group_name':'领取成功，',
+                    'title':'销售顾问将在48小时内联系您发送话费'
+                    };
+                this.$invoke('dialog', 'showDialog', title, content, {
+                    hasCancel:true,
+                    hasOkCancel:false,
+                    ok:'确定',
+                    finish:function(){
+                        console.log('finish');
+                    }
+                });
+            },
+            
+            openMeTab(){
+                // wepy.showToast({
+                //     title: '我的',
+                //     icon: 'success',
+                //     duration: 1000
+                // });
+                this.userInfo.openId = wepy.getStorageSync('openId');
+                this.userInfo.nickName = wepy.getStorageSync('nickName');
+                this.userInfo.avatarUrl = wepy.getStorageSync('avatarUrl');
+                this.$apply();
+
+                
+            },
+
+            change_tab(tab_name){
+                let self = this;
+                if(tab_name == 'left_active'){
+                    this.left_active = 'active';
+                    this.right_active = '';
+                    this.show_qrcode = 'none';
+                    this.show_group = '';
+                    this.$apply();
+                }else if(tab_name == 'right_active'){
+                    if(this.qrcodeUrl != ''){
+                        this.left_active = '';
+                        this.right_active = 'active';
+                        this.show_qrcode = '';
+                        this.show_group = 'none';
+                        this.$apply();
+                    }else{
+                        wx.request({
+                            url:api.baseUrl + "index.php?m=home&c=user&a=getUnlimited",//请求地址
+                            data:{
+                                openId:wepy.getStorageSync('openId')
+                            },
+                            header:{"Content-Type":"applciation/json"},
+                            method:"GET",
+                            success:function(res){      
+                                self.qrcodeUrl = res.data.url;
+                                self.left_active = '';
+                                self.right_active = 'active';
+                                self.show_qrcode = '';
+                                self.show_group = 'none';
+                                self.$apply();
+                            },
+                            fail:function(err){},//请求失败
+                            complete:function(){}//请求完成后执行的函数
+                        });
+                    }
+                }
+            }
+        };
+
+        events = {
+            
+        }
+    }
+</script>

@@ -1,0 +1,311 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+    .detail{
+        background: #ffffff;
+        .group-buy{
+            margin:20rpx 20rpx 20rpx 20rpx;
+            padding:20rpx 20rpx 20rpx 20rpx;
+            border:0.5px grey solid;
+            height:190rpx;
+            font-size:13px;
+
+            
+            .img{
+                float:left;
+                position:relative;
+
+                image{
+                    width:250rpx;
+                    height:190rpx;
+                    float:left;
+                    display:block;
+                }
+
+                .car-num{
+                    position:absolute;
+                    bottom:0;
+                    height:15px;
+                    width:38px;
+                    background-color:#cfd4d4;
+                    right:0;
+                    overflow:hidden;
+                    font-size:10px;
+                    opacity:0.6;
+                } 
+            }
+
+                       
+            .content{
+                margin-left:280rpx;
+                .title{
+                    color:#d43030;
+                }
+                .desc{
+                    font-size:11px;
+                }
+                .btn{
+                    color:white;
+                    background-color: darkblue;
+                    width: 120px;
+                    height: 15px;
+                    margin:15rpx 15rpx 15rpx 15rpx;
+                    border-radius:35px;
+                    text-align: center;
+                }                
+            }  
+            .car-title .desc {
+                color:#d43030;
+                font-size:11px;
+                margin-left:20rpx
+            }
+            .car-title .title {
+                color:#000000;
+                margin:30rpx 30rpx 30rpx 20rpx;
+                font-size:14px;
+            }   
+        }
+    }
+    .line{
+        height:1px; 
+        background:rgb(172, 169, 169);        
+    }
+    .line-margin{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    .years-list{
+        margin:25rpx 25rpx 25rpx 25rpx;
+        border-bottom:solid 1px #ddd;
+        padding-bottom:25rpx;
+
+        .item{
+            width:120rpx;
+            height:20rpx;
+            display: inline-block;
+            margin-right:10rpx;
+            marign-bottom:0rpx;
+            border:0rpx;
+            .title{
+                font-size: 11px;
+            }
+            
+        }
+    }
+    .car-list{ 
+        display: inline-block;   
+        width:100%;
+        .car-row{
+            border-bottom:solid 1px #ddd;
+            .item{
+                margin:25rpx 25rpx 25rpx 25rpx;
+                width:55%;
+                line-height:40rpx;
+                display: inline-block;
+                font-size: 11px;
+                .price{
+                    color: red;
+                }
+                .desc{
+                    color: steelblue;
+                }            
+            }
+            .item-contact{
+                float: right;
+                margin:70rpx 25rpx 25rpx 25rpx;
+                width: 25%;
+                .btn{
+                    color:white;
+                    background-color: steelblue;
+                    width: 70%;
+                    height: 20px;
+                    line-height:20px;
+                    border-radius:35px;
+                    text-align: center;
+                    font-size:11px;
+                }     
+            }
+        }
+    }
+</style>
+
+<template>
+    <view class="detail">
+        <view class='group-buy car-detail'>
+            <view class='img'>
+                <image src="{{group_buy.thumb}}"  @tap='goto_picture({{group_buy.goods_id}})'/>
+                <view class='car-num'>{{group_buy.num}}张</view>                
+            </view>            
+            <view class="content car-title">
+                <view class="title">{{group_buy.brand_name}} {{group_buy.goods_name}}</view>
+                <view class="desc">售价：{{group_buy.sell_price}}万 - {{group_buy.market_price}}万</view>
+            </view>            
+        </view>
+        <view class='line line-margin'></view>
+        <view class='years-list' @tap="click">
+            <block wx:for="{{list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="item" @tap="goto_year({{item.title}})">
+                    <view class="title">{{item.title}}{{item.unit}}</view>
+                </view>
+            </block>
+        </view>
+        <view class="car-list" @tap="click">
+            <view class="car-row" wx:for="{{car_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="item">
+                    <view class="title">{{item.year}} {{item.brand_name}} {{item.goods_name}}</view>
+                    <view class="price">售价：{{item.sell_price}}万</view> 
+                    <view class="desc" @tap="goto_detail({{item.goods_id}})">商品详情</view>                   
+                </view>
+                <view class="item-contact">
+                    <view class="btn" @tap="goto_contact({{item.goods_id}})">联系看车</view>                   
+                </view>                
+            </view>
+        </view>
+    </view>
+</template>
+<script>
+    import wepy from 'wepy';
+    import api from '../common/api.js'
+
+    export default class Detail extends wepy.page {
+
+        props = {
+            item: {},
+            index: {},
+        }
+
+        data = {
+            // 团购
+            group_buy:{},
+            // 年份列表
+            list: [
+                {
+                    title:'全部在售',
+                    unit:''
+                },
+                {
+                    title:'2019',
+                    unit:'款'
+                },
+                {
+                    title:'2018',
+                    unit:'款'
+                },
+                {
+                    title:'2017',
+                    unit:'款'
+                },
+                {
+                    title:'2016',
+                    unit:'款'
+                }
+            ],
+            // 年份车列表
+            car_list: [
+            ],
+        }
+
+        onShareAppMessage(res){
+            let userInfo = wepy.getStorageSync('userInfo');   
+            return {
+                title: '买鑫车小程序',
+                path: '/pages/detail?userInfo=' + JSON.stringify(userInfo.data) + '&goods_id=' + this.group_buy.goods_id,
+                imageUrl: userInfo.qrcode,
+                success: function (res1) {
+                },
+                fail: function (res1) {
+                }
+            }
+        }
+
+        onLoad(options) {
+            let showFirstWelcomePage = wepy.getStorageSync('_showFirstWelcomePage');
+            if(showFirstWelcomePage === ""){
+                this.$root.$navigate({ url: 'welcome' });
+            }
+           
+            wx.showShareMenu({
+                withShareTicket: true,
+            });
+                  
+            if(typeof options.userInfo != 'undefined'){
+                console.log(options.userInfo)
+                let userInfo = JSON.parse(options.userInfo)
+                if(wepy.getStorageSync('openId') !== userInfo.open_id){                  
+                    let _userInfo = wepy.getStorageSync('userInfo');
+                    if(_userInfo.uid !== userInfo.uid){
+                        wx.request({
+                            url:api.baseUrl + "index.php?m=home&c=user&a=appUpdateUser",//请求地址
+                            data:{parent_id:userInfo.uid,uid:_userInfo.uid},
+                            header:{"Content-Type":"applciation/json"},
+                            method:"GET",//get为默认方法/POST
+                        });
+                    }                    
+                }                
+            }
+
+            var self = this;
+            wx.request({
+                url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsDetail",//请求地址
+                data:{goods_id:options.goods_id},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){                    
+                    self.group_buy = res.data;                    
+                    //console.log(res.data);
+                    self.$apply();
+                    //callback();
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+            wx.request({ 
+                url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
+                data:{num:"14"},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){                  
+                    self.car_list = res.data
+                    self.$apply()    
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+
+        
+        methods = {
+            click (evt) {
+                
+            },
+            goto_year(title){
+                if(title == '全部在售'){
+                    title = ''
+                }                
+                var self = this;
+                wx.request({ 
+                    url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
+                    data:{year:title,searchType:'search_by_grade'},
+                    header:{"Content-Type":"applciation/json"},
+                    method:"GET",//get为默认方法/POST
+                    success:function(res){                  
+                        self.car_list = res.data
+                        self.$apply()    
+                    },
+                    fail:function(err){},//请求失败
+                    complete:function(){}//请求完成后执行的函数
+                });
+            },
+            goto_detail (id) {
+                this.$root.$navigate({url: 'detail?goods_id=' + id});
+            },
+            goto_picture(id){
+                this.$root.$navigate({url: 'picture?goods_id='+id});
+            },
+            goto_contact(id){
+                this.$root.$navigate({url: 'contact?goods_id=' + id});
+            },
+           
+        };
+    }
+</script>

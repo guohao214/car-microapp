@@ -1,0 +1,362 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+    .group-detail-send {        
+        .group-buy{
+            margin:20rpx 20rpx 20rpx 20rpx;
+            padding:20rpx 20rpx 20rpx 20rpx;
+            background-color: #fff; 
+            border:0.5px grey solid;
+            height:190rpx;
+            font-size:13px;
+
+            image{
+                width:250rpx;
+                height:190rpx;
+                float:left;
+                display:block;
+            }
+            .img{
+                float:left;
+                position:relative;
+            }
+
+            .car-num{
+                position:absolute;
+                bottom:0;
+                height:15px;
+                width:38px;
+                background-color:#cfd4d4;
+                right:0;
+                overflow:hidden;
+                font-size:10px;
+                opacity:0.6;
+                }            
+            .content{
+                margin-left:280rpx;
+                .title{
+                    color:#d43030;
+                }
+                .desc{
+                    font-size:11px;
+                }
+                .btt{
+                    color:white;
+                    background-color: darkblue;
+                    width: 120px;
+                    height: 15px;
+                    margin:15rpx 15rpx 15rpx 15rpx;
+                    border-radius:35px;
+                    text-align: center;
+                }                
+            }  
+            .car-title .desc {
+                color:#d43030;
+                font-size:11px;
+                margin-left:20rpx
+            }
+            .car-title .title {
+                color:#000000;
+                margin:30rpx 30rpx 30rpx 20rpx;
+                font-size:14px;
+            }         
+        }
+        .car-detail{
+            border-style:none;
+        }
+        .list{
+            margin:20rpx 20rpx 20rpx 20rpx;
+            margin-bottom:150rpx;
+
+            .item{
+                width:300rpx;
+                height:370rpx;
+                display: inline-block;
+                margin-right:40rpx;
+                marign-bottom:20rpx;
+                border:0rpx;
+
+                image{
+                    width:300rpx;
+                    height:260rpx;
+                }
+                .title{
+
+                }
+                
+            }
+        }
+        .group-list{
+
+        }
+    }
+    .line{
+        height:1px; 
+        background:rgb(172, 169, 169);        
+    }
+    .line-margin{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+
+    .years-list{
+        margin:33rpx 33rpx 33rpx 33rpx;
+        .item{
+            width:120rpx;
+            height:20rpx;
+            display: inline-block;
+            margin-right:10rpx;
+            marign-bottom:0rpx;
+            border:0rpx;
+            .title{
+                font-size: 11px;
+            }
+            
+        }
+    }
+    .group-list{        
+        display: inline-block;   
+        width:100%;
+        .header{
+            width: 30px;
+            height: 30px;
+            border-radius:100px;
+            vertical-align:middle;
+        }
+        .group-row{
+            position: relative;
+            width:100%;
+            height:150rpx;
+            .item{
+                margin:33rpx 13rpx 33rpx 33rpx;
+                float: left;
+                width:60%;
+                vertical-align:middle;
+                font-size: 11px;
+                display: inline;
+                height: 25px;
+                .title{ 
+                    font-size:12px; 
+                    position:absolute;
+                }
+                .header{
+                    margin-top: -15rpx;
+                }
+                .span-1{
+                    display: block;
+                    white-space:pre-wrap;
+                    overflow:hidden;
+                    word-break:normal;
+                }
+                .price{
+                    color:red;
+                    position:absolute;
+                    left:38%;
+                }
+            }        
+        }
+        .item-contact-send{
+            float: right;
+            margin:20rpx 20rpx 20rpx 20rpx;
+            width:15%;
+            .send-btn{
+                color:white;       
+                height: 25px;
+                line-height:25px;
+                border-radius:5px;
+                text-align: center;
+                font-size:12px;
+                font-weight:bold;
+                background:orange;
+            }     
+        }        
+    }
+    .send{
+        position:fixed; 
+        margin-left: 13px;
+        margin-top: -230px;
+        z-index: 1000;
+        height: 170px;
+        background:gray;
+        text-align: center;
+        .send-btn{
+            width: 70px;
+            color:white;       
+            height: 25px;
+            line-height:25px;
+            border-radius:5px;
+            text-align: center;
+            font-size:12px;
+            font-weight:bold;
+            background:orange;     
+            margin-top:30px; 
+            margin-left: 35%;
+        }    
+        .title{
+            font-size: 14px;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+        .text{
+            font-size: 12px;
+            span{
+                display: block;
+            }
+        }
+    }
+    #group-detail{
+        .content{
+            .title{
+                color: black;
+                padding-bottom:10rpx;
+            }
+            .desc{
+                font-size: 11px;
+            }
+            .price{
+                color: red;
+                padding-top:10rpx;
+                font-size: 12px;
+            }
+            .marketPrice{
+                color: darkgray;
+                font-size: 11px;
+            }
+            .desc1{
+                color: dodgerblue; 
+                float: right;  
+                line-height: 7px;  
+                font-size: 11px;   
+            }
+        }        
+    } 
+</style>
+<template>
+    <view class="group-detail-send">
+        <groupDetailTop :item.sync="group_buy"/>
+        <view class='line'></view>
+
+        <view class="group-list" @tap="click">
+            <view class="group-row" wx:for="{{group_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="item">
+                    <image class='header' src="{{item.creator_profile}}"/>
+                    <span class="title">{{item.group_name}}</span> 
+                    <span class="price">售价：{{item.price}}</span>                        
+                </view>
+                <view class="item-contact-send">
+                    <view class="send-btn" @tap='send_box({{item}})'>发起</view>                   
+                </view>
+            </view>
+        </view>
+        
+    </view>
+
+    <dialog :dialogInfo="dialogInfo"></dialog>
+</template>
+<script>
+    import wepy from 'wepy';
+    import GroupDetailTop from '../components/groupDetailTop';
+    import Dialog from '../components/dialog';
+    import api from '../common/api.js'
+
+    export default class GroupDetailSend extends wepy.page {
+
+        // 子组件
+        components = {
+            groupDetailTop: GroupDetailTop,
+            dialog:Dialog
+        };
+        data = {
+            // 团购
+            group_buy:{},
+            // 拼团列表
+            group_list: [
+                {
+                    group_name: '十人团',
+                    price:'1588.88万',                    
+                },
+            ],
+            dialogInfo:{
+                title:'',
+                content:'',
+            },
+            group_user:{
+                mobile:'',
+                name:'',
+                uid:'',
+                user_profile:'',
+                city:'',
+                is_group:1,
+                goods_id:'',
+                open_id:'',
+                group_id:'',
+            },
+        }
+        onLoad(options) {
+            var self = this;
+            self.group_buy = JSON.parse(options.group_buy)
+            self.$apply();
+            wx.request({
+                url:api.baseUrl + "index.php?m=home&c=group&a=appGroupList",//请求地址
+                data:{goods_id:self.group_buy.goods_id},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){
+                    self.group_list = res.data;    
+                    self.group_list.forEach(element => {
+                        element.price = self.group_buy.sell_price - element.price
+                    });   
+                    self.$apply();
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+        
+        methods = {
+            click (evt) {
+                
+            },
+            send_box(item) {
+                let group_name = item.group_name;
+                this.group_user.group_id = item.group_id;
+                this.group_user.goods_id = this.group_buy.goods_id;
+                let sendData = this.group_user;
+                sendData.open_id = wepy.getStorageSync('openId');
+                let self = this;
+                wx.request({
+                    url:api.baseUrl + "index.php?m=home&c=group&a=appAddGroupUser",//请求地址
+                    data:sendData,
+                    header:{"Content-Type":"application/x-www-form-urlencoded"},
+                    method:"POST",//get为默认方法/POST
+                    success:function(res){       
+                        let group_buy = self.data.group_buy;
+                        group_buy.group_name = '您已成功发起' + group_name;
+                        group_buy.price = '拼团成功可' + group_buy.price + '抢购';
+                        group_buy.desc = '邀请好友一起参加，增加拼团成功率';
+                        let title = '成功发起拼团';
+                        let content = group_buy;
+                        if(res.data.status == 1){
+                            self.$invoke('dialog', 'showDialog', title, content, {
+                                hasCancel:false,
+                                ok:'一键邀请',
+                                cancel:'取消',
+                                finish:function(){
+                                    console.log('finish');
+                                }
+                            });    
+                        }else{
+                            wx.showToast({
+                                'title': res.data.msg,
+                                'icon': 'fail',
+                                'duration': 2000
+                            });
+                        }
+                    },
+                    fail:function(err){},//请求失败
+                    complete:function(){}//请求完成后执行的函数                      
+                });
+            }
+        };
+    }
+</script>

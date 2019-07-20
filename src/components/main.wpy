@@ -1,0 +1,219 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+    .main {        
+        .group-buy{
+            margin:20rpx 20rpx 20rpx 20rpx;
+            padding:20rpx 20rpx 20rpx 20rpx;
+            background-color: #fff; 
+            border:0.5px grey solid;
+            height:190rpx;
+            font-size:13px;
+
+            image{
+                width:250rpx;
+                height:190rpx;
+                float:left;
+                display:block;
+            }
+            .img{
+                float:left;
+                position:relative;
+            }
+
+            .car-num{
+                position:absolute;
+                bottom:0;
+                height:15px;
+                width:38px;
+                background-color:#cfd4d4;
+                right:0;
+                overflow:hidden;
+                font-size:10px;
+                opacity:0.6;
+                }            
+            .content{
+                margin-left:280rpx;
+                .title{
+                    color:#d43030;
+                }
+                .desc{
+                    font-size:11px;
+                }
+                .btn{
+                    color:white;
+                    background-color: darkblue;
+                    width: 120px;
+                    height: 40rpx;
+                    line-height: 40rpx;
+                    margin:15rpx 15rpx 15rpx 15rpx;
+                    border-radius:40rpx;
+                    text-align: center;
+                }                
+            }  
+            .car-title .desc {
+                color:#d43030;
+                font-size:11px;
+                margin-left:20rpx
+            }
+            .car-title .title {
+                color:#000000;
+                margin:30rpx 30rpx 30rpx 20rpx;
+                font-size:14px;
+            }         
+        }
+        .car-detail{
+            border-style:none;
+        }
+        .list{
+            margin:20rpx 20rpx 20rpx 20rpx;
+            margin-bottom:150rpx;
+
+            .item{
+                width:300rpx;
+                height:370rpx;
+                display: inline-block;
+                margin-right:55rpx;
+                marign-bottom:20rpx;
+                border:0rpx;
+                font-size: 25rpx;
+                image{
+                    width:100%;
+                    height:260rpx;
+                }
+                .title{
+
+                }
+                
+            }
+        }
+        .group-list{
+
+        }
+    }
+</style>
+
+<template>
+    <view class="main">
+        <swiper indicator-dots="{{swiper.indicatorDots}}" autoplay="{{swiper.autoplay}}" interval="{{swiper.interval}}" duration="{{swiper.duration}}" circular="{{swiper.circular}}">
+            <repeat for="{{swiper.imgUrls}}">
+                <swiper-item>
+                <!--{{item}}-->
+                <image src="{{item}}" class="slide-image" style="width:100%"/>
+                </swiper-item>
+            </repeat>
+        </swiper>
+
+        <view class='group-buy'>
+            <image src="{{group_buy.img}}"/>
+            <view class="content">
+                <view class="title">{{group_buy.title}}</view>
+                <block wx:for="{{group_buy.list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                    <view class="desc">{{item}}</view>
+                </block>
+                <view class="btn desc" @tap="goto_group_detail({{group_buy.goods_id}})">{{group_buy.desc4}}</view>
+            </view>            
+        </view>
+
+        <view class='list'>
+            <block wx:for="{{goods_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="item" @tap="goto_detail({{item.goods_id}})">
+                    <image src="{{item.thumb}}"/>
+                    <view class="title">{{item.brand_name}} {{item.goods_name}}</view>
+                </view>
+            </block>
+        </view>
+
+        
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy';
+    import api from '../common/api';
+
+    export default class Main extends wepy.component {
+
+        data = {
+            // 轮播图
+            swiper:{
+                indicatorDots:true,
+                autoplay:true,
+                circular:true,
+                interval:2000,
+                duration:500,
+                imgUrls:[
+                    '/images/main/slide1.jpg',
+                    'https://img.pc841.com/2018/0815/20180815101229911.jpg',
+                    'https://img.pc841.com/2018/0815/20180815101229911.jpg',
+                    'https://img.pc841.com/2018/0815/20180815101229911.jpg',
+                ]
+            },
+
+            // 团购
+            group_buy:{
+                img:'/images/main/group_car.jpg',
+                title:'买路虎 拼团购 更优惠',
+                list:[],
+                desc4:'一键拼团',
+                goods_id:112                 
+            },
+
+            // 主列表
+            goods_list: [],
+        };
+
+        methods = {
+            goto_detail (id) {
+                this.$root.$navigate({url: 'detail?goods_id=' + id});
+            },
+            goto_group_detail(id) {
+                this.$root.$navigate({url: 'groupDetail?goods_id=' + id});
+            },
+        };
+
+        loadGroupList(callback){
+            var self = this;
+            wx.request({
+                url:api.baseUrl + "index.php?m=home&c=group&a=appGroupList",//请求地址
+                data:{num:"3"},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){    
+                    self.group_buy.list = []                
+                    res.data.forEach(element => {
+                        self.group_buy.list.push(element.group_name + ' 每车优惠'+element.price+'万')
+                    });
+                    // self.$apply()
+                    callback();
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+
+        loadGoodsList(){
+            var self = this;
+            wx.request({ 
+                url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
+                data:{num:"14"},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){                  
+                    self.goods_list = res.data
+                    self.$apply()    
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+
+        async loadMainData() {
+            let self = this;            
+            self.loadGroupList(function(){
+                self.loadGoodsList();
+            });
+        }
+
+    }
+</script>

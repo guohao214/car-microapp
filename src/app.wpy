@@ -1,0 +1,115 @@
+<style type='scss'>
+body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #f0eff5;
+}
+</style>
+
+<script>
+// <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">授权登录</button>
+
+import wepy from 'wepy';
+import 'wepy-async-function';
+import api from './common/api.js';
+
+export default class extends wepy.app {
+
+    config = {
+        'pages': [
+            'pages/index',
+            'pages/chat',
+            'pages/detail',
+            'pages/groupDetail',
+            'pages/groupDetailSend',
+            'pages/group',
+            'pages/in',
+            'pages/contact',
+            'pages/picture',
+            'pages/car',
+            'pages/welcome'
+        ],
+        'window': {
+            'backgroundTextStyle': 'light',
+            'navigationBarBackgroundColor': '#3b3a40',
+            'navigationBarTitleText': '买鑫车',
+            'navigationBarTextStyle': 'black'
+        }
+    };
+
+    constructor () {
+        super();
+        this.use('promisify');
+        this.use('requestfix');
+    }
+
+    globalData = {
+        userInfo: null
+    };
+
+    onLaunch(options) {
+        // 用户验证
+        this.userInfo = this.loginEx();
+        wepy.setStorageSync('scene', options.scene);
+        console.log("[onLaunch] 本次场景值:", options.scene);
+    }
+
+    async loginEx() {
+        wepy.setStorageSync('_isLogin', false)
+        wepy.setStorageSync('_isWebSocketOpen', false)
+
+        //获得登录数据
+        let loginData = {}
+        try {
+            loginData = await wepy.login()
+            console.log(loginData.code)
+        } catch (e) {
+            console.log('调用登录接口wepy.login出错')
+        }
+
+        //获得微信提供的用户信息
+        let userinfoRaw = {}
+        try {
+            if (loginData.code) {
+                userinfoRaw = await wepy.getUserInfo()
+                userinfoRaw.code = loginData.code
+
+                console.log('loginData=' + JSON.stringify(loginData));
+                wepy.setStorageSync('_isLogin', true)
+                await wepy.showToast({
+                    title: '登录成功',
+                    icon: 'success',
+                    duration: 1000
+                })
+            } else {
+                console.log('登录时获取用户code失败！')
+            }
+        } catch (e) {
+           console.log('登录失败！')
+        }
+
+        //console.log('userinfoRaw=' + JSON.stringify(userinfoRaw));
+
+        // try {
+        //     await wepy.setStorage({
+        //         key: '_session',
+        //         data: userinfo.data.data.session
+        //     })
+        // } catch (e) {
+        //     console.log('客户端存储会话信息失败')
+        //     console.log(e.message)
+        //     console.log(e.stack)
+        // }
+    }
+    
+    async getUserInfo() {
+        if (this.globalData.userInfo) {            
+            return this.globalData.userInfo;
+        }
+        await wx.login();
+        let res = await wx.getUserInfo();
+        this.globalData.userInfo = res.userInfo;
+        return res.userInfo;
+    }
+}
+</script>

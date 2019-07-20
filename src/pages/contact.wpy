@@ -1,0 +1,310 @@
+<style type="scss">
+$fontcolor: #7b7b7b;
+$activecolor: #13b113;
+.detail {
+  background: #ffffff;
+  .title-desc {
+    font-size: 25rpx;
+    margin-left: 33rpx;
+    margin-top: 50rpx;
+    display: inline;
+    float: left;
+    width: 100%;
+    border-bottom: 0.5px grey solid;
+  }
+  .btn {
+    width: 190px;
+    color: white;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 2px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    background: #f57a07;
+    margin-top: 70%;
+    margin-left: 20%;
+  }
+  .group-buy {
+    margin: 20rpx 20rpx 20rpx 20rpx;
+    padding: 20rpx 20rpx 20rpx 20rpx;
+    border: 0.5px grey solid;
+    height: 190rpx;
+    font-size: 13px;
+
+    .img {
+      float: left;
+      position: relative;
+
+      image {
+        width: 250rpx;
+        height: 190rpx;
+        float: left;
+        display: block;
+      }
+
+      .car-num {
+        position: absolute;
+        bottom: 0;
+        height: 15px;
+        width: 38px;
+        background-color: #cfd4d4;
+        right: 0;
+        overflow: hidden;
+        font-size: 10px;
+        opacity: 0.6;
+      }
+    }
+
+    .content {
+      margin-left: 280rpx;
+      .title {
+        color: #d43030;
+      }
+      .desc {
+        font-size: 11px;
+      }
+      .btt {
+        color: white;
+        background-color: darkblue;
+        width: 120px;
+        height: 15px;
+        margin: 15rpx 15rpx 15rpx 15rpx;
+        border-radius: 35px;
+        text-align: center;
+      }
+    }
+    .car-title .desc {
+      color: #d43030;
+      font-size: 11px;
+      margin-left: 20rpx;
+    }
+    .car-title .title {
+      color: #000000;
+      margin: 30rpx 30rpx 30rpx 20rpx;
+      font-size: 14px;
+    }
+  }
+}
+.line {
+  height: 1px;
+  background: rgb(172, 169, 169);
+}
+.line-margin {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.years-list {
+  margin: 25rpx 25rpx 25rpx 25rpx;
+  border-bottom: solid 1px #ddd;
+  padding-bottom: 25rpx;
+
+  .item {
+    width: 120rpx;
+    height: 20rpx;
+    display: inline-block;
+    margin-right: 10rpx;
+    marign-bottom: 0rpx;
+    border: 0rpx;
+    .title {
+      font-size: 11px;
+    }
+  }
+}
+.input-desc {
+  float: right;
+  width: 80%;
+  margin-top: -8rpx;
+}
+.input-desc-get {
+  margin-top: -40rpx;
+  margin-right: -360rpx;
+  color: steelblue;
+}
+.car-list {
+  display: inline-block;
+  width: 100%;
+  .car-row {
+    border-bottom: solid 1px #ddd;
+    .item {
+      margin: 25rpx 25rpx 25rpx 25rpx;
+      width: 55%;
+      line-height: 40rpx;
+      display: inline-block;
+      font-size: 11px;
+      .price {
+        color: red;
+      }
+      .desc {
+        color: steelblue;
+      }
+    }
+    .item-contact {
+      float: right;
+      margin: 83rpx 25rpx 25rpx 25rpx;
+      width: 25%;
+      .btn {
+        color: white;
+        background-color: blue;
+        width: 70%;
+        height: 20px;
+        line-height: 20px;
+        border-radius: 35px;
+        text-align: center;
+        font-size: 11px;
+      }
+    }
+  }
+}
+</style>
+
+<template>
+    <view class="detail">
+        <view class='group-buy car-detail'>
+            <view class='img'>
+                <image src="{{group_buy.thumb}}"  @tap='goto_picture({{group_buy.goods_id}})'/>
+                <view class='car-num'>{{group_buy.num}}张</view>                
+            </view>            
+            <view class="content car-title">
+                <view class="title">{{group_buy.brand_name}} {{group_buy.goods_name}}</view>
+                <view class="desc">售价：{{group_buy.sell_price}}万 - {{group_buy.market_price}}万</view>
+            </view>            
+        </view>
+        <view class='line line-margin'></view>
+        <view class='title-desc'>
+           <span>姓名</span>
+           <span class='input-desc'><input @input="input" id='name' bindinput='inputWacth' placeholder="输入姓名" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
+        </view>
+        <view class='title-desc'>
+           <span>手机号</span>
+           <span class='input-desc'><input @input="input" id='mobile' bindinput='inputWacth' placeholder="输入手机号" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
+        </view>
+        <!-- <view class='title-desc'>
+           <span>验证码</span>
+           <span class='input-desc'><input @input="input" id='msg' bindinput='inputWacth' placeholder="输入验证码" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
+           <span class='input-desc input-desc-get'>获取验证码</span>
+        </view> -->
+        <view class='title-desc'>
+           <span>城市</span>
+           <span class='input-desc'><input @input="input" id='city' bindinput='inputWacth' placeholder="输入城市" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
+        </view>
+        
+        <view class="btn" @tap='send()'>提交</view> 
+        
+    </view>
+</template>
+<script>
+    import wepy from 'wepy';
+    import api from '../common/api.js'
+
+    export default class Contact extends wepy.page {
+
+        props = {
+            item: {},
+            index: {},
+        }
+
+        data = {
+            // 团购
+            group_buy:{
+                img:'/images/main/group_car.jpg',
+                title:'奔驰 G级',
+                desc1:'售价: 100.5 ~ 123.5万',
+                num:'1232张',
+            },
+            member:{
+                mobile:'',
+                name:'',
+                creator:'',
+                city:'',
+                brand_id:'',
+                goods_id:'',
+            },            
+        }
+        
+        onLoad(options) {
+            var self = this;
+            wx.request({
+                url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsDetail",//请求地址
+                data:{goods_id:options.goods_id},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){                    
+                    self.group_buy = res.data;  
+                    self.member.brand_id = res.data.brand_id;
+                    self.member.goods_id = res.data.goods_id; 
+                    self.$apply();
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+        
+        methods = {
+            click (evt) {
+                
+            },
+            inputWacth(e){
+                let item = e.currentTarget.id;
+                if(item == 'name'){
+                    this.member.name = e.detail.value;
+                }
+                if(item == 'mobile'){
+                    this.member.mobile = e.detail.value;
+                }
+                if(item == 'city'){
+                    this.member.city = e.detail.value;
+                }
+                this.$apply();
+            },
+            goto_car(evt){
+                this.$root.$navigate({url: 'car'});
+            },
+            goto_picture(id){
+                this.$root.$navigate({url: 'picture?goods_id='+id});
+            },
+            send (evt) {                
+                let self = this;
+                let sendData = self.member;
+                wx.request({
+                    url:api.baseUrl + "index.php?m=home&c=member&a=appAddMember",//请求地址
+                    data:sendData,
+                    header:{"Content-Type":"application/x-www-form-urlencoded"},
+                    method:"POST",//get为默认方法/POST
+                    success:function(res){               
+                        wx.showToast({
+                            'title': res.data.msg,
+                            'icon': res.data.status == 1 ? 'success':'fail',
+                            'duration': 2000
+                        });
+                        if(res.data.status == 1){
+                            self.$root.$navigate({url: 'car?goods_id=' + sendData.goods_id});
+                        }
+                    },
+                    fail:function(err){},//请求失败
+                    complete:function(){}//请求完成后执行的函数
+                });
+            },
+            // input (evt) {
+            //     console.log(evt)
+            //     this.readyToSend = evt.detail.value;
+            // },
+            // focus (evt) {
+            //     this.focusFlag = true;
+            //     console.log(evt)
+            //     // this.$invoke('../chartboard', 'fixPosition', this.focusFlag);
+            // },
+            // blur (evt) {
+            //     console.log(evt.detail.value)
+            //     evt.detail.value = '';
+            //     this.focusFlag = false;
+            //     // this.$invoke('../chartboard', 'fixPosition', this.focusFlag);
+            // },
+            // clear () {
+            //     console.log(evt)
+            //     this.readyToSend = '';
+            // }
+
+        };
+    }
+</script>

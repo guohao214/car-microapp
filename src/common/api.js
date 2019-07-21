@@ -2,11 +2,27 @@ import m_contacts from '../mocks/contact';
 import m_history from '../mocks/history';
 import m_reply from '../mocks/reply';
 import global from './global';
+import {
+    showLoading,
+    hideLoading
+} from './util'
 
 import wepy from 'wepy';
 
+const request = wx.request
+Object.defineProperty(wx, 'request', {
+    get() {
+        // showLoading()
+        return request
+    }
+})
+// wx.request = function() {
+//     showLoading()
+//     return request(...arguments).call(wx)
+// }
+
 export default {
-    baseUrl:'http://www.maixc.cn/',
+    baseUrl:'https://www.maixc.cn/',
 
     getRandomReply (id) {
         let template = m_reply[id];

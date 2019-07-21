@@ -19,7 +19,7 @@ module.exports = {
       sourceMap: true,
       presets: [
         "es2015",
-        "stage-1"
+        "stage-1",
       ],
       plugins: [
         "transform-export-extensions",

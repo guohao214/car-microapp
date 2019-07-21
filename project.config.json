@@ -9,7 +9,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "1.9.94",
-	"appid": "touristappid",
+	"appid": "wxa5a5a2fcfbfef7f6",
 	"projectname": "wepy-wechat-demo",
 	"miniprogramRoot": "./dist",
 	"condition": {

@@ -24,6 +24,8 @@
         }
 
         .center{
+            width: 90%;
+            margin: 0rpx auto;
             margin-top:200rpx;
         }
     }
@@ -58,6 +60,10 @@
     import wepy from 'wepy';
     import GroupTop from '../components/groupTop';
     import api from '../common/api.js'
+    import {
+        showLoading,
+        hideLoading
+    } from '../common/util.js'
 
     export default class Group extends wepy.page {
 
@@ -71,12 +77,13 @@
         };
 
         onLoad(options) {
-            var self = this;           
+            var self = this;
         }
 
         bindGetUserInfo (e) {
             let self = this;
             self.userInfo = e.detail.userInfo;
+            showLoading()
             
             wepy.login()
                 .then(res => {
@@ -122,14 +129,13 @@
                         }
                     },
                     fail:function(err){
-                        debugger;
+                        hideLoading();
                     },//请求失败
-                    complete:function(){}//请求完成后执行的函数
+                    complete:function(){
+                        hideLoading();
+                    }//请求完成后执行的函数
                 });
-                
-            });   
-            
-            
+            });
         }
 
         getPhoneNumber(e) {

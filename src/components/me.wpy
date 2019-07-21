@@ -314,8 +314,8 @@
             uid:0,
             parent_name:'',
             userInfo:{
-                avatarurl:'',
-                nickname:'',
+                avatarUrl:'',
+                nickName:'',
                 open_id:'',
             }
         }

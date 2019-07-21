@@ -407,6 +407,8 @@
                 this.$emit('gotoUrl', url);
             },
             goto_detail (id) {
+                let url = 'detail?goods_id=' + id;
+                this.$emit('gotoUrl', url);
                 //this.$root.$navigate({url: 'detail?goods_id=' + id});
             },
             goto_contact(evt){

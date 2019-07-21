@@ -42,7 +42,7 @@ page, .body{
 
     export default class Index extends wepy.page {
         config = {
-            'navigationBarTitleText': '买鑫车',
+            'navigationBarTitleText': '易鑫车',
             'navigationBarTextStyle': 'white',
             'navigationBarBackgroundColor': '#3b3a40'
         };
@@ -103,7 +103,7 @@ page, .body{
             let userInfo = wepy.getStorageSync('userInfo');   
             console.log(userInfo,'path4')
             return {
-                title: '买鑫车小程序',
+                title: '易鑫车小程序',
                 path: '/pages/index?userInfo=' + JSON.stringify(userInfo.data) ,
                 imageUrl: userInfo.qrcode,
                 success: function (res1) {
@@ -123,7 +123,7 @@ page, .body{
             // console.log('=======scene=====');
             // console.log(scene);
             // console.log('=======scene=====');
-            console.log(options,'path3')
+            // console.log(options,'path3')
             let showFirstWelcomePage = wepy.getStorageSync('_showFirstWelcomePage');
             if(showFirstWelcomePage === ""){
                 this.$root.$navigate({ url: 'welcome' });

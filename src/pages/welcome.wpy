@@ -32,7 +32,7 @@
     <view class="welcome">
         
         <view class='logo'>
-            <!-- <image src='http://www.maixc.cn/qrcode/firstPage.jpeg'/> -->
+            <!-- <image src='https://www.maixc.cn/qrcode/firstPage.jpeg'/> -->
         </view>
 
         <view class='logo_txt'>
@@ -47,7 +47,7 @@
         
         <view class='center'>
             <button hidden="{{showLoginButton != 1}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" style='background-color:green;color:#FFF'>授权登录</button>
-            <button hidden="{{showPhoneButton != 1}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">同意绑定手机号</button>
+            <button hidden="{{showPhoneButton != 1}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" style='background-color:green;color:#FFF'>同意绑定手机号</button>
         </view>
 
        
@@ -101,8 +101,9 @@
                     success:function(userinfoEx){
                         if(userinfoEx['data'].openId !== undefined){
                             let userData = userinfoEx['data'];
-                            wepy.setStorageSync('openId', userData.openId);
-                            wepy.setStorageSync('nickName', userData.nickName);
+                            wepy.setStorageSync('code', encodeURIComponent(code));
+                            wepy.setStorageSync('openId', userData.open_id);
+                            wepy.setStorageSync('nickName', userData.nickname);
                             wepy.setStorageSync('avatarUrl', userData.avatarUrl);
 
                             wx.request({
@@ -111,7 +112,6 @@
                                 header:{"Content-Type":"application/x-www-form-urlencoded"},
                                 method:"POST",//get为默认方法/POST
                                 success:function(res){  
-                                    console.log(res.data.data,'data')
                                     wepy.setStorageSync('userInfo', res.data.data);
                                     self.showLoginButton = 0;
                                     self.showPhoneButton = 1;
@@ -133,7 +133,23 @@
 
         getPhoneNumber(e) {
             console.log("============getPhoneNumber ============");
-            console.log(e);
+            // let encryptedData = e.detail.encryptedData;
+            // let iv = e.detail.iv;
+            // wx.request({
+            //         url:api.baseUrl + "index.php?m=home&c=user&a=getPhone",//请求地址
+            //         header:{"Content-Type":"application/x-www-form-urlencoded"},
+            //         method:"POST",//get为默认方法/POST
+            //         data: {
+            //             'encryptedData': encodeURIComponent(encryptedData),
+            //             'iv': encodeURIComponent(iv),
+            //         },
+            //         success:function(userinfoEx){
+            //             console.log(wepy.getStorageSync('code'),11111111111)
+            //         },
+            //         fail:function(err){},//请求失败
+            //         complete:function(){}//请求完成后执行的函数
+            //     });
+
             wepy.setStorageSync('_showFirstWelcomePage', 'finish');
             this.$root.$navigate({ url: 'index' });
         }

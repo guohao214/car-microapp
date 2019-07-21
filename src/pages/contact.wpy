@@ -266,20 +266,28 @@ $activecolor: #13b113;
             send (evt) {                
                 let self = this;
                 let sendData = self.member;
+                let userInfo = wepy.getStorageSync('userInfo');  
+                sendData.uid = userInfo.uid;
                 wx.request({
                     url:api.baseUrl + "index.php?m=home&c=member&a=appAddMember",//请求地址
                     data:sendData,
                     header:{"Content-Type":"application/x-www-form-urlencoded"},
                     method:"POST",//get为默认方法/POST
-                    success:function(res){               
-                        wx.showToast({
-                            'title': res.data.msg,
-                            'icon': res.data.status == 1 ? 'success':'fail',
-                            'duration': 2000
-                        });
-                        if(res.data.status == 1){
-                            self.$root.$navigate({url: 'car?goods_id=' + sendData.goods_id});
-                        }
+                    success:function(res){ 
+                      wx.showModal({
+                        title: '提示',
+                        content: res.data.msg,
+                        success(res1) {
+                            if (res1.confirm) {
+                                if(res.data.status == 1){
+                                    self.$root.$navigate({url: 'car?goods_id=' + sendData.goods_id});
+                                }
+                            } else if (res1.cancel) {
+                            
+                          }
+                        } 
+                      }); 
+                        
                     },
                     fail:function(err){},//请求失败
                     complete:function(){}//请求完成后执行的函数

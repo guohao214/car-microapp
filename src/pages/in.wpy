@@ -339,7 +339,8 @@
                             };
                         if(res.data.status == 1){
                             self.$invoke('dialog', 'showDialog', title, content, {
-                                hasCancel:false,
+                                hasCancel:true,
+                                hasOkCancel:false,
                                 ok:'确认',
                                 finish:function(){
                                    // self.$root.$navigate({url: 'group?group_id=' + sendData.group_id});

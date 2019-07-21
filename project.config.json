@@ -9,8 +9,8 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "1.9.94",
-	"appid": "touristappid",
-	"projectname": "wepy-wechat-demo",
+	"appid": "wxa5a5a2fcfbfef7f6",
+	"projectname": "易鑫车",
 	"miniprogramRoot": "./dist",
 	"condition": {
 		"search": {

@@ -208,7 +208,7 @@
         onShareAppMessage(res){
             let userInfo = wepy.getStorageSync('userInfo');   
             return {
-                title: '买鑫车小程序',
+                title: '易鑫车小程序',
                 path: '/pages/detail?userInfo=' + JSON.stringify(userInfo.data) + '&goods_id=' + this.group_buy.goods_id,
                 imageUrl: userInfo.qrcode,
                 success: function (res1) {

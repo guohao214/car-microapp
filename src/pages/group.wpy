@@ -270,7 +270,7 @@
         onShareAppMessage(res){
             let userInfo = wepy.getStorageSync('userInfo');   
             return {
-                title: '买鑫车小程序',
+                title: '易鑫车小程序',
                 path: '/pages/group?userInfo=' + JSON.stringify(userInfo.data) + '&group=' + JSON.stringify(this.group) + '&group_buy=' + JSON.stringify(this.group_buy),
                 imageUrl: userInfo.qrcode,
                 success: function (res1) {
@@ -290,12 +290,13 @@
                 withShareTicket: true,
             });
             
-            var self = this;         
+            var self = this;    
+            let _userInfo = wepy.getStorageSync('userInfo');     
             if(typeof options.userInfo != 'undefined'){
                 let userInfo = JSON.parse(options.userInfo)
                 if(wepy.getStorageSync('openId') !== userInfo.open_id){
                     self.is_me = true                    
-                    let _userInfo = wepy.getStorageSync('userInfo');
+                    
                     if(_userInfo.uid !== userInfo.uid){
                         wx.request({
                             url:api.baseUrl + "index.php?m=home&c=user&a=appUpdateUser",//请求地址
@@ -314,6 +315,10 @@
             self.group_buy = JSON.parse(options.group_buy)
             self.group = JSON.parse(options.group)
             self.group_buy.price = self.group_buy.sell_price - self.group.price  
+            //一个用户加入一个团
+            if(!_userInfo.group_id){
+                self.is_me = true
+            }
             self.$apply();
             wx.request({
                 url:api.baseUrl + "index.php?m=home&c=group&a=appGroupUsers",//请求地址
@@ -322,7 +327,7 @@
                 method:"GET",//get为默认方法/POST
                 success:function(res){
                     self.group_user_list = res.data.group_user_list; 
-                    self.group.count = res.data.num; 
+                    self.group.count = res.data.num;                                  
                     self.$apply();
                 },
                 fail:function(err){},//请求失败

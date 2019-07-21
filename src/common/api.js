@@ -6,7 +6,7 @@ import global from './global';
 import wepy from 'wepy';
 
 export default {
-    baseUrl:'http://www.maixc.cn/',
+    baseUrl:'https://www.maixc.cn/',
 
     getRandomReply (id) {
         let template = m_reply[id];

@@ -407,6 +407,8 @@
                 this.$emit('gotoUrl', url);
             },
             goto_detail (id) {
+                let url = 'detail?goods_id=' + id;
+                this.$emit('gotoUrl', url);
                 //this.$root.$navigate({url: 'detail?goods_id=' + id});
             },
             goto_contact(evt){
@@ -497,7 +499,6 @@
                 method:"GET",//get为默认方法/POST
                 success:function(res){   
                     self.historyList = res.data;
-                    console.log(res,1212)
                     self.$apply();           
                 },
                 fail:function(err){},//请求失败
@@ -505,15 +506,7 @@
             });
         }
         async loadCarList() {
-            // let arr = [
-            //     {name: 'aodi',   icon:'', cn_name: '奥迪'},
-            //     {name: 'asidun', icon:'', cn_name: '阿斯顿马丁'},
-            //     {name: 'auxun',  icon:'', cn_name: 'AUXUN傲旋'},
-            //     {name: 'aurus',  icon:'', cn_name: 'Aurus'},
-            //     {name: 'futian',  icon:'', cn_name: '福田'},
-            //     {name: 'baoma',  icon:'', cn_name: '宝马'},
-            //     {name: 'jili',   icon:'', cn_name: '吉利'},
-            // ];
+        
             let self = this;
             wx.request({
                 url:api.baseUrl + "index.php?m=home&c=brand&a=appBrandList",//请求地址

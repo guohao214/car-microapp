@@ -32,7 +32,7 @@ export default class extends wepy.app {
         'window': {
             'backgroundTextStyle': 'light',
             'navigationBarBackgroundColor': '#3b3a40',
-            'navigationBarTitleText': '买鑫车',
+            'navigationBarTitleText': '易鑫车',
             'navigationBarTextStyle': 'black'
         }
     };
@@ -62,7 +62,7 @@ export default class extends wepy.app {
         let loginData = {}
         try {
             loginData = await wepy.login()
-            console.log(loginData.code)
+            console.log(loginData.code,2222222222)
         } catch (e) {
             console.log('调用登录接口wepy.login出错')
         }
@@ -85,7 +85,7 @@ export default class extends wepy.app {
                 console.log('登录时获取用户code失败！')
             }
         } catch (e) {
-           console.log('登录失败！')
+           console.log(e)
         }
 
         //console.log('userinfoRaw=' + JSON.stringify(userinfoRaw));

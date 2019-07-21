@@ -103,14 +103,11 @@ page {
                     </button>
                 </view>
 
-                <view hidden="{{!dialogInfo.config.hasOkCancel}}">
-                    <view class="btn-ok">{{dialogInfo.config.button}}</view>
+                <view hidden="{{dialogInfo.config.hasOkCancel}}">
+                    <view class="one-btn-ok" @tap='hideDialog'>{{dialogInfo.config.ok}}</view>
                 </view>
 
-                <view hidden="{{!dialogInfo.config.hasCancel}}">
-                    <view class="btn-ok">{{dialogInfo.config.button}}</view>
-                    <view class="btn-cancel">{{dialogInfo.config.cancel}}</view>
-                </view>
+                
             </view>
         </view>
     </view>
@@ -184,26 +181,26 @@ page {
             var that = this
             that.show = false;
             that.$apply();
-            var ok_msg = e.source.data.$dialog$dialogInfo.config.ok
-            if(ok_msg == '确认'){
-                wx.navigateBack({//返回
-                    delta: 1
-                });
-            }
-            if(ok_msg == '一键邀请'){
-                wx.showShareMenu({
-                    withShareTicket: true,
-                    success: function (res) {
-                        // 分享成功
-                        console.log('shareMenu share success')
-                        console.log(res)
-                    },
-                    fail: function (res) {
-                        // 分享失败
-                        console.log(res)
-                    }
-                })
-            }    
+            //var ok_msg = e.source.data.$me$dialogInfo.config.ok
+            // if(ok_msg == '确认'){                
+            //     wx.navigateBack({//返回
+            //         delta: 1
+            //     });
+            // }
+            // if(ok_msg == '一键邀请'){
+            //     wx.showShareMenu({
+            //         withShareTicket: true,
+            //         success: function (res) {
+            //             // 分享成功
+            //             console.log('shareMenu share success')
+            //             console.log(res)
+            //         },
+            //         fail: function (res) {
+            //             // 分享失败
+            //             console.log(res)
+            //         }
+            //     })
+            // }    
         }
     }
   }

@@ -323,13 +323,18 @@
                 this.group_user.goods_id = this.group_buy.goods_id;
                 let sendData = this.group_user;
                 sendData.open_id = wepy.getStorageSync('openId');
+                let userInfo = wepy.getStorageSync('userInfo');
                 let self = this;
                 wx.request({
                     url:api.baseUrl + "index.php?m=home&c=group&a=appAddGroupUser",//请求地址
                     data:sendData,
                     header:{"Content-Type":"application/x-www-form-urlencoded"},
                     method:"POST",//get为默认方法/POST
-                    success:function(res){       
+                    success:function(res){ 
+                        userInfo.group_id = item.group_id;
+                        userInfo.goods_id = self.group_user.goods_id;
+                        wepy.setStorageSync('userInfo',userInfo);
+
                         let group_buy = self.data.group_buy;
                         group_buy.group_name = '您已成功发起' + group_name;
                         group_buy.price = '拼团成功可' + group_buy.price + '抢购';

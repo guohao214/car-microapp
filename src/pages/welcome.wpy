@@ -32,7 +32,7 @@
     <view class="welcome">
         
         <view class='logo'>
-            <image src='http://www.maixc.cn/qrcode/firstPage.jpeg'/>
+            <!-- <image src='http://www.maixc.cn/qrcode/firstPage.jpeg'/> -->
         </view>
 
         <view class='logo_txt'>
@@ -86,6 +86,7 @@
                 let iv = e.detail.iv;
                 let signature = e.detail.signature;
                 let encryptedData = e.detail.encryptedData;
+
                 wx.request({
                     url:api.baseUrl + "index.php?m=home&c=user&a=wxLogin",//请求地址
                     header:{"Content-Type":"application/x-www-form-urlencoded"},
@@ -121,9 +122,7 @@
                             });
                         }
                     },
-                    fail:function(err){
-                        debugger;
-                    },//请求失败
+                    fail:function(err){},//请求失败
                     complete:function(){}//请求完成后执行的函数
                 });
                 

@@ -239,6 +239,10 @@
                             data:{parent_id:userInfo.uid,uid:_userInfo.uid},
                             header:{"Content-Type":"applciation/json"},
                             method:"GET",//get为默认方法/POST
+                            success:function(res){          
+                                _userInfo.parent_id = userInfo.uid;
+                                wepy.setStorageSync('userInfo',_userInfo);
+                            },
                         });
                     }                    
                 }                

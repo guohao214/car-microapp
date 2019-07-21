@@ -15,6 +15,7 @@
         }
         .img{
             left:40%;
+            width:150rpx;
             position:relative;
         }
         .right-top{
@@ -54,12 +55,12 @@
             .tab2{
                 float: right;
                 position:absolute;
-                width:50%;
+                width:20%;
                 color: black;
                 text-align:center;
                 font-size: 30rpx;
                 margin-top:46rpx;
-                margin-left:24%;
+                margin-left:40%;
             } 
             .tab3{
                 float: right;
@@ -203,7 +204,7 @@
 </style>
 <template>    
     <view class='me'>
-        <view class='right-top' @tap="goto_group()">
+        <view class='right-top' @tap='goto_group()'>
             我的拼团
         </view> 
         <view class='img'>
@@ -214,7 +215,7 @@
             {{userInfo.nickName}}
         </view>   
         <view class='command'>
-            推荐人：小晨
+            推荐人：{{parent_name}}
         </view>       
         <view class="middle">
             <view class='tab1 {{left_active}}' @tap="change_tab('left_active')">
@@ -238,7 +239,7 @@
                     </span>                        
                 </view>
                 <view class="item-contact">
-                    <view class="btn" @tap='get_phone_fee()'>领取话费</view>
+                    <view class="btn" @tap='get_phone_fee({{item.uid}})'>领取话费</view>
                 </view>
             </view>
         </view>
@@ -305,7 +306,10 @@
                 title:'',
                 content:'',
             },
-
+            group_id:0,
+            goods_id:0,
+            uid:0,
+            parent_name:'',
             userInfo:{
                 avatarUrl:'',
                 nickName:'',
@@ -315,7 +319,6 @@
         onShareAppMessage(res) {
             if (res.from === 'button') {
             // 来自页面内转发按钮
-            console.log(res.target,1111111111111)
             }
             return {
                 title: '自定义转发标题',
@@ -336,75 +339,109 @@
                     console.log(res,300)
                 }
             })
-            var self = this;
-            wx.request({
-                url:api.baseUrl + "index.php?m=home&c=group&a=appGroupUsers",//请求地址
-                data:{group_id:109,page:self.page,size:12},
-                header:{"Content-Type":"applciation/json"},
-                method:"GET",//get为默认方法/POST
-                success:function(res){
-                    console.log(res,2);                    
-                    self.group_user_list = res.data.group_user_list; 
-                    self.$apply();
-                },
-                fail:function(err){},//请求失败
-                complete:function(){}//请求完成后执行的函数
-            });
-            //index.php?m=home&c=brand&a=createQrcode&url=xxx
+            let self = this;
+            let user = wepy.getStorageSync('userInfo');
+            self.uid = user.uid || 0;
+            self.group_id = user.group_id || 0;
+            self.goods_id = user.goods_id || 0;
+            if(self.uid){
+                wx.request({
+                    url:api.baseUrl + "index.php?m=home&c=group&a=appMyGroupUser",//请求地址
+                    data:{uid:user.uid,page:self.page,size:12},
+                    header:{"Content-Type":"applciation/json"},
+                    method:"GET",//get为默认方法/POST
+                    success:function(res){                 
+                        self.group_user_list = res.data.group_user_list; 
+                        self.$apply();
+                    },
+                    fail:function(err){},//请求失败
+                    complete:function(){}//请求完成后执行的函数
+                });
+            }
+            if(self.parent_id){
+                wx.request({
+                    url:api.baseUrl + "index.php?m=home&c=user&a=appUserDetail",//请求地址
+                    data:{uid:self.parent_id},
+                    header:{"Content-Type":"applciation/json"},
+                    method:"GET",//get为默认方法/POST
+                    success:function(res){                 
+                        self.parent_name = res.data.data.nickName; 
+                        self.$apply();
+                    },
+                    fail:function(err){},//请求失败
+                    complete:function(){}//请求完成后执行的函数
+                });
+            }
         }
         loadMore(){
             var self = this;
             self.page = self.page + 1
-            wx.request({
-                url:api.baseUrl + "index.php?m=home&c=group&a=appGroupUsers",//请求地址
-                data:{group_id:29,page:self.page,size:12},
-                header:{"Content-Type":"applciation/json"},
-                method:"GET",//get为默认方法/POST
-                success:function(res){
-                    console.log(res);                    
-                    self.group_user_list = res.data.group_user_list; 
-                    self.$apply();
-                },
-                fail:function(err){},//请求失败
-                complete:function(){}//请求完成后执行的函数
-            });
+            if(self.uid){
+                wx.request({
+                    url:api.baseUrl + "index.php?m=home&c=group&a=appMyGroupUser",//请求地址
+                    data:{uid:user.uid,page:self.page,size:12},
+                    header:{"Content-Type":"applciation/json"},
+                    method:"GET",//get为默认方法/POST
+                    success:function(res){                 
+                        self.group_user_list = res.data.group_user_list; 
+                        self.$apply();
+                    },
+                    fail:function(err){},//请求失败
+                    complete:function(){}//请求完成后执行的函数
+                });
+            }
         }
         methods = {
             click (evt) {
                 
             },
-            goto_group(){
-                // wx.request({
-                //     url:api.baseUrl + "index.php?m=home&c=goods&a=appMyGroup",//请求地址
-                //     data:{uid:1},
-                //     header:{"Content-Type":"applciation/json"},
-                //     method:"GET",//get为默认方法/POST
-                //     success:function(res){                    
-                //         self.group_buy = res.data;                    
-                //         //console.log(res.data);
-                //         self.$apply();
-                //         //callback();
-                //     },
-                //     fail:function(err){},//请求失败
-                //     complete:function(){}//请求完成后执行的函数
-                // });
-                this.$root.$navigate({url: 'group'});
-                //?group=' + JSON.stringify(group) + '&group_buy=' + JSON.stringify(this.group_buy)}
+            goto_group() {
+                if(!this.goods_id){
+                    wepy.showToast({
+                        title: '无团',
+                        icon: 'fail',
+                        duration: 1000
+                    });
+                }else{
+                    this.$root.$navigate({url: 'groupDetail?goods_id=' + this.goods_id});
+                }                
             },
-            get_phone_fee(){
-                let title = '提示';
-                let content = {
-                    'group_name':'领取成功，',
-                    'title':'销售顾问将在48小时内联系您发送话费'
-                    };
-                this.$invoke('dialog', 'showDialog', title, content, {
-                    hasCancel:true,
-                    hasOkCancel:false,
-                    ok:'确定',
-                    finish:function(){
-                        console.log('finish');
-                    }
+            get_phone_fee(uid){
+                var self = this;
+                wx.request({
+                    url:api.baseUrl + "index.php?m=home&c=user&a=appAddCommission",//请求地址
+                    data:{member_id:uid, parent_id:self.uid,type:'register'},
+                    header:{"Content-Type":"applciation/json"},
+                    method:"GET",//get为默认方法/POST
+                    success:function(res){       
+                        console.log({member_id:uid, parent_id:self.uid,type:'register'},'reg')          
+                        if(res.data.status == 1){
+                            let title = '提示';
+                            let content = {
+                                'group_name':'领取成功，',
+                                'title':'销售顾问将在48小时内联系您发送话费'
+                                };
+                            self.$invoke('dialog', 'showDialog', title, content, {
+                                hasCancel:true,
+                                hasOkCancel:false,
+                                ok:'确定',
+                                finish:function(){
+                                    console.log('finish');
+                                }
+                            });
+                        }else{
+                            wepy.showToast({
+                                title: res.data.msg,
+                                icon: 'fail',
+                                duration: 1000
+                            });
+                        }
+                    },
+                    fail:function(err){},//请求失败
+                    complete:function(){}//请求完成后执行的函数
                 });
+
+                
             },
             
             openMeTab(){

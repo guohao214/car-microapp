@@ -9,17 +9,24 @@ import {
 
 import wepy from 'wepy';
 
-const request = wx.request
-Object.defineProperty(wx, 'request', {
-    get() {
-        // showLoading()
-        return request
+// const request = wx.request
+// Object.defineProperty(wx, 'request', {
+//     get() {
+//         showLoading()
+//         return request
+//     },
+// })
+
+wx.requestLoad = function(obj) {
+    showLoading()
+    const complete = obj.complete || function() {}
+    obj.complete = function() {
+        hideLoading()
+        complete()
     }
-})
-// wx.request = function() {
-//     showLoading()
-//     return request(...arguments).call(wx)
-// }
+
+    return wx.request(obj)
+}
 
 export default {
     baseUrl:'https://www.maixc.cn/',

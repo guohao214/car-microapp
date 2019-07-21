@@ -80,14 +80,22 @@
         padding-bottom:25rpx;
 
         .item{
-            width:120rpx;
+            /* width:120rpx; */
             height:20rpx;
             display: inline-block;
             margin-right:10rpx;
             marign-bottom:0rpx;
             border:0rpx;
+            padding: 5rpx 15rpx;
             .title{
                 font-size: 11px;
+                text-align: center;
+                padding-bottom: 3rpx;
+                &.selected {
+                    border-bottom: 2rpx solid blue;
+                    font-size: 27rpx;
+                    color: blue;
+                }
             }
             
         }
@@ -145,7 +153,7 @@
         <view class='years-list' @tap="click">
             <block wx:for="{{list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                 <view class="item" @tap="goto_year({{item.title}})">
-                    <view class="title">{{item.title}}{{item.unit}}</view>
+                    <view :class="{title: true, selected: item.title === currentItem}">{{item.title}}{{item.unit}}</view>
                 </view>
             </block>
         </view>
@@ -175,6 +183,7 @@
         }
 
         data = {
+            currentItem: '全部在售',
             // 团购
             group_buy:{},
             // 年份列表
@@ -234,7 +243,7 @@
                 if(wepy.getStorageSync('openId') !== userInfo.open_id){                  
                     let _userInfo = wepy.getStorageSync('userInfo');
                     if(_userInfo.uid !== userInfo.uid){
-                        wx.request({
+                        wx.requestLoad({
                             url:api.baseUrl + "index.php?m=home&c=user&a=appUpdateUser",//请求地址
                             data:{parent_id:userInfo.uid,uid:_userInfo.uid},
                             header:{"Content-Type":"applciation/json"},
@@ -249,7 +258,7 @@
             }
 
             var self = this;
-            wx.request({
+            wx.requestLoad({
                 url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsDetail",//请求地址
                 data:{goods_id:options.goods_id},
                 header:{"Content-Type":"applciation/json"},
@@ -263,7 +272,7 @@
                 fail:function(err){},//请求失败
                 complete:function(){}//请求完成后执行的函数
             });
-            wx.request({ 
+            wx.requestLoad({ 
                 url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
                 data:{num:"14"},
                 header:{"Content-Type":"applciation/json"},
@@ -283,11 +292,15 @@
                 
             },
             goto_year(title){
+                this.currentItem = title
                 if(title == '全部在售'){
                     title = ''
-                }                
+                }      
+                
+                
+                console.log(this.currentItem)
                 var self = this;
-                wx.request({ 
+                wx.requestLoad({ 
                     url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
                     data:{year:title,searchType:'search_by_grade'},
                     header:{"Content-Type":"applciation/json"},

@@ -88,6 +88,7 @@
                 image{
                     width:100%;
                     height:260rpx;
+                    box-shadow: 5rpx 6rpx 20rpx #e5e5e5;
                 }
                 .title{
                     padding: 10rpx 0;
@@ -185,7 +186,7 @@
 
         loadGroupList(callback){
             var self = this;
-            wx.request({
+            wx.requestLoad({
                 url:api.baseUrl + "index.php?m=home&c=group&a=appGroupList",//请求地址
                 data:{num:"3"},
                 header:{"Content-Type":"applciation/json"},

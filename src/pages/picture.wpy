@@ -19,29 +19,43 @@
         background: #cfd4d4;
         text-align: center;
         .item{
-            width:150rpx;
+            /* width:150rpx; */
             height:20rpx;
             display: inline-block;
-            margin-right:10rpx;
-            marign-bottom:0rpx;
+            margin: 0 15rpx;
+            /* margin-right:10rpx; */
+            /* marign-bottom:0rpx; */
             border:0rpx;
+            padding: 5rpx 15rpx;
             .title{
                 font-size: 11px;
+                text-align: center;
+                padding-bottom: 3rpx;
+                &.selected {
+                    border-bottom: 2rpx solid blue;
+                    font-size: 27rpx;
+                    color: blue;
+                }
             }
             
         }        
     }
     
     .pic-list{        
-        display: inline; 
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+
         .group-row{
+            flex-basis: 33%;
             .item{
-                float: left;
-                display: inline;  
+                /* float: left; */
                 .header{
-                    width: 70px;
-                    height: 70px;
+                    width: 90px;
+                    height: 90px;
                     margin:15px 15px 15px 20px;
+                    border-radius: 10rpx;
+                    box-shadow: 5rpx 6rpx 20rpx #e5e5e5;
                 }
             }        
         }
@@ -49,11 +63,11 @@
 </style>
 
 <template>
-    <view class="picture-detail">        
+    <view class="picture-detail">
         <view class='years-list'>
             <block wx:for="{{list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                 <view class="item" @tap="goto_image({{item.type}})">
-                    <view class="title">{{item.title}}</view>
+                    <view :class="{title: true, selected: item.type === currentItem}">{{item.title}}</view>
                 </view>
             </block>
         </view>
@@ -78,6 +92,7 @@
         }
 
         data = {
+            currentItem: 'upload_list_1',
             // 团购
             goods_id:'',
             // 年份列表
@@ -108,7 +123,7 @@
             this.$apply();
             var type = 'upload_list_1';
             var self = this;
-            wx.request({
+            wx.requestLoad({
                 url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsImage",//请求地址
                 data:{goods_id:self.goods_id,type:'upload_list_1'},
                 header:{"Content-Type":"applciation/json"},
@@ -131,7 +146,7 @@
                 let imgArr = this.data.img_list;
                 let newImg = []
                 imgArr.forEach(ele => {
-                    newImg.push(ele.img);
+                    newImg.push(ele);
                 });
                 wx.previewImage({
                     current: newImg[index],     //当前图片地址
@@ -142,6 +157,7 @@
                 })
             },
             goto_image(type){
+                this.currentItem = type
                 this.img_list = this.all_img_list[type]; 
                 this.$apply()
             }

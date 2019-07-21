@@ -347,10 +347,11 @@
             let self = this;
             let user = wepy.getStorageSync('userInfo');
             self.userInfo = user;
-            
+            console.log(self.userInfo,'userinfo')
             self.uid = user.uid || 0;
             self.group_id = user.group_id || 0;
             self.goods_id = user.goods_id || 0;
+            self.qrcodeUrl = user.qrcode;
             self.$apply();
             console.log(self.userInfo,'user') 
             if(self.uid){

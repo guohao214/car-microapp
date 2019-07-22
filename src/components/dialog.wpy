@@ -51,8 +51,9 @@ page {
 
             .one-btn-ok{
                 width:200rpx;
-                height:30rpx;
-                padding:20rpx 20rpx 20rpx 20rpx;
+                height:48rpx;
+                font-size: 30rpx;
+                //padding:20rpx 20rpx 20rpx 20rpx;
                 border-radius:40rpx;
                 background-color:#407ff3;
                 margin:auto;
@@ -98,7 +99,7 @@ page {
 
             <view>
                 <view hidden="{{dialogInfo.config.hasCancel}}">
-                    <button class="one-btn-ok" open-type="share" @tap='hideDialog'>
+                    <button class="one-btn-ok" open-type="share">
                         {{dialogInfo.config.ok}}
                     </button>
                 </view>
@@ -131,39 +132,65 @@ page {
                 hasCancel:false,
                 hasOkCancel:false,
                 ok:'',
+                group
                 cancel:'',
                 finish:null,
             }
         }
     }
-
+    onLoad(options){
+        let showFirstWelcomePage = wepy.getStorageSync('_showFirstWelcomePage');
+        if(showFirstWelcomePage === ""){
+            this.$root.$navigate({ url: 'welcome' });
+        }
+        
+        wx.showShareMenu({
+            withShareTicket: true
+        })
+        let _userInfo = wepy.getStorageSync('userInfo');     
+        if(typeof options!='undefined' && options.userInfo != 'undefined'){
+            let userInfo = JSON.parse(options.userInfo)
+            if(wepy.getStorageSync('openId') !== userInfo.open_id){
+                if(_userInfo.uid !== userInfo.uid){
+                    wx.request({
+                        url:api.baseUrl + "index.php?m=home&c=user&a=appUpdateUser",//请求地址
+                        data:{parent_id:userInfo.uid,uid:_userInfo.uid},
+                        header:{"Content-Type":"applciation/json"},
+                        method:"GET",//get为默认方法/POST
+                        success:function(res){          
+                            _userInfo.parent_id = userInfo.uid;
+                            wepy.setStorageSync('userInfo',_userInfo);
+                        },
+                    });
+                }                    
+            }                
+        }
+    }
     onShareAppMessage(res){
         let userInfo = wepy.getStorageSync('userInfo');
         console.log(userInfo,'userinfo')
-    
-        if (res.from === 'button') {
-        // 通过按钮触发
-            return {
-                title: '',
-                path: '/pages/group?userInfo=' + JSON.stringify(userInfo.data) + '&group=' + JSON.stringify(this.group) + '&group_buy=' + JSON.stringify(this.group_buy),
-                imageUrl: userInfo.qrcode,
-                success: function (res1) {
-                // 转发成功
-                console.log('转发成功')
-                },
-                fail: function (res1) {
-                // 转发失败
-                console.log('转发失败')
-                }
+        let that = this;
+        return {
+            title: '',
+            path: '/pages/group?userInfo=' + JSON.stringify(userInfo) + '&group=' + JSON.stringify(this.group) + '&group_buy=' + JSON.stringify(this.group_buy),
+            imageUrl: userInfo.qrcode,
+            success: function (res1) {
+            // 转发成功
+                that.hideDialog();
+            },
+            fail: function (res1) {
+            // 转发失败
+                that.hideDialog();
+            },
+            complete:function(){
+                var that = this
+                that.show = false;
+                that.$apply();
             }
         }
-        //通过右上角菜单触发
-        return {
-            title: '开普勒小程序',
-            path: "/pages/researches/index",
-            imageUrl: '/images/aikepler-logo.jpeg'
-        };
+        
     }
+      
     methods = {        
         // 关闭弹窗
         showDialog: function (...args) {
@@ -181,26 +208,6 @@ page {
             var that = this
             that.show = false;
             that.$apply();
-            //var ok_msg = e.source.data.$me$dialogInfo.config.ok
-            // if(ok_msg == '确认'){                
-            //     wx.navigateBack({//返回
-            //         delta: 1
-            //     });
-            // }
-            // if(ok_msg == '一键邀请'){
-            //     wx.showShareMenu({
-            //         withShareTicket: true,
-            //         success: function (res) {
-            //             // 分享成功
-            //             console.log('shareMenu share success')
-            //             console.log(res)
-            //         },
-            //         fail: function (res) {
-            //             // 分享失败
-            //             console.log(res)
-            //         }
-            //     })
-            // }    
         }
     }
   }

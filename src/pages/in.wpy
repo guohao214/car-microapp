@@ -343,10 +343,11 @@
                                 hasOkCancel:false,
                                 ok:'确认',
                                 finish:function(){
-                                   // self.$root.$navigate({url: 'group?group_id=' + sendData.group_id});
+                                   self.$root.$navigate({url: 'car?goods_id=' + sendData.goods_id});
                                 }
                             });      
                         }
+
                     },
                     fail:function(err){},//请求失败
                     complete:function(){}//请求完成后执行的函数

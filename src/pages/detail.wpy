@@ -230,7 +230,7 @@
         onLoad(options) {
             let showFirstWelcomePage = wepy.getStorageSync('_showFirstWelcomePage');
             if(showFirstWelcomePage === ""){
-                this.$root.$navigate({ url: 'welcome' });
+                this.$root.$navigate({ url: 'welcome?backFlag=1' });
             }
            
             wx.showShareMenu({
@@ -286,7 +286,9 @@
             });
         }
 
-        
+        onShow(){
+            this.onLoad()
+        }
         methods = {
             click (evt) {
                 

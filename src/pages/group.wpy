@@ -268,10 +268,11 @@
         }
 
         onShareAppMessage(res){
-            let userInfo = wepy.getStorageSync('userInfo');   
+            let userInfo = wepy.getStorageSync('userInfo');  
+            console.log(userInfo,'体验分享') 
             return {
                 title: '易鑫车小程序',
-                path: '/pages/group?userInfo=' + JSON.stringify(userInfo.data) + '&group=' + JSON.stringify(this.group) + '&group_buy=' + JSON.stringify(this.group_buy),
+                path: '/pages/group?userInfo=' + JSON.stringify(userInfo) + '&group=' + JSON.stringify(this.group) + '&group_buy=' + JSON.stringify(this.group_buy),
                 imageUrl: userInfo.qrcode,
                 success: function (res1) {
                 },
@@ -291,9 +292,11 @@
             });
             
             var self = this;    
-            let _userInfo = wepy.getStorageSync('userInfo');     
+            let _userInfo = wepy.getStorageSync('userInfo');  
+            console.log(_userInfo,'分享1')    
             if(typeof options.userInfo != 'undefined'){
                 let userInfo = JSON.parse(options.userInfo)
+                console.log(userInfo,'分享2') 
                 if(wepy.getStorageSync('openId') !== userInfo.open_id){
                     self.is_me = true                    
                     

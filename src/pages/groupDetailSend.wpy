@@ -343,11 +343,12 @@
                         let content = group_buy;
                         if(res.data.status == 1){
                             self.$invoke('dialog', 'showDialog', title, content, {
-                                hasCancel:false,
-                                ok:'一键邀请',
+                                hasCancel:true,
+                                hasOkCancel:false,
+                                ok:'确定',
                                 cancel:'取消',
                                 finish:function(){
-                                    console.log('finish');
+                                    
                                 }
                             });    
                         }else{

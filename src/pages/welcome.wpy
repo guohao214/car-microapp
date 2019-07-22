@@ -73,11 +73,15 @@
         };
         data = {
             showLoginButton: 1,
-            showPhoneButton: 0
+            showPhoneButton: 0,
+            backFlag:0,
         };
 
         onLoad(options) {
-            var self = this;           
+            var self = this;   
+            if(typeof options !='undefined' && typeof options.backFlag !='undefined' && options.backFlag == 1) {
+                self.backFlag = 1;
+            }       
         }
 
         bindGetUserInfo (e) {
@@ -123,7 +127,7 @@
                                     wepy.setStorageSync('userInfo', res.data.data);
                                     self.showLoginButton = 0;
                                     self.showPhoneButton = 1;
-                                    self.$apply();
+                                    self.$apply();                                    
                                 },
                                 fail:function(err){},//请求失败
                                 complete:function(){}//请求完成后执行的函数
@@ -147,6 +151,7 @@
             showLoading()
             let encryptedData = e.detail.encryptedData;
             let iv = e.detail.iv;
+            let self = this;
             wx.request({
                     url:api.baseUrl + "index.php?m=home&c=user&a=appGetPhone",//请求地址
                     header:{"Content-Type":"application/x-www-form-urlencoded"},
@@ -163,6 +168,11 @@
                             icon: 'success',
                             duration: 1000
                         })
+                        if(self.backFlag == 1){
+                            wx.navigateBack({
+                                delta: 3,
+                            })
+                        }
                     },
                     fail:function(err){
                         hideLoading();

@@ -22,7 +22,7 @@ page, .body{
         </view>
 
         <tab :active.sync="currentTab" />
-        <toast />
+        <tab />
     </view>
 
     <dialog :dialogInfo="dialogInfo"></dialog>
@@ -88,7 +88,8 @@ page, .body{
             hideButton(){
                 this.showLoginButton = !this.showLoginButton;
                 this.$apply();
-            }
+            },
+            
         };
 
         events = {
@@ -97,6 +98,12 @@ page, .body{
             },
             openMeTab(){
                 this.$invoke('me', 'openMeTab');
+            },
+            openCategoryTab(){
+                this.$invoke('category', 'openCategoryTab');
+            },
+            openIndexTab(){
+                this.onLoad();
             }
         }
         onShareAppMessage(res){
@@ -126,14 +133,20 @@ page, .body{
             // console.log(options,'path3')
             let showFirstWelcomePage = wepy.getStorageSync('_showFirstWelcomePage');
             if(showFirstWelcomePage === ""){
+                wepy.setStorageSync('options',options);
                 this.$root.$navigate({ url: 'welcome' });
             }
-           
+            
+            if(wepy.getStorageSync('options') != 'undefined'){
+                options = wepy.getStorageSync('options');
+                wepy.removeStorage({
+                    key:'options'
+                });
+            }
             wx.showShareMenu({
                 withShareTicket: true,
             });
-            console.log(options,'path1')
-            if(typeof options.userInfo != 'undefined'){
+            if(typeof options != 'undefined' && typeof options.userInfo != 'undefined'){
                 console.log(options.userInfo,'path2')
                 let userInfo = JSON.parse(options.userInfo)
                 if(wepy.getStorageSync('openId') !== userInfo.open_id){                  

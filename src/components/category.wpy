@@ -399,6 +399,9 @@
             click (evt) {
                 
             },
+            openCategoryTab(){
+                this.onLoad();
+            },
             goto_url(item){
                 let url = "";
                 if(item.url == 'detail'){
@@ -492,9 +495,10 @@
         }
         loadHistoryList(){
             var self = this;
+            let user = wepy.getStorageSync('userInfo');
             wx.request({ 
                 url: api.baseUrl + "index.php?m=home&c=member&a=appMemberScanList",//请求地址
-                data:{uid:1},
+                data:{uid:user.uid},
                 header:{"Content-Type":"applciation/json"},
                 method:"GET",//get为默认方法/POST
                 success:function(res){   

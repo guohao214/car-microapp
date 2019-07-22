@@ -1,12 +1,13 @@
 <style type="scss">
     $fontcolor: #7b7b7b;
     $activecolor: #13b113;
-    .group-detail {        
+    .group-detail {       
+        padding-bottom: 100rpx; 
         .group-buy{
             margin:20rpx 20rpx 20rpx 20rpx;
             padding:20rpx 20rpx 20rpx 20rpx;
             background-color: #fff; 
-            border:0.5px grey solid;
+            border:0.5px #e5e5e5 solid;
             height:190rpx;
             font-size:13px;
 
@@ -26,11 +27,13 @@
                 bottom:0;
                 height:15px;
                 width:38px;
-                background-color:#cfd4d4;
+                background-color:#fff;
                 right:0;
                 overflow:hidden;
                 font-size:10px;
-                opacity:0.6;
+                opacity:0.7;
+                color: black;
+                text-align: center;
                 }            
             .content{
                 margin-left:280rpx;
@@ -92,7 +95,7 @@
     }
     .line{
         height:1px; 
-        background:rgb(172, 169, 169);        
+        background:#e5e5e5; 
     }
     .line-margin{
         margin-left: 15px;
@@ -118,9 +121,9 @@
         display: inline-block;   
         width:100%;
         .header{
-            width: 30px;
-            height: 30px;
-            border-radius:100px;
+            width: 70rpx;
+            height: 70rpx;
+            border-radius:50%;
             vertical-align:middle;
         }
 
@@ -156,17 +159,17 @@
 
             .item-contact{
                 float: right;
-                margin:25rpx 25rpx 25rpx 13rpx;
+                margin:40rpx 25rpx 25rpx 13rpx;
                 width:18%;
                 .btn{
                     color:white;
                     background-color: red;                
-                    height: 30px;
-                    line-height:30px;
-                    border-radius:5px;
+                    height: 25px;
+                    line-height:25px;
+                    /* border-radius:5px; */
                     text-align: center;
                     font-size:12px;
-                    font-weight:bold;
+                    /* font-weight:bold; */
                 }     
             }  
         }      
@@ -174,11 +177,11 @@
     .footer{
         position:fixed;
         bottom:0;
-        height:40px;
-        line-height: 40px;
+        height:90rpx;
+        line-height: 90rpx;
         text-align: center;
         width:100%;
-        background:orange;
+        background:green;
         color:white;
     }
 </style>
@@ -186,9 +189,9 @@
     <view class="group-detail">
         <groupDetailTop :item.sync="group_buy"/>
 
-        <view class='line'></view>
+        <!-- <view class='line'></view> -->
         <view class='years-list' style='font-size:11px;color:gray'>
-            {{group_user_num}}人在拼团，可直接参与
+            <span style='color:red; font-size:30rpx;'>{{group_user_num}}</span> 人在拼团，可直接参与
         </view>
         <view class='line'></view>
 
@@ -198,17 +201,15 @@
                     <image class='header' src="{{item.user_profile}}"/>
                     <span class="title">{{item.name}}</span> 
                     <span class="title span-1">
-                        <view>还差 <font style='color:red'>{{item.count}} 人 </font> 拼成 </view>                       
+                        <view>还差 <span style='color:red'>{{item.count}} 人 </span> 拼成 </view>                       
                         <view>还剩{{item.time}}</view> 
                     </span>  
-                                                   
                 </view>
                 <view class="item-contact">
-                    <view class="btn" @tap='goto_group({{item}})'>去拼团</view>                   
+                    <view class="btn" @tap='goto_group({{item}})'>去拼团</view>
                 </view>
             </view>
         </view>
-        
         <view class='footer' @tap='goto_send_group()'>
             发起拼团
         </view>
@@ -245,7 +246,7 @@
 
         onLoad(options) {
             var self = this;
-            wx.request({
+            wx.requestLoad({
                 url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsDetail",//请求地址
                 data:{goods_id:options.goods_id},
                 header:{"Content-Type":"applciation/json"},
@@ -258,7 +259,7 @@
                 fail:function(err){},//请求失败
                 complete:function(){}//请求完成后执行的函数
             });
-            wx.request({
+            wx.requestLoad({
                 url:api.baseUrl + "index.php?m=home&c=group&a=appGroupUserList",//请求地址
                 data:{goods_id:options.goods_id},
                 header:{"Content-Type":"applciation/json"},

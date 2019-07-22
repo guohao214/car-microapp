@@ -92,7 +92,7 @@
     }
     .line{
         height:1px; 
-        background:rgb(172, 169, 169);        
+        background:#e5e5e5; 
     }
     .line-margin{
         margin-left: 15px;
@@ -118,9 +118,9 @@
         display: inline-block;   
         width:100%;
         .header{
-            width: 30px;
-            height: 30px;
-            border-radius:100px;
+            width: 70rpx;
+            height: 70rpx;
+            border-radius:50%;
             vertical-align:middle;
         }
         .group-row{
@@ -136,7 +136,8 @@
                 display: inline;
                 height: 25px;
                 .title{ 
-                    font-size:12px; 
+                    font-size:27rpx; 
+                    left: 130rpx;
                     position:absolute;
                 }
                 .header{
@@ -151,25 +152,24 @@
                 .price{
                     color:red;
                     position:absolute;
-                    left:38%;
+                    left:45%;
+                    font-size: 27rpx;
                 }
-            }        
+            }
         }
         .item-contact-send{
             float: right;
-            margin:20rpx 20rpx 20rpx 20rpx;
+            margin:25rpx 20rpx 20rpx 20rpx;
             width:15%;
             .send-btn{
-                color:white;       
-                height: 25px;
-                line-height:25px;
-                border-radius:5px;
+                color: white;
+                height: 50rpx;
+                line-height: 50rpx;
                 text-align: center;
-                font-size:12px;
-                font-weight:bold;
-                background:orange;
-            }     
-        }        
+                font-size: 23rpx;
+                background: red;
+            }
+        }
     }
     .send{
         position:fixed; 
@@ -180,16 +180,16 @@
         background:gray;
         text-align: center;
         .send-btn{
-            width: 70px;
+            width: 70rpx;
             color:white;       
-            height: 25px;
-            line-height:25px;
-            border-radius:5px;
+            height: 25rpx;
+            line-height:25rpx;
+            border-radius:5rpx;
             text-align: center;
-            font-size:12px;
+            font-size:12rpx;
             font-weight:bold;
-            background:orange;     
-            margin-top:30px; 
+            background:red;     
+            margin-top:30rpx; 
             margin-left: 35%;
         }    
         .title{
@@ -241,7 +241,7 @@
                 <view class="item">
                     <image class='header' src="{{item.creator_profile}}"/>
                     <span class="title">{{item.group_name}}</span> 
-                    <span class="price">售价：{{item.price}}</span>                        
+                    <span class="price">售价：¥{{item.price}}</span>                        
                 </view>
                 <view class="item-contact-send">
                     <view class="send-btn" @tap='send_box({{item}})'>发起</view>                   

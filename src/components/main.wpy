@@ -70,14 +70,13 @@
             /* margin-bottom:150rpx; */
             display:flex;
             justify-content: space-between;
-            padding: 10rpx 35rpx;
-            flex-basis:320rpx;
+            padding: 10rpx 25rpx;
+            flex-basis:340rpx;
             flex-wrap: wrap;
             padding-bottom: 130rpx;
 
-
             .item{
-                width:320rpx;
+                width:340rpx;
                 height:330rpx;
                 display: inline-block;
                 /* margin-right:55rpx; */

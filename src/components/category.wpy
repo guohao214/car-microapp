@@ -122,25 +122,25 @@
 
     .catgoryCarList {
         margin-top:40rpx;
-        padding-left: 20rpx;
-        padding-right: 20rpx;
+        /* padding-left: 20rpx; */
+        /* padding-right: 20rpx; */
         padding-bottom: 100rpx;
         background: white;
         
         .sep {
             background-color: #f1f0f6;
             color: #7e7d83;
-            height: 45rpx;
-            padding: 6rpx 0 10rpx 20rpx;
+            /* height: 45rpx; */
+            padding: 10rpx 30rpx;
             font-size: 26rpx;
             font-weight: bold;
             box-sizing: border-box;
-            margin-left: -20rpx;
-            margin-right: -20rpx;
+            /* margin-left: -20rpx; */
+            /* margin-right: -20rpx; */
         }
         .car {
             height: 110rpx;
-            border-bottom: 1px solid #dad9d6;
+            /* border-bottom: 1px solid #dad9d6; */
             box-sizing: border-box;
             padding: 20rpx;
             position: relative;
@@ -153,17 +153,17 @@
             .car_name {
                 margin-left: 90rpx;
                 margin-top: 10rpx;
-                font-size: 33rpx;
+                font-size: 28rpx;
                 line-height: 70rpx;
             }
         }
         .total {
             height: 120rpx;
             background-color: #eee;
-            margin-left: -20rpx;
-            margin-right: -20rpx;
+            /* margin-left: -20rpx; */
+            /* margin-right: -20rpx; */
             text-align: center;
-            line-height: 140rpx;
+            line-height: 120rpx;
             color: $fontcolor;
             font-size: 33rpx;
         }
@@ -193,16 +193,40 @@
         width:0%;
         height:100%;
         background-color:#eee;
+    
+        .car-panels {
+            display: flex;
+            flex-flow: column;
+            .panels {
+                height: 180rpx;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 0 30rpx;
+                .car {
+                    img {
+                        height: 180rpx;
+                    }
+                }
+                &:last-child {
+                    margin-bottom: 120rpx;
+                }
+            }
+        }
+
+
         .right_item_icon{
-            width: 200rpx;
+            width: 180rpx;
             height: 140rpx;
-            margin-top: 50rpx;
-            float: left;
-            margin-left:20rpx;
+            border-radius: 10rpx;
+            /* margin-top: 50rpx; */
+            /* float: left; */
+            /* margin-left:20rpx; */
         }
         .content{
             font-size: 25rpx;
-            padding-top:80rpx;
+            margin-left: 20rpx;
+            /* padding-top:80rpx; */
             .price{
                 color:red;
             }
@@ -254,10 +278,10 @@
             <view class="item2">
                 快速找车
             </view>
-            <view class="item3">
+            <!-- <view class="item3">
                 <image src="/images/main/huo.png"/>
                 <view class="title">热销汽车</view>
-            </view>
+            </view> -->
         </view>
         <view class='type-search'>            
             <block wx:for="{{priceList}}" wx:key="index" wx:for-index="index" wx:for-item="item">
@@ -289,7 +313,7 @@
                     </block>
                 </view>
             </block>
-            <view class="total">{{total}}种车型</view>
+            <view class="total">共{{total}}种车型</view>
         </view>
         </scroll-view>
 
@@ -298,17 +322,16 @@
 
         <view class="mask {{maskCss}}" @tap="closeRightPanel()"></view>
         <view class="rightPanel {{rightPanelCss}}">            
-                
-            <scroll-view bindscroll="scroll" style="height: 400px;" scroll-y>
-            <view wx:for="{{searchRightData}}" wx:key="index" wx:for-index="index" wx:for-item="item">
-                <view class="car">
-                    <image src="{{item.thumb}}"  @tap="goto_detail({{item.goods_id}})" class="right_item_icon"/>                    
+            <scroll-view class="car-panels" bindscroll="scroll" style="height:100%" scroll-y>
+                <view class="panels" wx:for="{{searchRightData}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                    <view class="car">
+                        <image src="{{item.thumb}}"  @tap="goto_detail({{item.goods_id}})" class="right_item_icon"/>                    
+                    </view>
+                    <view class="content">
+                        <view class="desc"> {{item.goods_name}}</view>
+                        <view class="price"> 售价：¥{{item.sell_price}}</view>
+                    </view> 
                 </view>
-                <view class="content">
-                    <view class="desc"> {{item.goods_name}}</view>
-                    <view class="price"> 售价：¥{{item.sell_price}}</view>
-                </view> 
-            </view>
             </scroll-view>
         </view>
 
@@ -420,7 +443,7 @@
             goto_search(start, end){
                 var self = this;
                 
-                wx.request({ 
+                wx.requestLoad({ 
                     url: api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
                     data:{
                         searchType:'search_by_price', 
@@ -444,7 +467,7 @@
             }, 
             goto_search_type(type){
                 var self = this;
-                wx.request({ 
+                wx.requestLoad({ 
                     url: api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
                     data:{searchType:'search_by_grade', grade:type},
                     header:{"Content-Type":"applciation/json"},
@@ -452,6 +475,10 @@
                     success:function(res){                  
                         //self.goods_list = res.data
                         console.log(res)
+                         self.searchRightData = res.data;
+                        self.maskCss = 'show';
+                        self.rightPanelCss = 'fade_in';
+                        self.$apply();
                         //self.$apply()    
                     },
                     fail:function(err){},//请求失败
@@ -496,7 +523,7 @@
         loadHistoryList(){
             var self = this;
             let user = wepy.getStorageSync('userInfo');
-            wx.request({ 
+            wx.requestLoad({ 
                 url: api.baseUrl + "index.php?m=home&c=member&a=appMemberScanList",//请求地址
                 data:{uid:user.uid},
                 header:{"Content-Type":"applciation/json"},
@@ -512,7 +539,7 @@
         async loadCarList() {
         
             let self = this;
-            wx.request({
+            wx.requestLoad({
                 url:api.baseUrl + "index.php?m=home&c=brand&a=appBrandList",//请求地址
                 data:{},
                 header:{"Content-Type":"applciation/json"},

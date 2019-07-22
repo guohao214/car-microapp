@@ -77,7 +77,7 @@
         };
 
         onLoad(options) {
-            var self = this;
+            var self = this;           
         }
 
         bindGetUserInfo (e) {
@@ -109,9 +109,10 @@
                         if(userinfoEx['data'].openId !== undefined){
                             let userData = userinfoEx['data'];
                             wepy.setStorageSync('code', encodeURIComponent(code));
-                            wepy.setStorageSync('openId', userData.open_id);
+                            wepy.setStorageSync('openId', userData.openId);
                             wepy.setStorageSync('nickName', userData.nickname);
                             wepy.setStorageSync('avatarUrl', userData.avatarUrl);
+                            wepy.setStorageSync('sessionKey', userData.sessionKey);
 
                             wx.request({
                                 url:api.baseUrl + "index.php?m=home&c=user&a=appAddUser",//请求地址
@@ -136,27 +137,36 @@
                         hideLoading();
                     }//请求完成后执行的函数
                 });
-            });
+                
+            });   
+            
+            
         }
 
         getPhoneNumber(e) {
             console.log("============getPhoneNumber ============");
-            // let encryptedData = e.detail.encryptedData;
-            // let iv = e.detail.iv;
-            // wx.request({
-            //         url:api.baseUrl + "index.php?m=home&c=user&a=getPhone",//请求地址
-            //         header:{"Content-Type":"application/x-www-form-urlencoded"},
-            //         method:"POST",//get为默认方法/POST
-            //         data: {
-            //             'encryptedData': encodeURIComponent(encryptedData),
-            //             'iv': encodeURIComponent(iv),
-            //         },
-            //         success:function(userinfoEx){
-            //             console.log(wepy.getStorageSync('code'),11111111111)
-            //         },
-            //         fail:function(err){},//请求失败
-            //         complete:function(){}//请求完成后执行的函数
-            //     });
+            let encryptedData = e.detail.encryptedData;
+            let iv = e.detail.iv;
+            wx.request({
+                    url:api.baseUrl + "index.php?m=home&c=user&a=appGetPhone",//请求地址
+                    header:{"Content-Type":"application/x-www-form-urlencoded"},
+                    method:"POST",//get为默认方法/POST
+                    data: {
+                        'encryptedData': encodeURIComponent(encryptedData),
+                        'iv': encodeURIComponent(iv),
+                        'open_id': encodeURIComponent(wepy.getStorageSync('openId')),
+                        'sessionKey':encodeURIComponent(wepy.getStorageSync('sessionKey'))
+                    },
+                    success:function(res){
+                        wepy.showToast({
+                            title: res.data.msg,
+                            icon: 'success',
+                            duration: 1000
+                        })
+                    },
+                    fail:function(err){},//请求失败
+                    complete:function(){}//请求完成后执行的函数
+                });
 
             wepy.setStorageSync('_showFirstWelcomePage', 'finish');
             this.$root.$navigate({ url: 'index' });

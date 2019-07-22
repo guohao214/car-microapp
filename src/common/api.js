@@ -2,31 +2,8 @@ import m_contacts from '../mocks/contact';
 import m_history from '../mocks/history';
 import m_reply from '../mocks/reply';
 import global from './global';
-import {
-    showLoading,
-    hideLoading
-} from './util'
 
 import wepy from 'wepy';
-
-// const request = wx.request
-// Object.defineProperty(wx, 'request', {
-//     get() {
-//         showLoading()
-//         return request
-//     },
-// })
-
-wx.requestLoad = function(obj) {
-    showLoading()
-    const complete = obj.complete || function() {}
-    obj.complete = function() {
-        hideLoading()
-        complete()
-    }
-
-    return wx.request(obj)
-}
 
 export default {
     baseUrl:'https://www.maixc.cn/',

@@ -190,7 +190,11 @@ page {
         }
         
     }
-      
+      backHome() {
+        wx.reLaunch({
+            url: '/pages/index'
+        })
+    }
     methods = {        
         // 关闭弹窗
         showDialog: function (...args) {

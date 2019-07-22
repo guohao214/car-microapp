@@ -6,7 +6,7 @@
             margin:20rpx 20rpx 20rpx 20rpx;
             padding:20rpx 20rpx 20rpx 20rpx;
             background-color: #fff; 
-            border:0.5px grey solid;
+            border:0.5px #e5e5e5 solid;
             height:190rpx;
             font-size:13px;
 

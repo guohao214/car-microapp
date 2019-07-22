@@ -214,7 +214,7 @@
         <view class='title'>
             {{userInfo.nickName}}
         </view>   
-        <view class='command'>
+        <view class='command' hidden="{{parent_name==''}}">
             推荐人：{{parent_name}}
         </view>       
         <view class="middle">
@@ -377,7 +377,8 @@
                     header:{"Content-Type":"applciation/json"},
                     method:"GET",//get为默认方法/POST
                     success:function(res){                                      
-                        self.parent_name = res.data.data.nickName; 
+                        self.parent_name = res.data.data.nickname; 
+                       
                         self.$apply();
                     },
                     fail:function(err){},//请求失败

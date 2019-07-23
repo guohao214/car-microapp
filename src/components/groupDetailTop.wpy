@@ -46,7 +46,7 @@
             }
             .price{
                 color: red;
-                padding-top:10rpx;
+                padding:5rpx 0;
                 font-size: 12px;
             }
             .marketPrice{
@@ -79,9 +79,9 @@
             <view class='car-num'>{{item.num}}张</view>                
         </view>            
         <view class="content">
-            <view class="title">{{item.brand_name}}</view>
+            <view class="title">[{{item.brand_name}}] {{item.goods_name}}</view>
             <view class="desc">{{item.goods_title}}</view>
-            <view class="desc">{{item.goods_name}}</view>
+            <!-- <view class="desc">{{item.goods_name}}</view> -->
             <view class="price">售价：¥{{item.sell_price}}</view>
             <view class="marketPrice">市场价：¥{{item.market_price}}</view>
             <view class='desc1' @tap='goto_detail({{item.goods_id}})'>{{item.desc}}</view>

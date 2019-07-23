@@ -24,7 +24,7 @@
             display: inline-block;
             margin: 0 25rpx;
             border:0rpx;
-            padding: 5rpx 15rpx;
+            padding: 5rpx 20rpx;
             .title{
                 font-size: 11px;
                 text-align: center;

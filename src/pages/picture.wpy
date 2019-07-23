@@ -30,9 +30,9 @@
                 text-align: center;
                 padding-bottom: 3rpx;
                 &.selected {
-                    border-bottom: 2rpx solid blue;
+                    border-bottom: 2rpx solid #1296db;
                     font-size: 27rpx;
-                    color: blue;
+                    color: #1296db;
                 }
             }
             

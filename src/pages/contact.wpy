@@ -118,7 +118,7 @@ $activecolor: #13b113;
 .input-desc {
   float: right;
   width: 80%;
-  margin-top: -8rpx;
+  margin-top: -1rpx;
 }
 .input-desc-get {
   margin-top: -40rpx;

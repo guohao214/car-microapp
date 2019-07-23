@@ -20,10 +20,11 @@
             text-align: center;
         }
         .icon {
-            width: 60rpx;
-            height: 60rpx;
+            width: 50rpx;
+            height: 50rpx;
             display: block;
             margin: auto;
+            padding-top: 10rpx;
         }
         .title {
             padding-top: 6rpx;
@@ -35,11 +36,11 @@
 <template>
     <view class="tab">
         <view class="tab_item tab_message{{active == 0 ? ' active' : ''}}" @tap="change(0)">
-            <image class="icon" src="../images/message{{active == 0 ? '_active' : ''}}.png"></image>
+            <image class="icon" src="../images/index{{active == 0 ? '_active' : ''}}.png"></image>
             <text class="title">首页</text>
         </view>
         <view class="tab_item tab_contact{{active == 1 ? ' active' : ''}}" @tap="change(1)">
-            <image class="icon" src="../images/contact{{active == 1 ? '_active' : ''}}.png"></image>
+            <image class="icon" src="../images/category{{active == 1 ? '_active' : ''}}.png"></image>
             <text class="title">分类</text>
         </view>
         <view class="tab_item tab_me{{active == 2 ? ' active' : ''}}" @tap="change(2)">

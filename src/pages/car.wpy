@@ -27,6 +27,10 @@
         color: darkgrey;
         font-size: 11px;
         .car-row{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 24rpx;
             .item{
                 margin:25rpx 25rpx 25rpx 25rpx;
                 width:55%;
@@ -47,7 +51,7 @@
         line-height: 40px;
         text-align: center;
         width:100%;
-        background:rgb(12, 97, 224);
+        background:#1296db;
         color:white;
     }
 </style>

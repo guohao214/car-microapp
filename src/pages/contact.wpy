@@ -11,25 +11,25 @@ $activecolor: #13b113;
     display: inline;
     float: left;
     width: 93%;
-    border-bottom: 0.5px grey solid;
+    border-bottom: 1rpx #e5e5e5 solid;
   }
   .btn {
-    width: 50%;
+    width: 90%;
     color: white;
-    height: 60rpx;
-    line-height: 60rpx;
+    height: 65rpx;
+    line-height: 65rpx;
     border-radius: 10rpx;
     text-align: center;
-    font-size: 24rpx;
-    font-weight: bold;
-    background: #f57a07;
+    font-size: 26rpx;
+    /* font-weight: bold; */
+    background: #1296db;
     margin-top: 70%;
-    margin-left: 25%;
+    margin-left: 5%;
   }
   .group-buy {
     margin: 20rpx 20rpx 20rpx 20rpx;
     padding: 20rpx 20rpx 20rpx 20rpx;
-    border: 0.5px grey solid;
+    border: 1rpx #e5e5e5 solid;
     height: 190rpx;
     font-size: 13px;
 
@@ -180,7 +180,7 @@ $activecolor: #13b113;
         </view>
         <view class='title-desc'>
            <span>手机号</span>
-           <span class='input-desc'><input @input="input" id='mobile' bindinput='inputWacth' placeholder="输入手机号" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
+           <span class='input-desc'><input @input="input" type="number" id='mobile' bindinput='inputWacth' placeholder="输入手机号" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
         </view>
         <!-- <view class='title-desc'>
            <span>验证码</span>

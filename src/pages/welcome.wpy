@@ -48,8 +48,8 @@
         </view>
         
         <view class='center'>
-            <button hidden="{{showLoginButton != 1}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" style='background-color:green;color:#FFF'>授权登录</button>
-            <button hidden="{{showPhoneButton != 1}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" style='background-color:green;color:#FFF'>同意绑定手机号</button>
+            <button hidden="{{showLoginButton != 1}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" style='background-color:#1296db;color:#FFF'>授权登录</button>
+            <button hidden="{{showPhoneButton != 1}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" style='background-color:#1296db;color:#FFF'>同意绑定手机号</button>
         </view>
 
        

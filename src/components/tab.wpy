@@ -1,6 +1,6 @@
 <style type="scss">
     $fontcolor: #7b7b7b;
-    $activecolor: #13b113;
+    $activecolor: #1296db;
     .tab {
         color: $fontcolor;
         position: fixed;

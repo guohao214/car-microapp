@@ -1,6 +1,9 @@
 <style type="scss">
     $fontcolor: #7b7b7b;
     $activecolor: #13b113;
+    .car-detail {
+        padding-bottom: 100rpx;
+    }
     .line{
         height:1px; 
         background:#e5e5e5;        

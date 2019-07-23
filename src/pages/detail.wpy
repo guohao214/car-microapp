@@ -77,7 +77,7 @@
         margin-right: 15px;
     }
     .years-list{
-        margin:25rpx 25rpx 25rpx 25rpx;
+        margin:25rpx 25rpx 5rpx 25rpx;
         border-bottom:solid 1px #ddd;
         padding-bottom:25rpx;
 
@@ -106,13 +106,19 @@
         display: inline-block;   
         width:100%;
         .car-row{
-            border-bottom:solid 1px #ddd;
+            border-bottom:solid 1px #e5e5e5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30rpx 50rpx;
+
             .item{
-                margin:25rpx 25rpx 25rpx 25rpx;
+                /* margin:25rpx 25rpx 25rpx 25rpx; */
+                font-size: 25rpx;
                 width:55%;
                 line-height:40rpx;
                 display: inline-block;
-                font-size: 11px;
+                font-size: 25rpx;
                 .price{
                     color: red;
                 }
@@ -121,18 +127,18 @@
                 }            
             }
             .item-contact{
-                float: right;
-                margin:70rpx 25rpx 25rpx 25rpx;
-                width: 25%;
+                /* float: right; */
+                /* margin:70rpx 25rpx 25rpx 25rpx; */
+                width: 150rpx;
                 .btn{
                     color:white;
                     background-color: steelblue;
-                    width: 70%;
-                    height: 20px;
-                    line-height:20px;
-                    border-radius:35px;
+                    /* width: 70%; */
+                    height: 50rpx;
+                    line-height:50rpx;
+                    border-radius:35rpx;
                     text-align: center;
-                    font-size:11px;
+                    font-size:23rpx;
                 }     
             }
         }

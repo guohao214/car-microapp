@@ -121,6 +121,14 @@
             border-radius:100px;
             vertical-align:middle;
         }
+
+        .no_data{
+            width:100%;
+            height:200rpx;
+            text-align: center;
+            font-size: 30rpx;
+            margin-top: 150rpx;
+        }
         
         .group-row{
             position: relative;
@@ -245,7 +253,12 @@
                     </view>
                 </view>
             </view>
+
+            <view hidden="{{group_user_list.length > 0}}" class="no_data">
+                暂无数据
+            </view>
         </view>
+
         </scroll-view>
         <!-- 加载动画结构代码 -->
         <view class="loadMoreGif" wx:if="{{loadingShow}}">

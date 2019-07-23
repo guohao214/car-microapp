@@ -7,23 +7,24 @@ $activecolor: #13b113;
     font-size: 25rpx;
     margin-left: 33rpx;
     margin-top: 50rpx;
+    padding-bottom: 45rpx;
     display: inline;
     float: left;
-    width: 100%;
+    width: 93%;
     border-bottom: 0.5px grey solid;
   }
   .btn {
-    width: 190px;
+    width: 50%;
     color: white;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 2px;
+    height: 60rpx;
+    line-height: 60rpx;
+    border-radius: 10rpx;
     text-align: center;
-    font-size: 12px;
+    font-size: 24rpx;
     font-weight: bold;
     background: #f57a07;
     margin-top: 70%;
-    margin-left: 20%;
+    margin-left: 25%;
   }
   .group-buy {
     margin: 20rpx 20rpx 20rpx 20rpx;
@@ -48,11 +49,14 @@ $activecolor: #13b113;
         bottom: 0;
         height: 15px;
         width: 38px;
-        background-color: #cfd4d4;
+        background-color: #fff;
         right: 0;
         overflow: hidden;
         font-size: 10px;
-        opacity: 0.6;
+        opacity: 0.7;
+        color: black;
+        text-align: center;
+
       }
     }
 
@@ -170,7 +174,6 @@ $activecolor: #13b113;
                 <view class="desc">售价：{{group_buy.sell_price}}万 - {{group_buy.market_price}}万</view>
             </view>            
         </view>
-        <view class='line line-margin'></view>
         <view class='title-desc'>
            <span>姓名</span>
            <span class='input-desc'><input @input="input" id='name' bindinput='inputWacth' placeholder="输入姓名" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>

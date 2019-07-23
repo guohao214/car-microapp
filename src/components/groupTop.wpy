@@ -22,16 +22,18 @@
         }
 
         .car-num{
-            position:absolute;
-            bottom:0;
-            height:15px;
-            width:38px;
-            background-color:#cfd4d4;
-            right:0;
-            overflow:hidden;
-            font-size:10px;
-            opacity:0.6;
-            }            
+                position:absolute;
+                bottom:0;
+                height:15px;
+                width:38px;
+                background-color:#fff;
+                right:0;
+                overflow:hidden;
+                font-size:10px;
+                opacity:0.7;
+                color: black;
+                text-align: center;
+                }          
         .content{
             margin-left: 135px;
             .title{
@@ -74,8 +76,8 @@
 <template>    
     <view class='group-top'>
         <view class='img'>
-            <image src="{{item.thumb}}"/>
-            <view class='car-num'>{{item.num}}</view>                
+            <image src="{{item.thumb}}" @tap='goto_picture({{item.goods_id}})'/>
+            <view class='car-num'>{{item.num}}张</view>                
         </view>            
         <view class="content">
             <view class="title">{{item.brand_name}}</view>
@@ -99,6 +101,9 @@
         methods = {
             click (evt) {
                 
+            },
+            goto_picture(id){
+                this.$root.$navigate({url: 'picture?goods_id='+id});
             },
         };
     }

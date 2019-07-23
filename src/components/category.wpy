@@ -144,10 +144,14 @@
             box-sizing: border-box;
             padding: 20rpx;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: left; 
+
             .car_icon {
                 width: 70rpx;
                 height: 70rpx;
-                position: absolute;
+                display: flex;                
                 border-radius: 10rpx;
             }
             .car_name {
@@ -307,7 +311,7 @@
                 <view  class="sep">{{alpha}}</view>
                     <block wx:for="{{lists}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                         <view class="car">
-                            <image src="{{item.logo}}" class="car_icon"></image>
+                            <image mode="widthFix" src="{{item.logo}}" class="car_icon"></image>
                             <text class="car_name">{{item.cn_name}}</text>
                         </view>
                     </block>
@@ -325,7 +329,7 @@
             <scroll-view class="car-panels" bindscroll="scroll" style="height:100%" scroll-y>
                 <view class="panels" wx:for="{{searchRightData}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                     <view class="car">
-                        <image src="{{item.thumb}}"  @tap="goto_detail({{item.goods_id}})" class="right_item_icon"/>                    
+                        <image mode="aspectFill" src="{{item.thumb}}"  @tap="goto_detail({{item.goods_id}})" class="right_item_icon"/>                    
                     </view>
                     <view class="content">
                         <view class="desc"> {{item.goods_name}}</view>

@@ -12,7 +12,7 @@
 
         image{
             width:250rpx;
-            height:190rpx;
+            /* height:190rpx; */
             float:left;
             display:block;
         }
@@ -36,7 +36,7 @@
             }            
         
         .content{
-            margin-left: 135px;
+            margin-left: 300rpx;
             .title{
                 color: black;
                 padding-bottom:10rpx;
@@ -75,7 +75,7 @@
 <template>    
     <view class='group-detail-top'>
         <view class='img'>
-            <image src="{{item.thumb}}" @tap='goto_picture({{item.goods_id}})'/>
+            <image src="{{item.thumb}}" mode="widthFix" @tap='goto_picture({{item.goods_id}})'/>
             <view class='car-num'>{{item.num}}张</view>                
         </view>            
         <view class="content">

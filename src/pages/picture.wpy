@@ -15,16 +15,14 @@
     .years-list{
         margin:0rpx 0rpx 0rpx 0rpx;
         border-bottom:solid 1px #ddd;
-        padding:25rpx 25rpx 25rpx 25rpx;
+        padding:25rpx 0rpx 25rpx 0rpx;
         background: #cfd4d4;
-        text-align: center;
+        display: flex;
+        justify-content: center;
         .item{
-            /* width:150rpx; */
             height:20rpx;
             display: inline-block;
-            margin: 0 15rpx;
-            /* margin-right:10rpx; */
-            /* marign-bottom:0rpx; */
+            margin: 0 25rpx;
             border:0rpx;
             padding: 5rpx 15rpx;
             .title{
@@ -45,15 +43,17 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
+        margin-left: 20rpx;
 
         .group-row{
-            flex-basis: 33%;
+            flex-basis: 32.3%;
+            display: flex;
+            justify-content: center;
             .item{
-                /* float: left; */
                 .header{
-                    width: 90px;
-                    height: 90px;
-                    margin:15px 15px 15px 20px;
+                    width: 200rpx;
+                    height: 200rpx;
+                    margin:15px 0px -5px 0px;
                     border-radius: 10rpx;
                     box-shadow: 5rpx 6rpx 20rpx #e5e5e5;
                 }
@@ -74,7 +74,7 @@
         <view class="pic-list" @tap="click">
             <view class="group-row" wx:for="{{img_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                 <view class="item">
-                    <image class='header' src="{{item}}" data-index='{{index}}' bindtap='previewImg'/>                       
+                    <image mode="aspectFill" class='header' src="{{item}}" data-index='{{index}}' bindtap='previewImg'/>                       
                 </view>                
             </view>
         </view>

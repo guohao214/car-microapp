@@ -54,9 +54,9 @@
 
 <template>
     <view class="car-detail">
-        <view class='group-buy'>
+        <view class='group-buy' style="text-align:center">
             <view class='img'>
-                <image src="{{group_buy.thumb}}"/>               
+                <image src="{{group_buy.thumb}}" mode='widthFix' style='width:100%'/>               
             </view>          
                       
         </view>

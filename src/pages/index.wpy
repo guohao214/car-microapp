@@ -42,7 +42,7 @@ page, .body{
 
     export default class Index extends wepy.page {
         config = {
-            'navigationBarTitleText': '易鑫车',
+            'navigationBarTitleText': '买鑫车',
             'navigationBarTextStyle': 'white',
             'navigationBarBackgroundColor': '#3b3a40'
         };
@@ -110,8 +110,8 @@ page, .body{
             let userInfo = wepy.getStorageSync('userInfo');   
             console.log(userInfo,'path4')
             return {
-                title: '易鑫车小程序',
-                path: '/pages/index?userInfo=' + JSON.stringify(userInfo.data) ,
+                title: '买鑫车小程序',
+                path: '/pages/index?userInfo=' + JSON.stringify(userInfo),
                 imageUrl: userInfo.qrcode,
                 success: function (res1) {
                 },
@@ -133,19 +133,21 @@ page, .body{
             // console.log(options,'path3')
             let showFirstWelcomePage = wepy.getStorageSync('_showFirstWelcomePage');
             if(showFirstWelcomePage === ""){
+                console.log('----- app->welcome -----');
                 wepy.setStorageSync('options',options);
                 this.$root.$navigate({ url: 'welcome' });
             }
             
-            if(wepy.getStorageSync('options') != 'undefined'){
-                options = wepy.getStorageSync('options');
-                wepy.removeStorage({
-                    key:'options'
-                });
-            }
+          
             wx.showShareMenu({
                 withShareTicket: true,
             });
+
+            
+
+
+            
+
             if(typeof options != 'undefined' && typeof options.userInfo != 'undefined'){
                 console.log(options.userInfo,'path2')
                 let userInfo = JSON.parse(options.userInfo)

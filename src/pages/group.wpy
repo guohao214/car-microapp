@@ -32,12 +32,14 @@
                 bottom:0;
                 height:15px;
                 width:38px;
-                background-color:#cfd4d4;
+                background-color:#fff;
                 right:0;
                 overflow:hidden;
                 font-size:10px;
-                opacity:0.6;
-                }            
+                opacity:0.7;
+                color: black;
+                text-align: center;
+            }           
             .content{
                 margin-left:280rpx;
                 .title{
@@ -97,7 +99,7 @@
         }
     }
     .line{
-        height:1px; 
+        height:1rpx; 
         background:rgb(172, 169, 169);        
     }
     .line-margin{
@@ -271,7 +273,7 @@
             let userInfo = wepy.getStorageSync('userInfo');  
             console.log(userInfo,'体验分享') 
             return {
-                title: '易鑫车小程序',
+                title: '买鑫车小程序',
                 path: '/pages/group?userInfo=' + JSON.stringify(userInfo) + '&group=' + JSON.stringify(this.group) + '&group_buy=' + JSON.stringify(this.group_buy),
                 imageUrl: userInfo.qrcode,
                 success: function (res1) {
@@ -282,6 +284,8 @@
         }
         
         onLoad(options) {
+            console.log(options, '----- options -----');
+
             let showFirstWelcomePage = wepy.getStorageSync('_showFirstWelcomePage');
             if(showFirstWelcomePage === ""){
                 this.$root.$navigate({ url: 'welcome' });
@@ -290,6 +294,7 @@
             wx.showShareMenu({
                 withShareTicket: true,
             });
+           
             
             var self = this;    
             let _userInfo = wepy.getStorageSync('userInfo');  
@@ -298,20 +303,24 @@
                 let userInfo = JSON.parse(options.userInfo)
                 console.log(userInfo,'分享2') 
                 if(wepy.getStorageSync('openId') !== userInfo.open_id){
-                    self.is_me = true                    
-                    
-                    if(_userInfo.uid !== userInfo.uid){
-                        wx.request({
-                            url:api.baseUrl + "index.php?m=home&c=user&a=appUpdateUser",//请求地址
-                            data:{parent_id:userInfo.uid,uid:_userInfo.uid},
-                            header:{"Content-Type":"applciation/json"},
-                            method:"GET",//get为默认方法/POST
-                            success:function(res){          
-                                _userInfo.parent_id = userInfo.uid;
-                                wepy.setStorageSync('userInfo',_userInfo);
-                            },
-                        });
-                    }                    
+                    if(typeof _userInfo.group_id != 'undefined' && _userInfo.group_id){
+                        self.is_me = false
+                    }else{
+                        self.is_me = true
+                        if(_userInfo.uid !== userInfo.uid){
+                            wx.request({
+                                url:api.baseUrl + "index.php?m=home&c=user&a=appUpdateUser",//请求地址
+                                data:{parent_id:userInfo.uid,uid:_userInfo.uid},
+                                header:{"Content-Type":"applciation/json"},
+                                method:"GET",//get为默认方法/POST
+                                success:function(res){          
+                                    _userInfo.parent_id = userInfo.uid;
+                                    wepy.setStorageSync('userInfo',_userInfo);
+                                },
+                            });
+                        }  
+                    }
+                    self.$apply();                 
                 }                
             }
             

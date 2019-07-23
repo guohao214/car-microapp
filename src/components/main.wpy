@@ -38,17 +38,18 @@
                     color:#d43030;
                 }
                 .desc{
-                    font-size:11px;
+                    font-size:22rpx;
                 }
                 .btn{
                     color:white;
                     background-color: darkblue;
                     width: 120px;
-                    height: 40rpx;
-                    line-height: 40rpx;
-                    margin:15rpx 15rpx 15rpx 15rpx;
+                    height: 50rpx;
+                    line-height: 50rpx;
+                    margin:10rpx 10rpx 10rpx 10rpx;
                     border-radius:40rpx;
                     text-align: center;
+                    font-size:25rpx;
                 }                
             }  
             .car-title .desc {
@@ -113,13 +114,13 @@
             <repeat for="{{swiper.imgUrls}}">
                 <swiper-item>
                 <!--{{item}}-->
-                <image src="{{item}}" class="slide-image" style="width:100%"/>
+                <image mode="aspectFill" src="{{item}}" class="slide-image" style="width:100%"/>
                 </swiper-item>
             </repeat>
         </swiper>
 
         <view class='group-buy'>
-            <image src="{{group_buy.img}}"/>
+            <image mode="aspectFill" src="{{group_buy.img}}"/>
             <view class="content">
                 <view class="title">{{group_buy.title}}</view>
                 <block wx:for="{{group_buy.list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
@@ -132,7 +133,7 @@
         <view class='list'>
             <block wx:for="{{goods_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                 <view class="item" @tap="goto_detail({{item.goods_id}})">
-                    <image src="{{item.thumb}}"/>
+                    <image mode="aspectFill" src="{{item.thumb}}"/>
                     <view class="title"><span class="brand_name">[{{item.brand_name}}]</span> {{item.goods_name}}</view>
                 </view>
             </block>

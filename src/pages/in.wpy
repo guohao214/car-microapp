@@ -2,28 +2,29 @@
     $fontcolor: #7b7b7b;
     $activecolor: #13b113;
     .group {  
-        .title-desc{
-            font-size:14px;
-            margin-left:33rpx;
-            margin-top:33rpx;   
-            display:inline;
-            float: left;    
-            width:100%;
-            border-bottom:0.5px grey solid;   
-        }  
-        .btn{
-            width: 190px;
-            color:white;       
-            height: 30px;
-            line-height:30px;
-            border-radius:2px;
+        .title-desc {
+            font-size: 25rpx;
+            margin-left: 33rpx;
+            margin-top: 50rpx;
+            padding-bottom: 45rpx;
+            display: inline;
+            float: left;
+            width: 93%;
+            border-bottom: 0.5px grey solid;
+        }
+        .btn {
+            width: 50%;
+            color: white;
+            height: 60rpx;
+            line-height: 60rpx;
+            border-radius: 10rpx;
             text-align: center;
-            font-size:12px;
-            font-weight:bold;
-            background:#f57a07;     
-            margin-top:70%; 
-            margin-left: 20%;
-        }    
+            font-size: 24rpx;
+            font-weight: bold;
+            background: #f57a07;
+            margin-top: 70%;
+            margin-left: 25%;
+        }   
         .group-buy{
             margin:20rpx 20rpx 20rpx 20rpx;
             padding:20rpx 20rpx 20rpx 20rpx;
@@ -345,7 +346,8 @@
                                 finish:function(){
                                    self.$root.$navigate({url: 'car?goods_id=' + sendData.goods_id});
                                 }
-                            });      
+                            }); 
+                            self.$root.$navigate({url: 'car?goods_id=' + sendData.goods_id});     
                         }
 
                     },

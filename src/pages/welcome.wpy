@@ -110,13 +110,25 @@
                         'signature':encodeURIComponent(signature)
                     },
                     success:function(userinfoEx){
-                        if(userinfoEx['data'].openId !== undefined){
+                        if(userinfoEx['data'].openId !== undefined && userinfoEx['data'].openId){
                             let userData = userinfoEx['data'];
+
+                            console.log('=====login=====',userData)
                             wepy.setStorageSync('code', encodeURIComponent(code));
                             wepy.setStorageSync('openId', userData.openId);
-                            wepy.setStorageSync('nickName', userData.nickname);
-                            wepy.setStorageSync('avatarUrl', userData.avatarUrl);
+                            wepy.setStorageSync('nickname', userData.nickname);
+                            wepy.setStorageSync('avatarurl', userData.avatarUrl);
                             wepy.setStorageSync('sessionKey', userData.sessionKey);
+
+                            let query_user_info = wepy.getStorageSync('query_user_info');
+                            console.log('=====loginquery_user_info=====',query_user_info)
+                            if(query_user_info != undefined && query_user_info){
+                                query_user_info = JSON.parse(query_user_info);
+                                console.log('=====parent_id=====', query_user_info);
+                                let parent_id = query_user_info.uid;
+                                userData.parent_id = parent_id;
+                                console.log('=====parent_id=====', parent_id);
+                            }
 
                             wx.request({
                                 url:api.baseUrl + "index.php?m=home&c=user&a=appAddUser",//请求地址

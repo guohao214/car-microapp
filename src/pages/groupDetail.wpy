@@ -198,7 +198,7 @@
         <view class="group-list" @tap="click">
             <view class="group-row" wx:for="{{group_user_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                 <view class="item">
-                    <image class='header' src="{{item.user_profile}}"/>
+                    <image mode="widthFix" class='header' src="{{item.user_profile}}"/>
                     <span class="title">{{item.name}}</span> 
                     <span class="title span-1">
                         <view>还差 <span style='color:red'>{{item.count}} 人 </span> 拼成 </view>                       
@@ -206,7 +206,7 @@
                     </span>  
                 </view>
                 <view class="item-contact">
-                    <view class="btn" @tap='goto_group({{item}})'>去拼团</view>
+                    <view class="btn" hidden="{{item.time_diff <= 0}}" @tap='goto_group({{item}})'>去拼团</view>
                 </view>
             </view>
         </view>

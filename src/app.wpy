@@ -32,8 +32,8 @@ export default class extends wepy.app {
         'window': {
             'backgroundTextStyle': 'light',
             'navigationBarBackgroundColor': '#3b3a40',
-            'navigationBarTitleText': '易鑫车',
-            'navigationBarTextStyle': 'black'
+            'navigationBarTitleText': '买鑫车',
+            'navigationBarTextStyle': 'white'
         }
     };
 
@@ -48,6 +48,13 @@ export default class extends wepy.app {
     };
 
     onLaunch(options) {
+        console.log('----- app.options -----');
+        if(options.query.userInfo != undefined){
+            wepy.setStorageSync('query_user_info', options.query.userInfo);
+        }
+        console.log('----- app.options -----');
+        
+
         // 用户验证
         this.userInfo = this.loginEx();
         wepy.setStorageSync('scene', options.scene);

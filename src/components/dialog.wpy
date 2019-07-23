@@ -132,7 +132,7 @@ page {
                 hasCancel:false,
                 hasOkCancel:false,
                 ok:'',
-                group
+                group:'',
                 cancel:'',
                 finish:null,
             }

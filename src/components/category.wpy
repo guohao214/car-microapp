@@ -216,6 +216,13 @@
                     margin-bottom: 120rpx;
                 }
             }
+            .no_data{
+                width:450rpx;
+                height:200rpx;
+                text-align: center;
+                font-size: 30rpx;
+                margin-top: 150rpx;
+            }
         }
 
 
@@ -335,6 +342,10 @@
                         <view class="desc"> {{item.goods_name}}</view>
                         <view class="price"> 售价：¥{{item.sell_price}}</view>
                     </view> 
+                </view>
+
+                <view hidden="{{searchRightData.length > 0}}" class="no_data">
+                    暂无数据
                 </view>
             </scroll-view>
         </view>

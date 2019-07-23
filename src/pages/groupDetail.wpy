@@ -181,7 +181,7 @@
         line-height: 90rpx;
         text-align: center;
         width:100%;
-        background:green;
+        background:#1296db;
         color:white;
     }
 </style>

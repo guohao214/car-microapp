@@ -53,6 +53,7 @@
         width:100%;
         background:#1296db;
         color:white;
+        font-size: 28rpx;
     }
 </style>
 

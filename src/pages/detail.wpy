@@ -132,7 +132,7 @@
                 width: 150rpx;
                 .btn{
                     color:white;
-                    background-color: steelblue;
+                    background-color: #1296db;
                     /* width: 70%; */
                     height: 50rpx;
                     line-height:50rpx;

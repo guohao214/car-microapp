@@ -10,6 +10,7 @@ page, .body{
 </style>
 <template>
     <view class="body">
+         
         <view class="tab_item tab_message" hidden="{{currentTab != 0}}">
             
             <main />
@@ -17,9 +18,11 @@ page, .body{
         <view class="tab_item tab_contact" hidden="{{currentTab != 1}}">
             <category/>
         </view>
-        <view class="tab_item tab_me" hidden="{{currentTab != 2}}">
+
+         <view class="tab_item tab_me" hidden="{{currentTab != 2}}">
             <me />
         </view>
+      
 
         <tab :active.sync="currentTab" />
         <tab />

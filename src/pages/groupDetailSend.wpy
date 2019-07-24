@@ -271,10 +271,7 @@
             group_buy:{},
             // 拼团列表
             group_list: [
-                {
-                    group_name: '十人团',
-                    price:'1588.88万',                    
-                },
+               
             ],
             dialogInfo:{
                 title:'',

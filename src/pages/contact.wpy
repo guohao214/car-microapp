@@ -249,14 +249,16 @@ $activecolor: #13b113;
             },
             inputWacth(e){
                 let item = e.currentTarget.id;
+                let val = e.detail.value
+                
                 if(item == 'name'){
-                    this.member.name = e.detail.value;
+                    this.member.name = val;
                 }
                 if(item == 'mobile'){
-                    this.member.mobile = e.detail.value;
+                    this.member.mobile = val;
                 }
                 if(item == 'city'){
-                    this.member.city = e.detail.value;
+                    this.member.city = val;
                 }
                 this.$apply();
             },
@@ -268,6 +270,40 @@ $activecolor: #13b113;
             },
             send (evt) {                
                 let self = this;
+                               
+                  
+                if(self.member.name== "" || self.member.name == null || self.member.name == undefined){
+                  wx.showModal({
+                      title: '提示',
+                      content: '姓名不能为空',
+                  })  
+                  return false
+                }    
+
+                if(self.member.mobile== "" || self.member.mobile == null || self.member.mobile == undefined){
+                    wx.showModal({
+                      title: '提示',
+                      content: '电话不能为空',
+                  })
+                  return false
+                }
+                var reg =/^0?1[3|4|5|6|7|8][0-9]\d{8}$/;
+                if(!reg.test(self.member.mobile)){
+                    wx.showModal({
+                      title: '提示',
+                      content: '电话格式不正确',
+                  })
+                  return false
+                }       
+                
+                if(self.member.city== "" || self.member.city == null || self.member.city == undefined){
+                    wx.showModal({
+                      title: '提示',
+                      content: '城市不能为空',
+                  })
+                  return false
+                }
+                
                 let sendData = self.member;
                 let userInfo = wepy.getStorageSync('userInfo');  
                 sendData.uid = userInfo.uid;
@@ -283,7 +319,8 @@ $activecolor: #13b113;
                         success(res1) {
                             if (res1.confirm) {
                                 if(res.data.status == 1){
-                                    self.$root.$navigate({url: 'car?goods_id=' + sendData.goods_id});
+                                    //wx.redirectTo({url: 'car?goods_id=' + sendData.goods_id})
+                                    wx.navigateBack({ delta: 2, })
                                 }
                             } else if (res1.cancel) {
                             

@@ -264,11 +264,11 @@
                     }                    
                 }                
             }
-
+            let user = wepy.getStorageSync('userInfo');
             var self = this;
             wx.requestLoad({
                 url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsDetail",//请求地址
-                data:{goods_id:options.goods_id},
+                data:{goods_id:options.goods_id,uid:user.uid},
                 header:{"Content-Type":"applciation/json"},
                 method:"GET",//get为默认方法/POST
                 success:function(res){                    
@@ -324,7 +324,7 @@
                 });
             },
             goto_detail (id) {
-                this.$root.$navigate({url: 'detail?goods_id=' + id});
+                this.$root.$navigate({url: 'car?goods_id=' + id});
             },
             goto_picture(id){
                 this.$root.$navigate({url: 'picture?goods_id='+id});

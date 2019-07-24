@@ -185,6 +185,9 @@
                                 delta: 3,
                             })
                         }
+
+                        wepy.setStorageSync('_showFirstWelcomePage', 'finish');
+                        wx.navigateBack({ delta: 2, });
                     },
                     fail:function(err){
                         hideLoading();
@@ -194,8 +197,7 @@
                     }//请求完成后执行的函数
                 });
 
-            wepy.setStorageSync('_showFirstWelcomePage', 'finish');
-            this.$root.$navigate({ url: 'index' });
+            
         }
 
         methods = {

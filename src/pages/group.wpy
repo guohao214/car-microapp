@@ -202,15 +202,14 @@
             }
         }
     }
-   
-    .footer{
+  .footer{
         position:fixed;
         bottom:0;
-        height:40px;
-        line-height: 40px;
+        height:90rpx;
+        line-height: 90rpx;
         text-align: center;
         width:100%;
-        background:orange;
+        background:#1296db;
         color:white;
     }
 </style>
@@ -259,11 +258,7 @@
             group_buy:{},
             group:{},
             group_user_list: [
-                {
-                    name: '十人团',
-                    user_profile:'/images/main/header.png',     
-                    uid:1,               
-                },
+                
             ],
             group_user_list:[],
             is_me: false,

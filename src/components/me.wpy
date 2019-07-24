@@ -395,7 +395,7 @@
             self.goods_id = user.goods_id || 0;
             self.$apply();
             if(self.uid){
-                wx.request({
+                wx.requestLoad({
                     url:api.baseUrl + "index.php?m=home&c=group&a=appMyGroupUser",//请求地址
                     data:{uid:user.uid,page:self.page,size:12},
                     header:{"Content-Type":"applciation/json"},
@@ -409,7 +409,7 @@
                 });
             }
             if(typeof user.parent_id != 'undefined' && user.parent_id){
-                wx.request({
+                wx.requestLoad({
                     url:api.baseUrl + "index.php?m=home&c=user&a=appUserDetail",//请求地址
                     data:{uid:user.parent_id},
                     header:{"Content-Type":"applciation/json"},
@@ -429,7 +429,7 @@
             var self = this;
             self.page = self.page + 1
             if(self.uid){
-                wx.request({
+                wx.requestLoad({
                     url:api.baseUrl + "index.php?m=home&c=group&a=appMyGroupUser",//请求地址
                     data:{uid:self.uid,page:self.page,size:12},
                     header:{"Content-Type":"applciation/json"},
@@ -459,7 +459,7 @@
                     });
                 }else{
                     let group_user_list = {}
-                    wx.request({
+                    wx.requestLoad({
                         url:api.baseUrl + "index.php?m=home&c=group&a=appGroupUserList",//请求地址
                         data:{group_id:self.group_id,goods_id:self.goods_id},
                         header:{"Content-Type":"applciation/json"},
@@ -491,7 +491,7 @@
             get_phone_fee(uid){
                 var self = this;
                 if(self.uid){
-                wx.request({
+                wx.requestLoad({
                     url:api.baseUrl + "index.php?m=home&c=user&a=appAddCommission",//请求地址
                     data:{member_id:uid, parent_id:self.uid,type:'register'},
                     header:{"Content-Type":"applciation/json"},
@@ -559,7 +559,7 @@
                         this.show_group = 'none';
                         this.$apply();
                     }else{
-                        wx.request({
+                        wx.requestLoad({
                             url:api.baseUrl + "index.php?m=home&c=user&a=getUnlimited",//请求地址
                             data:{
                                 openId:wepy.getStorageSync('openId')

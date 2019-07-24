@@ -133,7 +133,7 @@ page, .body{
             // console.log('=======scene=====');
             // console.log(scene);
             // console.log('=======scene=====');
-            // console.log(options,'path3')
+            console.log(options,'path3')
             let showFirstWelcomePage = wepy.getStorageSync('_showFirstWelcomePage');
             if(showFirstWelcomePage === ""){
                 console.log('----- app->welcome -----');
@@ -146,7 +146,20 @@ page, .body{
                 withShareTicket: true,
             });
 
-            
+            let _userInfo = wepy.getStorageSync('userInfo');
+            if(!_userInfo){
+                console.log('_userInfo======',_userInfo)
+                console.log('open_id======',wepy.getStorageSync('openId'))
+                wx.request({
+                    url:api.baseUrl + "index.php?m=home&c=user&a=appUserDetail",//请求地址
+                    data:{open_id:wepy.getStorageSync('openId')},
+                    header:{"Content-Type":"applciation/json"},
+                    method:"GET",//get为默认方法/POST
+                    success:function(res){          
+                        wepy.setStorageSync('userInfo',_userInfo);
+                    },
+                });
+            }
 
 
             
@@ -172,16 +185,7 @@ page, .body{
             }
         }
        
-        showToast(name) {
-            let promise = this.$invoke('toast', 'show', {
-                title: `${name}`,
-                img: 'https://raw.githubusercontent.com/kiinlam/wetoast/master/images/star.png'
-            });
-
-            promise.then((d) => {
-                console.log('toast done');
-            });
-        }
+    
         
     }
 </script>

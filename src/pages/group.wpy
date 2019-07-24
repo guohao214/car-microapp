@@ -218,8 +218,7 @@
             }
         }
     }
-   
-    .footer{
+  .footer{
         position:fixed;
         bottom:0;
         height:90rpx;
@@ -275,11 +274,7 @@
             group_buy:{},
             group:{},
             group_user_list: [
-                {
-                    name: '十人团',
-                    user_profile:'/images/main/header.png',     
-                    uid:1,               
-                },
+                
             ],
             group_user_list:[],
             is_me: false,

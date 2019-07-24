@@ -114,7 +114,7 @@
             <repeat for="{{swiper.imgUrls}}">
                 <swiper-item>
                 <!--{{item}}-->
-                <image mode="aspectFill" src="{{item}}" class="slide-image" style="width:100%"/>
+                <image mode="widthFix" src="{{item}}" class="slide-image" style="width:100%"/>
                 </swiper-item>
             </repeat>
         </swiper>
@@ -158,10 +158,10 @@
                 interval:2000,
                 duration:500,
                 imgUrls:[
-                    '/images/main/slide1.jpg',
-                    'https://img.pc841.com/2018/0815/20180815101229911.jpg',
-                    'https://img.pc841.com/2018/0815/20180815101229911.jpg',
-                    'https://img.pc841.com/2018/0815/20180815101229911.jpg',
+                    //'/images/main/slide1.jpg',
+                    //'/images/main/A.jpg',
+                    '/images/main/C.jpg',
+                    '/images/main/C.jpg',
                 ]
             },
 

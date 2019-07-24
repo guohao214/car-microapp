@@ -306,7 +306,7 @@
         <view class='type-search'>            
             <block wx:for="{{typeList}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                 <view class="item">
-                    <view class="title" @tap="goto_search_type({{item.title}})">{{item.title}}</view>
+                    <view class="title" @tap="goto_search_type({{item.title}},'search_by_grade')">{{item.title}}</view>
                 </view>
             </block>
         </view>
@@ -317,9 +317,9 @@
                 <view id="{{'POS_' + alpha}}">
                 <view  class="sep">{{alpha}}</view>
                     <block wx:for="{{lists}}" wx:key="index" wx:for-index="index" wx:for-item="item">
-                        <view class="car">
+                        <view class="car" @tap="goto_search_type({{item.big_brand_id}},'search_by_brand')">
                             <image mode="widthFix" src="{{item.logo}}" class="car_icon"></image>
-                            <text class="car_name">{{item.cn_name}}</text>
+                            <text class="car_name" >{{item.cn_name}}</text>
                         </view>
                     </block>
                 </view>
@@ -480,11 +480,11 @@
                 //this.$root.$navigate({url: 'contact'});
 
             }, 
-            goto_search_type(type){
+            goto_search_type(type,searchType){
                 var self = this;
                 wx.requestLoad({ 
                     url: api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
-                    data:{searchType:'search_by_grade', grade:type},
+                    data:{searchType:searchType, grade:type},
                     header:{"Content-Type":"applciation/json"},
                     method:"GET",//get为默认方法/POST
                     success:function(res){                  

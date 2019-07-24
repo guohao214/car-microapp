@@ -339,11 +339,7 @@
             page :1, // 页数 给予默认值1
             // 拼团列表
             group_user_list: [
-                {
-                    name: '十人团',
-                    user_profile:'/images/main/header.png',     
-                    uid:1,               
-                },
+                
             ],
             dialogInfo:{
                 title:'',

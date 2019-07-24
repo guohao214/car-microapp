@@ -3,10 +3,11 @@
     $activecolor: #13b113;
     .group {  
         .title-desc{
-            font-size:11px;
-            margin-left:33rpx;
-            margin-top:33rpx;            
-            color: rgb(49, 48, 48);
+            font-size:23rpx;
+            margin-left:30rpx;
+            margin-top:30rpx;            
+            margin-bottom:30rpx;            
+            color: #222;
         }      
         .group-buy{
             margin:20rpx 20rpx 20rpx 20rpx;
@@ -89,7 +90,7 @@
                     height:260rpx;
                 }
                 .title{
-
+                    padding-top: 7rpx;
                 }
                 
             }
@@ -100,7 +101,7 @@
     }
     .line{
         height:1rpx; 
-        background:rgb(172, 169, 169);        
+        background:#e5e5e5;        
     }
     .line-margin{
         margin-left: 15px;
@@ -123,22 +124,37 @@
         }
     }
     .group-list{        
-        display: inline-block;   
+        display: flex;   
+        justify-content: flex-start;
+        flex-wrap: wrap;
         width:100%;
         .header{
-            width: 30px;
-            height: 30px;
-            border-radius:100px;
-            vertical-align:middle;
+            width: 70rpx;
+            height: 70rpx;
+            border-radius:50%;
+            display: block;
+            /* vertical-align:middle; */
+        }
+
+        .title {
+            display: inline-block;
+            margin-top: 7rpx;
         }
         
         .group-row{
+            flex-basis: 138rpx;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            margin-top:10rpx;
             .item{
-                margin:30rpx 13rpx 30rpx 30rpx;
-                float: left;
-                width:30px;
-                vertical-align:middle;
-                font-size: 9px;
+                /* margin:30rpx 13rpx 30rpx 30rpx; */
+                /* float: left; */
+                /* width:30px; */
+                /* vertical-align:middle; */
+                font-size: 19rpx;
+                text-align: center;
                 display: block;                
                 .span-1{
                     display: block;
@@ -206,11 +222,11 @@
     .footer{
         position:fixed;
         bottom:0;
-        height:40px;
-        line-height: 40px;
+        height:90rpx;
+        line-height: 90rpx;
         text-align: center;
         width:100%;
-        background:orange;
+        background:#1296db;
         color:white;
     }
 </style>
@@ -219,16 +235,16 @@
         <groupTop :item.sync="group_buy"/>
         <view class='line'></view>
         <view class='title-desc'>
-            {{group_buy.brand_name}} {{group_buy.goods_title}} {{group_buy.goods_name}}
+            [{{group_buy.brand_name}}] {{group_buy.goods_title}} {{group_buy.goods_name}}
         </view>
         <view class='title-desc'>
-            {{group.group_name}} 还差 <font style='color:red;'> {{group.count}} </font> 人拼成
+            {{group.group_name}} 还差 <span style='color:red;font-size:25rpx;'> {{group.count}} </span> 人拼成
         </view>
         <view class="group-list" @tap="click">
             <view class="group-row" wx:for="{{group_user_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                 <view class="item">
                     <image class='header' src="{{item.user_profile}}"/>
-                    <span class="title">{{item.name}}</span>                        
+                    <span class="title">{{item.name || '无名'}}</span>                        
                 </view>                
             </view>
         </view>

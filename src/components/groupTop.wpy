@@ -4,26 +4,29 @@
          
     .group-top{
         margin:20rpx 20rpx 20rpx 20rpx;
-        padding:20rpx 20rpx 20rpx 20rpx;
+        padding:20rpx 20rpx 0rpx 20rpx;
         background-color: #fff; 
+        border:1rpx solid #e5e5e5;
 
-        height:240rpx;
+        height:220rpx;
         font-size:13px;
+
+        display: flex;
+        justify-content: flex-start;
 
         image{
             width:250rpx;
             height:190rpx;
-            float:left;
             display:block;
         }
         .img{
-            float:left;
+            /* float:left; */
             position:relative;
         }
 
         .car-num{
                 position:absolute;
-                bottom:0;
+                bottom:15px;
                 height:15px;
                 width:38px;
                 background-color:#fff;
@@ -35,25 +38,26 @@
                 text-align: center;
                 }          
         .content{
-            margin-left: 135px;
+            margin-left: 30rpx;
+            margin-top:5rpx;
             .title{
                 color: black;
-                padding-bottom:20rpx;
+                padding-bottom:10rpx;
             }
             .desc{
-                font-size: 11px;
-                line-height: 14px;
+                font-size: 20rpx;
+                /* line-height: 14px; */
             }
             .price{
                 color:rgb(49, 48, 48);
-                padding-top:20rpx;
-                font-size: 11px;
-                line-height: 14px;
+                padding:10rpx 0;
+                font-size: 20rpx;
+                line-height: 20rpx;
             }
             .marketPrice{
                 color: rgb(49, 48, 48);
-                font-size: 11px;
-                line-height: 14px;
+                font-size: 20rpx;
+                line-height: 20rpx;
             }
             .groupPrice{
                 color: red;
@@ -63,7 +67,7 @@
         }  
         .car-title .desc {
             color:#d43030;
-            font-size:11px;
+            font-size:11rpx;
             margin-left:20rpx
         }
         .car-title .title {
@@ -80,9 +84,8 @@
             <view class='car-num'>{{item.num}}张</view>                
         </view>            
         <view class="content">
-            <view class="title">{{item.brand_name}}</view>
+            <view class="title">[{{item.brand_name}}] {{item.goods_name}}</view>
             <view class="desc">{{item.goods_title}}</view>
-            <view class="desc">{{item.goods_name}}</view>
             <view class="price">售价：¥{{item.sell_price}}</view>
             <view class="marketPrice">市场价：¥{{item.market_price}}</view>
             <view class='groupPrice'>拼团价：¥{{item.price}}</view>

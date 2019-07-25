@@ -156,7 +156,7 @@ page, .body{
                     header:{"Content-Type":"applciation/json"},
                     method:"GET",//get为默认方法/POST
                     success:function(res){          
-                        wepy.setStorageSync('userInfo',_userInfo);
+                        //wepy.setStorageSync('userInfo',_userInfo);
                     },
                 });
             }
@@ -169,6 +169,7 @@ page, .body{
                 let userInfo = JSON.parse(options.userInfo)
                 if(wepy.getStorageSync('openId') !== userInfo.open_id){                  
                     let _userInfo = wepy.getStorageSync('userInfo');
+                    console.log('---index.wpy[L172] start ---');
                     if(_userInfo.uid !== userInfo.uid){
                         wx.request({
                             url:api.baseUrl + "index.php?m=home&c=user&a=appUpdateUser",//请求地址
@@ -180,7 +181,8 @@ page, .body{
                                 wepy.setStorageSync('userInfo',_userInfo);
                             },
                         });
-                    }                    
+                    }
+                    console.log('---index.wpy[L172]  end ---');                
                 }                
             }
         }

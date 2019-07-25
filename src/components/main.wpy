@@ -158,10 +158,10 @@
                 interval:2000,
                 duration:500,
                 imgUrls:[
-                    //'/images/main/slide1.jpg',
-                    //'/images/main/A.jpg',
-                    '/images/main/C.jpg',
-                    '/images/main/C.jpg',
+                    'http://www.maixc.cn/image/index/AA.jpg',
+                    'http://www.maixc.cn/image/index/BB.jpg',
+                    'http://www.maixc.cn/image/index/CC.jpg',
+                    'http://www.maixc.cn/image/index/DD.jpg',
                 ]
             },
 

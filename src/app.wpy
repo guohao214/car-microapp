@@ -82,12 +82,12 @@ export default class extends wepy.app {
                 userinfoRaw.code = loginData.code
 
                 console.log('loginData=' + JSON.stringify(loginData));
-                wepy.setStorageSync('_isLogin', true)
-                // await wepy.showToast({
-                //     title: '登录成功',
-                //     icon: 'success',
-                //     duration: 1000
-                // })
+
+                let userInfo = wepy.setStorageSync('userInfo');
+                if(userInfo !== undefined && userInfo != null){
+                    wepy.setStorageSync('_isLogin', true);
+                }                
+                
             } else {
                 console.log('登录时获取用户code失败！')
             }

@@ -132,11 +132,11 @@
                 width: 150rpx;
                 .btn{
                     color:white;
-                    background-color: red;
+                    background-color: #1296db;
                     /* width: 70%; */
                     height: 50rpx;
                     line-height:50rpx;
-                    /* border-radius:35rpx; */
+                    border-radius:35rpx;
                     text-align: center;
                     font-size:23rpx;
                 }     
@@ -244,7 +244,7 @@
             wx.showShareMenu({
                 withShareTicket: true,
             });
-                  
+
             if(typeof options.userInfo != 'undefined'){
                 console.log(options.userInfo)
                 let userInfo = JSON.parse(options.userInfo)
@@ -294,9 +294,6 @@
             });
         }
 
-        onShow(){
-            this.onLoad()
-        }
         methods = {
             click (evt) {
                 

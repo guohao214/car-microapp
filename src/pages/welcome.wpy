@@ -113,21 +113,28 @@
                         if(userinfoEx['data'].openId !== undefined && userinfoEx['data'].openId){
                             let userData = userinfoEx['data'];
 
-                            console.log('=====login=====',userData)
+                            console.log('=====welcome.wpy[L100]  login=====',userData)
                             wepy.setStorageSync('code', encodeURIComponent(code));
                             wepy.setStorageSync('openId', userData.openId);
                             wepy.setStorageSync('nickname', userData.nickname);
                             wepy.setStorageSync('avatarurl', userData.avatarUrl);
                             wepy.setStorageSync('sessionKey', userData.sessionKey);
 
+                            let userInfoVO = wepy.getStorageSync('userInfo');
+                            if(userInfoVO === undefined || userInfoVO == null){
+                                userData['openId'] = userData['open_id'];
+                                wepy.setStorageSync('userInfo', userData);          
+                            }
+                            
+
                             let query_user_info = wepy.getStorageSync('query_user_info');
                             console.log('=====loginquery_user_info=====',query_user_info)
                             if(query_user_info != undefined && query_user_info){
                                 query_user_info = JSON.parse(query_user_info);
-                                console.log('=====parent_id=====', query_user_info);
+                                console.log('=====welcome.wpy [L127] parent_id start =====', query_user_info);
                                 let parent_id = query_user_info.uid;
                                 userData.parent_id = parent_id;
-                                console.log('=====parent_id=====', parent_id);
+                                console.log('=====welcome.wpy [L127] parent_id end =====', parent_id);
                             }
 
                             wx.request({
@@ -135,13 +142,16 @@
                                 data:userData,
                                 header:{"Content-Type":"application/x-www-form-urlencoded"},
                                 method:"POST",//get为默认方法/POST
-                                success:function(res){  
+                                success:function(res){
+                                    console.log('welcome.wpy[L140] ---- appAddUser-----success---', res);
                                     wepy.setStorageSync('userInfo', res.data.data);
                                     self.showLoginButton = 0;
                                     self.showPhoneButton = 1;
                                     self.$apply();                                    
                                 },
-                                fail:function(err){},//请求失败
+                                fail:function(err){
+                                    console.log('welcome.wpy[L146] ---- appAddUser-----fail---', err);
+                                },//请求失败
                                 complete:function(){}//请求完成后执行的函数
                             });
                         }

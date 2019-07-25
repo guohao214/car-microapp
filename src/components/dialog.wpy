@@ -140,9 +140,9 @@ page {
     }
     onLoad(options){
         let showFirstWelcomePage = wepy.getStorageSync('_showFirstWelcomePage');
-        if(showFirstWelcomePage === ""){
-            this.$root.$navigate({ url: 'welcome' });
-        }
+        // if(showFirstWelcomePage === ""){
+        //     this.$root.$navigate({ url: 'welcome' });
+        // }
         
         wx.showShareMenu({
             withShareTicket: true

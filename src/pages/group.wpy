@@ -357,7 +357,9 @@
                 complete:function(){}//请求完成后执行的函数
             });
         }
-
+        onShow(options){
+            this.onLoad(options)
+        }
         methods = {
             click (evt) {
                 

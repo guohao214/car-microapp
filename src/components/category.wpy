@@ -59,6 +59,20 @@
                 
             }
         }
+        .cate-search{
+            position: relative;
+            padding: 10rpx;
+            display: block;        
+            height:120rpx;  
+            text-align: center;
+            image{
+                width: 232rpx;
+                height: 102rpx;
+            }
+            .last{
+                padding-left: 40rpx
+            }
+        }
         .type-search{
             position: relative;
             padding: 10rpx;
@@ -289,19 +303,23 @@
             <view class="item2">
                 快速找车
             </view>
-            <!-- <view class="item3">
+            <view class="item3">
                 <image src="/images/main/huo.png"/>
                 <view class="title">热销汽车</view>
-            </view> -->
+            </view>
         </view>
+        <view class='cate-search'>            
+            <image src="{{button_pic.dingzhi}}" @tap="goto_car_category(1)"></image>
+            <image src="{{button_pic.jinkou}}" class="last" @tap="goto_car_category(2)"></image>
+        </view>
+
         <view class='type-search'>            
-            <block wx:for="{{priceList}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+            <block wx:for="{{typeList}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                 <view class="item">
-                    <view class="title" @tap="goto_search({{item.start}}, {{item.end}})" >{{item.start}} - {{item.end}} 万</view>
+                    <view class="title" @tap="goto_search_type({{item.title}},'search_by_grade')">{{item.title}}</view>
                 </view>
             </block>
         </view>
-
 
         <view class='type-search'>            
             <block wx:for="{{typeList}}" wx:key="index" wx:for-index="index" wx:for-item="item">
@@ -387,6 +405,10 @@
                 title:'',
                 url:''
             }],
+            button_pic: {
+                'dingzhi':'http://www.maixc.cn/image/index/dingzhi.png',
+                'jinkou':'http://www.maixc.cn/image/index/jinkou.png'
+            },
             priceList:[
                 {
                     start:2,
@@ -438,6 +460,7 @@
                 
             },
             openCategoryTab(){
+                console.log('======= category.openCategoryTab() ========');
                 this.onLoad();
             },
             goto_url(item){
@@ -457,6 +480,10 @@
                 let url = 'detail?goods_id=' + id;
                 this.$emit('gotoUrl', url);
                 //this.$root.$navigate({url: 'detail?goods_id=' + id});
+            },
+            goto_car_category(type){
+                let url = 'car_category?type=' + type;
+                this.$emit('gotoUrl', url);
             },
             goto_contact(evt){
                 this.$root.$navigate({url: 'contact'});

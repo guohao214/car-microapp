@@ -116,7 +116,7 @@
                             console.log('=====welcome.wpy[L100]  login=====',userData)
                             wepy.setStorageSync('code', encodeURIComponent(code));
                             wepy.setStorageSync('openId', userData.openId);
-                            wepy.setStorageSync('nickname', userData.nickname);
+                            wepy.setStorageSync('nickname', userData.nickName);
                             wepy.setStorageSync('avatarurl', userData.avatarUrl);
                             wepy.setStorageSync('sessionKey', userData.sessionKey);
 

@@ -27,7 +27,10 @@ export default class extends wepy.app {
             'pages/contact',
             'pages/picture',
             'pages/car',
-            'pages/welcome'
+            'pages/welcome',
+            'pages/button',
+            'pages/business',
+            'pages/car_category'
         ],
         'window': {
             'backgroundTextStyle': 'light',
@@ -83,7 +86,7 @@ export default class extends wepy.app {
 
                 console.log('loginData=' + JSON.stringify(loginData));
 
-                let userInfo = wepy.setStorageSync('userInfo');
+                let userInfo = wepy.getStorageSync('userInfo');
                 if(userInfo !== undefined && userInfo != null){
                     wepy.setStorageSync('_isLogin', true);
                 }                

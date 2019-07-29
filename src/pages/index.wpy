@@ -100,9 +100,12 @@ page, .body{
                 this.$root.$navigate({url: url});
             },
             openMeTab(){
+                this.currentTab = 0;
                 this.$invoke('me', 'openMeTab');
             },
             openCategoryTab(){
+                console.log('======= index.openCategoryTab() ========');
+                this.currentTab = 1;
                 this.$invoke('category', 'openCategoryTab');
             },
             openIndexTab(){
@@ -124,7 +127,14 @@ page, .body{
         }
 
         onLoad(options) {
-            this.currentTab = 0;
+            if(options === undefined){
+                this.currentTab = 0;
+            }else if(options['currentTab'] === 'undefined'){
+                this.currentTab = 0;
+            }else{
+                this.currentTab = options.currentTab;
+            }
+            
             // console.log(wepy.getUserInfo(),12)
             this.$invoke('main', 'loadMainData');
             this.$invoke('category', 'loadHistoryList');
@@ -147,6 +157,7 @@ page, .body{
             });
 
             let _userInfo = wepy.getStorageSync('userInfo');
+            console.log('_userInfo==160====',!_userInfo)
             if(!_userInfo){
                 console.log('_userInfo======',_userInfo)
                 console.log('open_id======',wepy.getStorageSync('openId'))
@@ -155,8 +166,8 @@ page, .body{
                     data:{open_id:wepy.getStorageSync('openId')},
                     header:{"Content-Type":"applciation/json"},
                     method:"GET",//get为默认方法/POST
-                    success:function(res){          
-                        //wepy.setStorageSync('userInfo',_userInfo);
+                    success:function(res){        
+                        wepy.setStorageSync('userInfo',res.data.data);
                     },
                 });
             }

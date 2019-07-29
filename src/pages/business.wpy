@@ -1,0 +1,404 @@
+<style type="scss">
+$fontcolor: #7b7b7b;
+$activecolor: #13b113;
+.detail {
+  background: #ffffff;
+  .title-desc {
+    font-size: 28rpx;
+    margin-left: 4%;
+    margin-top: 40rpx;
+    padding-bottom: 40rpx;
+    display: inline;
+    float: left;
+    width: 92%;
+    border-bottom: 1rpx #e5e5e5 solid;    
+    image{
+      width:160rpx;
+      height: 160rpx;      
+    }
+    .input-desc {
+      float: right;
+      width: 45%;
+      margin-top: -1rpx;
+      input{
+        text-align:right;
+      }
+    }
+    .card{
+      float: left;
+      width: 170rpx;
+      height: 180rpx;
+      padding-left: 17%;
+      position: relative;
+      .img{
+        display:flex;
+        align-items:center; 
+        width: 170rpx;
+        height: 180rpx;        
+      }
+      .delete_btn{
+        position: absolute;
+        top:0rpx;
+        right:-30rpx;
+        width:40rpx;
+        height:40rpx; 
+      }
+      text{
+        color: #7b7b7b;
+        font-size:20rpx;
+      }
+    }
+  }
+    .btn {
+        position:fixed;
+        bottom:0rpx;
+        height:90rpx;
+        line-height: 90rpx;
+        text-align: center;
+        width:100%;
+        background:#1296db;
+        color:white;
+        font-size: 28rpx;
+      }
+  .bg{
+    font-size: 28rpx;
+    display: inline;
+    float: left;
+    width: 100%;
+    padding-left: 33rpx;
+    padding-top: 40rpx;
+    padding-bottom: 10rpx;
+    border-bottom: 1rpx #e5e5e5 solid;
+    background-color: aliceblue
+  }
+  .pic{
+    font-size: 28rpx;
+    margin-left: 33rpx;
+    margin-top: 40rpx;    
+    padding-bottom: 40rpx;
+    display: inline;
+    float: left;
+    width: 100%;
+    border-bottom: 1rpx #e5e5e5 solid;
+    
+    
+    .card{
+      float: left;
+      width: 200rpx;
+      height: 180rpx;
+      position: relative;
+      .img{
+        display:flex;
+        align-items:center; 
+        width: 170rpx;
+        height: 180rpx;
+        margin-right:20rpx;
+        margin-bottom:20rpx;
+      }
+      .delete_btn{
+        position: absolute;
+        top:0rpx;
+        right:0rpx;
+        width:40rpx;
+        height:40rpx; 
+      }
+      image{
+        width:160rpx;
+        height: 160rpx; 
+      }
+      text{
+        width: 100%;
+        height: 30rpx;
+        font-size:30rpx
+      }
+    }
+  }
+  .last_pic{
+    margin-bottom:120rpx;
+  }
+}
+.line {
+  height: 1px;
+  background: rgb(172, 169, 169);
+}
+</style>
+
+<template>
+    <view class="detail">
+        <view class='bg'>
+          个人信息
+        </view>
+        <view class='title-desc'>
+           <span>姓名</span>
+           <span class='input-desc'><input @input="input" id='name' value="{{name}}" bindinput='inputWacth' placeholder="请填写您的真实姓名" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
+        </view>
+        <view class='title-desc'>
+            <view class='card' hidden="{{idcard_front_flag}}">
+              <image src="/images/up.png" mode="widthFix" @tap="upload_image('idcard_front')"/>
+              <text>请上传身份证正面</text>
+            </view>
+
+            <view class='card' hidden="{{!idcard_front_flag}}">
+              <image src="/images/delete.png" mode="widthFix" class="delete_btn" @tap="remove_image('idcard_front')"/>
+              <view class="img">
+                <image src="{{idcard_front}}" mode="widthFix"/>
+              </view>
+              <text>请上传身份证正面</text>
+            </view>
+
+            <view class='card' hidden="{{idcard_back_flag}}">
+              <image src="/images/up.png" mode="widthFix" class="add_btn" @tap="upload_image('idcard_back')" hidden="{{upfile.idcard_back_flag}}"/>
+              <text>请上传身份证反面</text>
+            </view>
+
+            <view class='card' hidden="{{!idcard_back_flag}}">
+              <image src="/images/delete.png" mode="widthFix" class="delete_btn" @tap="remove_image('idcard_back')"/>
+              <view class="img">
+                <image src="{{idcard_back}}" mode="widthFix"/>
+              </view>
+              <text>请上传身份证反面</text>
+            </view>
+        </view>
+        <view class='bg'>
+          公司信息
+        </view>
+        <view class='title-desc'>
+           <span>公司名称</span>
+           <span class='input-desc'><input @input="input" value="{{company_name}}" id='company_name' bindinput='inputWacth' placeholder="请填写营业执照公司全称" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
+        </view>
+        <view class='title-desc'>
+           <span>详细地址</span>
+           <span class='input-desc'><input @input="input" id='address' value="{{address}}" bindinput='inputWacth' placeholder="请填写公司详细地址" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
+        </view>
+        <view class='pic'>
+            <view class='card' hidden="{{company_flag}}">
+              <text>营业热照照片</text>
+              <image src="/images/up.png" mode="widthFix" @tap="upload_image('company')"/>
+            </view>
+
+            <view class='card' hidden="{{!company_flag}}">
+              <text>营业热照照片</text>
+              <image src="/images/delete.png" mode="widthFix" class="delete_btn" @tap="remove_image('company')"/>
+              <view class="img">
+                <image src="{{company}}" mode="widthFix"/>
+              </view>
+            </view>
+        </view>
+
+
+        <view class='pic last_pic'>          
+          <view>
+            <text>展厅照片</text>
+          </view>
+          <repeat for="{{luby}}">
+            <view class='card'>
+              <image src="/images/delete.png" mode="widthFix" class="delete_btn" @tap="remove_image('luby', {{item}})"/>
+              <view class="img">
+                <image src="{{item}}" mode="widthFix"/>
+              </view>
+            </view>
+          </repeat>
+
+          <view class='card'>            
+            <image src="/images/up.png" mode="widthFix" @tap="upload_image('luby')"/>
+          </view>    
+        </view>
+        <view class="btn" @tap='send()' hidden="{{checking}}">提交审核</view> 
+        <view class="btn" hidden="{{!checking}}">审核中</view>
+    </view>
+</template>
+<script>
+    import wepy from 'wepy';
+    import api from '../common/api.js'
+
+    export default class Business extends wepy.page {
+        config = {
+            'navigationBarTitleText': '商户入住',
+            'navigationBarTextStyle': 'white',
+            'navigationBarBackgroundColor': '#3b3a40'
+        };
+        props = {
+            item: {},
+            index: {},
+        }
+
+        data = {            
+            idcard_front_flag:false,
+            idcard_front:'',
+
+            idcard_back_flag:false,
+            idcard_back:'',
+
+            checking : false,
+
+            company_flag:false,
+            company:'',
+            company_name:'',
+            address:'',
+            name:'',
+            luby:[],
+            info: {}
+        }
+        
+        onLoad(options) {
+            let userInfo = wx.getStorageSync('userInfo');
+            console.log(userInfo,'business')
+            if(userInfo.business){    
+              let business = userInfo.business
+              this.name = business.name
+              this.company_name = business.company_name
+              this.address = business.address   
+              this.idcard_front_flag = true
+              this.idcard_back_flag = true
+              this.company_flag = true
+              this.$apply()
+
+              this.idcard_front = business.idcard_front
+              this.idcard_back = business.idcard_back
+              this.company = business.business_license_pic
+              if(typeof business.showroom_pic != 'array')
+                this.luby = [business.showroom_pic]
+              else
+                this.luby = business.showroom_pic
+              this.checking = true
+              this.$apply()
+            }
+        }
+                
+        methods = {
+            click (evt) {
+                
+            },            
+
+            //点击图片选择手机相册或者电脑本地图片
+            upload_image(elem) {
+              let self = this;
+              let sessionKey = wx.getStorageSync('sessionKey');
+              
+              wx.chooseImage({
+                count: 1,// 默认9
+                sizeType: ['original', 'compressed'],// 可以指定是原图还是压缩图，默认二者都有
+                sourceType: ['album', 'camera'],// 可以指定来源是相册还是相机，默认二者都有
+                success: function(res) {
+                  // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+                  let tempFilePaths = res.tempFilePaths;
+                  //这里是上传操作
+                  wx.uploadFile({
+                    url: api.baseUrl + "index.php?m=home&c=user&a=appUploadWxFile", //里面填写你的上传图片服务器API接口的路径 
+                    filePath: tempFilePaths[0],//要上传文件资源的路径 String类型 
+                    name: 'avatar',//按个人情况修改，文件对应的 key,开发者在服务器端通过这个 key 可以获取到文件二进制内容，(后台接口规定的关于图片的请求参数)
+                    header: {
+                      "Content-Type": "multipart/form-data"//记得设置
+                    },
+                    formData: {
+                        //和服务器约定的token, 一般也可以放在header中
+                      'session_token': sessionKey
+                    },
+                    success: function(res) {                      
+                      if (res.statusCode = 200) {
+                        let data = res.data;
+                        data = JSON.parse(data);
+                        let src = data.data;
+
+                        if(elem == 'luby'){
+                          self[elem].push(src);
+                          self.$apply();
+                        }else{
+                          self[elem + "_flag"] = true;
+                          self.$apply();
+                          self[elem] = src;
+                          self.$apply();
+                        }
+                        
+                      }
+                    }
+                  })
+                }
+              });
+            },
+
+            remove_image(elem, src){
+              if(elem == 'luby'){
+                let arr = [];
+                this.luby.forEach(item => {
+                  if(item != src){
+                    arr.push(item);
+                  }
+                });
+
+                this.luby = arr;
+                this.$apply();
+              }else{
+                this[elem + "_flag"] = false;
+                this.$apply();
+
+                this[elem] = '';              
+                this.$apply();
+              }
+            },
+            
+            inputWacth(e){
+                let item = e.currentTarget.id;
+                let val = e.detail.value
+                
+                if(item == 'name'){
+                    this.info.name = val;
+                }
+                if(item == 'company_name'){
+                    this.info.company_name = val;
+                }
+                if(item == 'address'){
+                    this.info.address = val;
+                }
+                this.$apply();
+            },
+            send (evt) { 
+                this.info.idcard_front = this.idcard_front
+                this.info.idcard_back = this.idcard_back
+                this.info.showroom_pic = this.luby
+                this.info.business_license_pic = this.company  
+                console.log(this.info,'this.info')   
+                // for (var index in this.info){
+                //     console.log(this.info[index],index) 
+                //     if(!this.info[index]){
+                //         wx.showModal({
+                //         title: '提示',
+                //         content: '数据不能为空',
+                //     })  
+                //     return false
+                //     }
+                // }
+                
+                let self = this;  
+
+                let userInfo = wepy.getStorageSync('userInfo');  
+                self.info.uid = userInfo.uid;
+                wx.requestLoad({
+                    url:api.baseUrl + "index.php?m=home&c=user&a=appAddBusniess",//请求地址
+                    data:self.info,
+                    header:{"Content-Type":"application/x-www-form-urlencoded"},
+                    method:"POST",//get为默认方法/POST
+                    success:function(res){ 
+                      console.log(res)
+                      wx.showModal({
+                        title: '提示',
+                        content: res.data.msg,
+                        success(res1) {
+                          if(res.data.status == 1){  
+                            userInfo['business'] = self.info
+                            wepy.setStorageSync('userInfo',userInfo);      
+                            self.$root.$navigate({url: 'index'});    
+                          }else{
+                            return false
+                          }                            
+                        } 
+                      }); 
+                        
+                    },
+                    fail:function(err){},//请求失败
+                    complete:function(){}//请求完成后执行的函数
+                });
+            },
+        };
+    }
+</script>

@@ -1,0 +1,170 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+    .category-detail{
+        background: #ffffff;
+        margin:0rpx 0rpx 0rpx 0rpx;
+        height: 100%;
+    }
+    .catgoryCarList {
+        margin-top:8rpx;
+        /* padding-left: 20rpx; */
+        /* padding-right: 20rpx; */
+        padding-bottom: 0rpx;
+        background: white;
+        
+        .sep {
+            background-color: #f1f0f6;
+            color: #7e7d83;
+            /* height: 45rpx; */
+            padding: 10rpx 30rpx;
+            font-size: 26rpx;
+            font-weight: bold;
+            box-sizing: border-box;
+            /* margin-left: -20rpx; */
+            /* margin-right: -20rpx; */
+        }
+        .car {
+            height: 110rpx;
+            box-sizing: border-box;
+            padding: 20rpx;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: left; 
+            border-bottom: 1rpx solid gainsboro;
+            .car_icon {
+                width: 70rpx;
+                height: 70rpx;
+                display: flex;                
+                border-radius: 10rpx;
+            }
+            .car_name {
+                margin-top: 10rpx;
+                font-size: 28rpx;
+                line-height: 70rpx; 
+                color: #7b7b7b                
+            }
+        }
+        .total {
+            height: 120rpx;
+            background-color: #eee;
+            /* margin-left: -20rpx; */
+            /* margin-right: -20rpx; */
+            text-align: center;
+            line-height: 120rpx;
+            color: $fontcolor;
+            font-size: 33rpx;
+        }
+    }
+</style>
+
+<template>
+    <view class="category-detail">
+        <scroll-view bindscroll="scroll" scroll-y scroll-into-view="{{jumpToPos}}" >
+        <view class='catgoryCarList'>            
+            <block wx:for="{{carList}}" wx:key="index" wx:for-index="alpha" wx:for-item="lists">
+                <view id="{{'POS_' + alpha}}">
+                <view  class="sep">{{alpha}}</view>
+                    <block wx:for="{{lists}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                        <view class="car" @tap="goto_search_type({{item.big_brand_id}},'search_by_brand')">
+                            <!-- <image mode="widthFix" src="{{item.logo}}" class="car_icon"></image> -->
+                            <text class="car_name" >{{item.cn_name}}</text>
+                        </view>
+                    </block>
+                </view>
+            </block>            
+        </view>
+        </scroll-view>
+
+        <alpha />
+    </view>
+</template>
+<script>
+    import wepy from 'wepy';
+    import api from '../common/api.js'
+    import Alpha from '../components/alpha_cate';
+
+    export default class Detail extends wepy.page {
+
+        // 子组件
+        components = {
+            alpha: Alpha
+        };
+        props = {
+            item: {},
+            index: {},
+        }
+        config = {
+            'navigationBarTitleText': '商务车定制车型',
+            'navigationBarTextStyle': 'white',
+            'navigationBarBackgroundColor': '#3b3a40'
+        };
+        data = {            
+            // 年份列表
+            carList: [],
+            jumpToPos:'POS_A',
+            
+        }
+
+        format (arr) {
+            if(arr === undefined || arr == null){
+                arr = [];
+            }
+            let c, obj = {};
+            arr.forEach((item) => {
+                c = item.name[0].toUpperCase();
+                if (obj[c]) {
+                    obj[c].push(item);
+                } else {
+                    obj[c] = [item];
+                }
+            });
+            return obj;
+        } 
+        onLoad(options) {
+            let self = this;
+            wx.requestLoad({
+                url:api.baseUrl + "index.php?m=home&c=brand&a=appBrandList",//请求地址
+                data:{},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){
+                    console.log(res);
+                    let arr = res.data;
+                    if(arr === undefined || arr == null){
+                        arr = [];
+                    }
+
+                    arr.forEach((v) => {
+                        arr[v.name] = v;
+                    });
+
+                    self.total = arr.length;
+                    self.carList = self.format(arr);
+
+                    console.log(self.carList);
+                    self.$apply();
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+        events = {
+            onAphaSelect(key,event){
+                this.jumpToPos = "POS_" + key;
+                this.$apply();                
+                this.jumpToPos = "";
+                this.$apply();
+            }
+        }
+        methods = {
+            click (evt) {
+                
+            },
+            goto_search_type(type,searchType){
+                //this.$root.$navigate({url: 'car_list?'});
+            }
+        };
+    }
+</script>

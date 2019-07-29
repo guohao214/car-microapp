@@ -102,8 +102,27 @@
                 
             }
         }
-        .group-list{
-
+        .button-list{
+            .content{
+                display:flex;
+                justify-content: space-between;
+                padding: 10rpx 25rpx;
+                flex-wrap: wrap;
+                .box{
+                    text-align:center;
+                    height: 160rpx;
+                    width:140rpx;
+                    padding-right: 20rpx;
+                    image{                    
+                        width:150rpx;
+                        height: 100rpx;
+                    }
+                    .desc{
+                        font-size: 25rpx;
+                    }
+                }
+                
+            }
         }
     }
 </style>
@@ -118,6 +137,18 @@
                 </swiper-item>
             </repeat>
         </swiper>
+
+        <view class='button-list'>
+            <view class="content">
+                <block wx:for="{{buttonList}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+                    <view class="box" @tap="goto_content({{item}})">                        
+                        <image  src="{{item.img}}"/>
+                        <view class="desc">{{item.title}}</view>
+                    </view>
+                    
+                </block>
+            </view>            
+        </view>
 
         <view class='group-buy'>
             <image mode="aspectFill" src="{{group_buy.img}}"/>
@@ -176,6 +207,8 @@
 
             // 主列表
             goods_list: [],
+            buttonList: [],
+            buttonListAll: []
         };
 
         methods = {
@@ -185,6 +218,30 @@
             goto_group_detail(id) {
                 this.$root.$navigate({url: 'groupDetail?goods_id=' + id});
             },
+            goto_content(item){
+                let userInfo = wepy.getStorageSync('userInfo'); 
+                if(item.title == '车型大全'){
+                    this.$emit('openCategoryTab', '');
+                }else if(item.title == '商务车定制'){
+                    this.$root.$navigate({url: 'car_category?type=1'});
+
+                }else if(item.title == '平行进口车'){
+                    this.$root.$navigate({url: 'car_category?type=2'});
+
+                }else if(item.title == '商户入驻'){
+
+                    this.$root.$navigate({url: 'business'});
+                }else if(item.title == '更多'){
+                    
+                    this.$root.$navigate({url: 'button?buttonList=' + JSON.stringify(this.buttonListAll)});
+                }else{
+                    wx.showModal({
+                        title: '提示',
+                        content: '功能正在开通中',
+                    })
+                    return false
+                }
+            }
         };
 
         loadGroupList(callback){
@@ -223,10 +280,27 @@
             });
         }
 
+        loadButtonList(){
+            var self = this;
+            wx.request({ 
+                url:api.baseUrl + "index.php?m=home&c=index&a=appIndexButton",//请求地址
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){
+                    self.buttonListAll = res.data
+                    self.buttonList = self.buttonListAll.slice(0,8)
+                    self.$apply()    
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+
         async loadMainData() {
             let self = this;            
             self.loadGroupList(function(){
                 self.loadGoodsList();
+                self.loadButtonList()
             });
         }
 

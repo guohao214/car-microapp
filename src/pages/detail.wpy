@@ -132,13 +132,13 @@
                 width: 150rpx;
                 .btn{
                     color:white;
-                    background-color: red;
+                    background-color: #1296db;
                     /* width: 70%; */
                     height: 50rpx;
                     line-height:50rpx;
-                    /* border-radius:35rpx; */
+                    border-radius:35rpx;
                     text-align: center;
-                    font-size:22rpx;
+                    font-size:23rpx;
                 }     
             }
         }

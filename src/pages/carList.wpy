@@ -1,0 +1,153 @@
+<style type="scss">
+    .carList{
+        width:100%;
+        .menu_row{
+            display: flex;
+            justify-content:center;            
+            .dp-menu{
+                display: inline;
+                width:200rpx;
+            }
+        }
+        .group-buy{
+            margin:20rpx 20rpx 20rpx 20rpx;
+            padding:20rpx 20rpx 20rpx 20rpx;
+            
+            height:190rpx;
+            font-size:13px;
+            .item{
+                border-bottom:0.5px #e5e5e5 solid;
+            }
+            .img{
+                float:left;
+                position:relative;
+                margin-top: 10rpx;
+                image{
+                    width:180rpx;
+                    height:120rpx;
+                    float:left;
+                    display:block;
+                }
+            }
+
+                       
+            .content{
+                margin-left:220rpx;
+                
+                .title{
+                    color:gray;
+                }
+                .desc{
+                    font-size:11px;
+                }
+                .btn{
+                    color:white;
+                    background-color: #1296db;
+                    /* width: 70%; */
+                    height: 50rpx;
+                    line-height:50rpx;
+                    border-radius:35rpx;
+                    text-align: center;
+                    font-size:23rpx;
+                }               
+            }  
+            .car-title .desc {
+                color:#d43030;
+                font-size:11px;
+                margin-right:50rpx;
+                margin-top: 50rpx;
+            }
+            .car-title .title {
+                color:#000000a9;
+                margin:15rpx 15rpx 15rpx 15rpx;
+                font-size:26rpx;
+            }   
+            .price{
+                
+            }
+        }
+    }
+</style>
+
+<template>
+    <view class="carList">
+        <view class="menu_row">
+            <dropdown1 class="dp-menu" :item="menu1"></dropdown1>
+            <dropdown2 class="dp-menu" :item="menu2"></dropdown2>
+            <dropdown3 class="dp-menu" :item="menu3"></dropdown3>
+        </view>
+        <view class='group-buy car-detail'>
+            <block wx:for="{{goods_list}}" class="item" wx:key="index" wx:for-index="index" wx:for-item="item">
+                <view class="item" @tap='goto_detail({{item.goods_id}})' >
+                    <view class='img'>
+                        <image src="{{item.thumb}}" />              
+                    </view> 
+                    <view class="content car-title">
+                        <view class="title">[{{item.brand_name}}] {{item.goods_name}}</view>
+                        <view class="title">黑、红 杭州</view>
+                        <view class="title">黑、红 杭州</view>
+                    </view> 
+                    
+                </view>
+
+                
+            </block>
+                       
+           
+        </view>           
+        </view>
+    </view>
+</template>
+<script>
+    import wepy from 'wepy';
+    import api from '../common/api.js'
+    import Dropdown from '../components/dropdown'
+
+    export default class CarList extends wepy.page {
+        // 子组件
+        components = {
+            dropdown1: Dropdown,
+            dropdown2: Dropdown,
+            dropdown3: Dropdown,
+        };
+        data = {
+            menu1:{
+                name:"menu1",
+                list:['全部','欧版','美版','中规'],
+            },
+            menu2:{
+                name:"menu2",
+                list:['颜色','黑','咖','白'],
+            },
+            menu3:{
+                name:"menu3",
+                list:['地区','北京','天津','杭州'],
+            },
+            goods_list: []
+        }
+        
+        onLoad(){
+            var self = this;
+            wx.request({ 
+                url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
+                data:{},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){                  
+                    self.goods_list = res.data
+                    self.$apply()    
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
+        methods = {
+            click (evt) {
+                
+            },  
+            goto_detail (id) {
+                this.$root.$navigate({url: 'car?goods_id=' + id});
+            },         
+        };
+    }
+</script>

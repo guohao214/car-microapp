@@ -1,0 +1,118 @@
+<!-- 下拉框 -->
+<style type="scss">
+.select_box {
+  background: #fff;
+  width: 33%;
+  margin: 0 auto;
+  margin-top: 40rpx;
+  height: 86rpx;
+  line-height: 86rpx;
+  text-align: left;
+  position: relative;
+  float:left;
+}
+
+.select {
+  box-sizing: border-box;
+  width: 150rpx;
+  height: 86rpx;
+  /* border: 1px solid #efefef; */
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+}
+
+.select_text {
+  font-size: 28rpx;
+  flex: 1;
+  color: rgb(102, 102, 102);
+  line-height: 86rpx;
+  height: 86rpx;
+}
+
+.select_img {
+  width: 40rpx;
+  height: 40rpx;
+  display: block;
+  transition: transform 0.3s;
+}
+
+.select_img_rotate {
+  transform: rotate(180deg);
+}
+
+.option_box {
+  position: absolute;
+  top: 86rpx;
+  width: 150rpx;
+  border: 1px solid #efefef;
+  box-sizing: border-box;
+  height: 0;
+  overflow-y: auto;
+  border-top: 0;
+  background: #fff;
+  transition: height 0.3s;
+  z-index: 10000;
+}
+
+.option {
+  display: block;
+  line-height: 28rpx;
+  font-size: 28rpx;
+  /* border-bottom: 1px solid #efefef; */
+  padding: 10rpx;
+  color: rgb(102, 102, 102);
+  font-size: 28rpx;
+  padding-bottom: 40rpx;
+}
+</style>
+
+<template>
+    <view class="select_box">
+      <view class="select" catchtap="selectTap">
+        <text class="select_text">{{item.list[index]}}</text>        
+        <image class="select_img {{show&&'select_img_rotate'}}" src="/images/godown.png"></image>
+      </view>
+
+      <view class="option_box" style="height:{{show?(item.list.length*150):0}}rpx;">
+        
+        <text class="option" wx:for="{{item.list}}" wx:key="index" wx:for-index="index" wx:for-item="v" @tap="optionTap({{index}})">
+            {{v}}
+        </text>
+      </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy';
+
+    export default class Dropdown extends wepy.component {
+        props = {
+            item:{
+                name:'',                
+                list:[],                
+            }, //下拉列表的数据       
+            
+        }
+        
+        data = {
+            show:false,
+            index:0,
+        }
+
+        methods = {
+             selectTap() {
+                 console.log('this--------->', this);
+                this.show = !this.show;
+                this.$apply();
+            },
+            // 点击下拉列表
+            optionTap(index) {
+                this.index = index;
+                this.show = false;
+                this.$apply();
+            },
+        };
+    }
+</script>

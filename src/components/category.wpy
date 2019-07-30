@@ -489,7 +489,7 @@
                 //this.$root.$navigate({url: 'detail?goods_id=' + id});
             },
             goto_car_category(type){
-                let url = 'car_category?type=' + type;
+                let url = 'carCategory?type=' + type;
                 this.$emit('gotoUrl', url);
             },
             goto_contact(evt){

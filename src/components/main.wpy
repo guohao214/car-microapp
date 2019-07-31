@@ -119,8 +119,8 @@
                     /* width:140rpx; */
                     /* padding-right: 20rpx; */
                     image{                    
-                        height:100rpx;
-                        width:140rpx;
+                        height:110rpx;
+                        width:150rpx;
                         /* height: 100rpx; */
                     }
                     .desc{

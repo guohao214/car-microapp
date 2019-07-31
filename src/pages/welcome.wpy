@@ -8,25 +8,39 @@
         padding-top:100rpx;
 
         .logo{
-            width:250rpx;
-            height:300rpx;
-            margin:auto;
+            display:flex;
+            justify-content: center;
+            padding: 50rpx 0;
+            margin: auto 80rpx;
+            border-bottom: 2rpx solid #eee;
             
             image{
-                width:100%;
-                height:300rpx;
+                width:200rpx;
+                height:200rpx;
+                border-radius: 50%;
             }
         }
 
         .logo_txt{
             width:100%;
-            text-align: center;
+            text-align: left;
+            padding: 50rpx 80rpx;
+            color: #222;
+            .small-title {
+                font-size: 27rpx;
+                padding: 30rpx 0rpx;
+                color: #888;
+            }
         }
 
         .center{
-            width: 90%;
+            width: 80%;
             margin: 0rpx auto;
-            margin-top:200rpx;
+            margin-top:30rpx;
+            .btn {
+                font-size: 30rpx;
+                padding: 10rpx 0;
+            }
         }
     }
 </style>
@@ -34,22 +48,24 @@
     <view class="welcome">
         
         <view class='logo'>
-            <!-- <image src='https://www.maixc.cn/qrcode/firstPage.jpeg'/> -->
+            <image src='https://wx.qlogo.cn/mmhead/cneZJxkw3TJzBtSWAfWak12TKwxrbLDDQ1fsqrjwamI/132'/>
         </view>
 
         <view class='logo_txt'>
             <view hidden="{{showLoginButton != 1}}">
-                Hi, 为了更好的体验请授权登录
+                申请获取以下权限
+                <view class="small-title">获取你的公开信息（昵称，头像等）</view>
             </view>
 
             <view hidden="{{showPhoneButton != 1}}">
-                请绑定手机号
+                申请获取以下权限
+                <view class="small-title">获取你的手机号</view>
             </view>
         </view>
         
         <view class='center'>
-            <button hidden="{{showLoginButton != 1}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" style='background-color:#1296db;color:#FFF'>授权登录</button>
-            <button hidden="{{showPhoneButton != 1}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" style='background-color:#1296db;color:#FFF'>同意绑定手机号</button>
+            <button class="btn" hidden="{{showLoginButton != 1}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" style='background-color:#1296db;color:#FFF'>授权登录</button>
+            <button class="btn" hidden="{{showPhoneButton != 1}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" style='background-color:#1296db;color:#FFF'>同意绑定手机号</button>
         </view>
 
        

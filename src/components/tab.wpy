@@ -68,13 +68,13 @@
                 this.active = idx;
 
                 if(idx == 2){
-                    //this.$emit('openMeTab', '');
+                    this.$emit('openMeTab', '');
                 }
                 if(idx == 1){
-                    // this.$emit('openCategoryTab', '');
+                    this.$emit('openCategoryTab', '');
                 }
                 if(idx == 0){
-                    // this.$emit('openIndexTab', '');
+                    this.$emit('openIndexTab', '');
                 }
             }
         };

@@ -495,9 +495,9 @@ $activecolor: #13b113;
                 let self = this
                 let goods_id = self.goods_id
                 if(!self.goods_id){
-                    wepy.showToast({
+                    wx.showToast({
                         title: '无团',
-                        icon: 'fail',
+                        icon: 'none',
                         duration: 1000
                     });
                 }else{

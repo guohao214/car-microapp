@@ -48,7 +48,7 @@
     <view class="welcome">
         
         <view class='logo'>
-            <image src='https://wx.qlogo.cn/mmhead/cneZJxkw3TJzBtSWAfWak12TKwxrbLDDQ1fsqrjwamI/132'/>
+            <image src='/images/logo.png'/>
         </view>
 
         <view class='logo_txt'>

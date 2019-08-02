@@ -557,9 +557,9 @@ $activecolor: #13b113;
                             });
                             self.onLoad();
                         }else{
-                            wepy.showToast({
+                            wx.showToast({
                                 title: res.data.msg,
-                                icon: 'fail',
+                                icon: 'none',
                                 duration: 1000
                             });
                         }
@@ -583,16 +583,10 @@ $activecolor: #13b113;
                 console.log('------openMeTab[539]-------', wepy.getStorageSync('openId'));
                 console.log('------openMeTab[540]-------', this.userInfo);
                 this.userInfo = wepy.getStorageSync('userInfo');
-                console.log('------openMeTab[541]-------', this.userInfo);
-                // this.userInfo.open_id = wepy.getStorageSync('openId');
-                // this.userInfo.nickname = wepy.getStorageSync('nickName');
-                // this.userInfo.avatarUrl = wepy.getStorageSync('avatarUrl');
+                console.log('------openMeTab[541]-------', this.userInfo);                
                 this.onLoad();
                 this.$apply();
                 let self = this;
-                
-                
-                
             },
 
             change_tab(tab_name){

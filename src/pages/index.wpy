@@ -100,7 +100,7 @@ page, .body{
                 this.$root.$navigate({url: url});
             },
             openMeTab(){
-                this.currentTab = 0;
+                this.currentTab = 2;
                 this.$invoke('me', 'openMeTab');
             },
             openCategoryTab(){

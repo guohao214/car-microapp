@@ -5,8 +5,8 @@
   width: 33%;
   margin: 0 auto;
   margin-top: 40rpx;
-  height: 86rpx;
-  line-height: 86rpx;
+  height: 46rpx;
+  line-height: 46rpx;
   text-align: left;
   position: relative;
   float:left;
@@ -15,7 +15,7 @@
 .select {
   box-sizing: border-box;
   width: 150rpx;
-  height: 86rpx;
+  height: 46rpx;
   /* border: 1px solid #efefef; */
   border-radius: 8rpx;
   display: flex;
@@ -27,8 +27,8 @@
   font-size: 28rpx;
   flex: 1;
   color: rgb(102, 102, 102);
-  line-height: 86rpx;
-  height: 86rpx;
+  line-height: 46rpx;
+  height: 46rpx;
 }
 
 .select_img {
@@ -64,7 +64,8 @@
   padding: 10rpx;
   color: rgb(102, 102, 102);
   font-size: 28rpx;
-  padding-bottom: 40rpx;
+  padding-left:20rpx;
+  padding-bottom: 10rpx;
 }
 </style>
 
@@ -75,7 +76,7 @@
         <image class="select_img {{show&&'select_img_rotate'}}" src="/images/godown.png"></image>
       </view>
 
-      <view class="option_box" style="height:{{show?(item.list.length*150):0}}rpx;">
+      <view class="option_box" style="height:{{show?(item.list.length*80):0}}rpx;">
         
         <text class="option" wx:for="{{item.list}}" wx:key="index" wx:for-index="index" wx:for-item="v" @tap="optionTap({{index}})">
             {{v}}

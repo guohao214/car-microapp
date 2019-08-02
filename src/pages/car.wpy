@@ -23,6 +23,11 @@
             margin-left: 22rpx;
             margin-top:30rpx;
         }
+        .desc{
+            font-size: 28rpx;
+            margin-left: 22rpx;
+            margin-top:30rpx;
+        }
     }
     .car-list{ 
         display: inline-block;   
@@ -80,6 +85,8 @@
                     </view>        
                 </view>
             </view>
+            <view class="desc">发布者名称：{{group_buy.nickname}}</view>
+            <view class="desc">车辆所在地：{{group_buy.city}}</view>
         </view>
         <view class='line'></view>
         <view class="car-list" @tap="click">

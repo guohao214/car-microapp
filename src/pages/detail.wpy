@@ -155,7 +155,9 @@
             <view class="content car-title">
                 <view class="title">[{{group_buy.brand_name}}] {{group_buy.goods_name}}</view>
                 <view class="desc">售价：{{group_buy.sell_price}}万 - {{group_buy.market_price}}万</view>
-            </view>            
+                <view class="desc">发布者名称:{{group_buy.uid}}</view>
+                <view class="desc">车辆所在地:{{group_buy.city}}</view>
+            </view>
         </view>
         <!-- <view class='line line-margin'></view> -->
         <view class='years-list' @tap="click">
@@ -282,7 +284,7 @@
             });
             wx.requestLoad({ 
                 url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
-                data:{num:"14"},
+                data:{},
                 header:{"Content-Type":"applciation/json"},
                 method:"GET",//get为默认方法/POST
                 success:function(res){                  

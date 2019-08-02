@@ -48,7 +48,7 @@
     <view class="welcome">
         
         <view class='logo'>
-            <image src='/images/logo.png'/>
+           <image src='/images/logo.png'/>
         </view>
 
         <view class='logo_txt'>

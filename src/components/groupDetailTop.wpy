@@ -55,9 +55,9 @@
             }
             .desc1{
                 color: dodgerblue; 
-                /* float: right;   */
-                /* line-height: 7px;   */
-                font-size: 21rpx;   
+                /* float: right;  
+                line-height: 7px;   */
+                font-size: 21rpx;
             }
         }        
         .car-title .desc {

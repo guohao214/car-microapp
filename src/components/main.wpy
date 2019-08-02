@@ -120,7 +120,7 @@
                     /* padding-right: 20rpx; */
                     image{                    
                         height:110rpx;
-                        width:150rpx;
+                        width:110rpx;
                         /* height: 100rpx; */
                     }
                     .desc{

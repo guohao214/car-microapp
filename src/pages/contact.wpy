@@ -26,6 +26,19 @@ $activecolor: #13b113;
     margin-left: 5%;
     margin-bottom:40rpx;
   }
+  .btn2{
+    position: fixed;
+    width: 90%;
+    color: white;
+    height: 80rpx;
+    line-height: 80rpx;
+    border-radius: 10rpx;
+    text-align: center;
+    font-size: 28rpx;
+    background: #1296db;
+    bottom:320rpx;
+    left:5%;
+  }
   .group-buy {
     margin: 20rpx 20rpx 20rpx 20rpx;
     padding: 20rpx 20rpx 20rpx 20rpx;
@@ -220,27 +233,26 @@ $activecolor: #13b113;
            <span class='input-desc'><input @input="input" id='city' bindinput='inputWacth' placeholder="输入城市" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
         </view>
 
-      <view>
-        <view class='h2'>
+        <view class='h2' hidden="{{'平行进口车' == group_buy.goods_category}}">
           定制详情
         </view>
-        
 
-        <view class='black'>
+
+        <view class='black' hidden="{{'平行进口车' == group_buy.goods_category}}">
           基本配置
         </view>        
 
-        <view class='gray'>
+        <view class='gray' hidden="{{'平行进口车' == group_buy.goods_category}}">
           <view wx:for="{{group_buy.goods_category_desc}}" wx:key="index" wx:for-index="index" wx:for-item="item">
             {{item}}
           </view>
         </view>
 
-        <view class='black'>
+        <view class='black' hidden="{{'平行进口车' == group_buy.goods_category}}">
           定制加装
         </view>
 
-        <view class='gray'>
+        <view class='gray' hidden="{{'平行进口车' == group_buy.goods_category}}">
           <!-- {{group_buy.goods_category_custom}} -->
           <checkbox-group @tap="checkCustom">
             <view class="checkCustomItem" wx:for="{{group_buy.goods_category_custom}}" wx:key="index" wx:for-index="index" wx:for-item="item">
@@ -248,9 +260,9 @@ $activecolor: #13b113;
             </view>
           </checkbox-group>
         </view>
-        </view>
-        <view class="btn" @tap='send()'>提交</view> 
-        
+
+        <view class="btn" @tap='send()' hidden="{{'平行进口车' == group_buy.goods_category}}">提交</view> 
+        <view class="btn2" @tap='send()' hidden="{{'平行进口车' != group_buy.goods_category}}">提交</view> 
     </view>
 </template>
 <script>

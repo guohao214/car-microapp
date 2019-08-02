@@ -155,7 +155,7 @@
             <view class="content car-title">
                 <view class="title">[{{group_buy.brand_name}}] {{group_buy.goods_name}}</view>
                 <view class="desc">售价：{{group_buy.sell_price}}万 - {{group_buy.market_price}}万</view>
-                <view class="desc">发布者名称:{{group_buy.uid}}</view>
+                <view class="desc">发布者名称:{{group_buy.nickname}}</view>
                 <view class="desc">车辆所在地:{{group_buy.city}}</view>
             </view>
         </view>

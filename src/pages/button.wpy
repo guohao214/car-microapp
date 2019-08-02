@@ -15,8 +15,8 @@ $activecolor: #13b113;
               width:140rpx;
               padding-right: 20rpx;
               image{                    
-                  width:150rpx;
-                  height: 100rpx;
+                  width:110rpx;
+                  height: 110rpx;
               }
               .desc{
                   font-size: 25rpx;

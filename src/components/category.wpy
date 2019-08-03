@@ -297,7 +297,7 @@
                 <view hidden="{{index}}" class="item item1">
                     <view class="title">最近看过</view>
                 </view>
-                <view class="item">
+                <view class="item" wx:if="{{item.title}}">
                     <view class="title" @tap="goto_url({{item}})">{{item.title}}</view>
                 </view>
             </block>

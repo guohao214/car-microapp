@@ -4,7 +4,7 @@ $activecolor: #13b113;
 .detail {
   background: #ffffff;
   .button-list{
-      margin: 30rpx 20rpx;
+      margin: 30rpx 20rpx ;
       .content{
           display:flex;
           justify-content: space-between;

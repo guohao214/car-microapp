@@ -271,17 +271,21 @@
         }
 
         loadGoodsList(){
+
             var self = this;
             wx.request({ 
                 url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
                 data:{num:"14"},
                 header:{"Content-Type":"applciation/json"},
                 method:"GET",//get为默认方法/POST
-                success:function(res){                  
-                    self.goods_list = res.data
-                    self.$apply()    
+                success:function(res){             
+                    if (Array.isArray(res.data)) {
+                        self.goods_list = res.data
+                        self.$apply()    
+                    }
                 },
-                fail:function(err){},//请求失败
+                fail:function(err){
+                },//请求失败
                 complete:function(){}//请求完成后执行的函数
             });
         }

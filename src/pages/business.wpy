@@ -3,6 +3,7 @@ $fontcolor: #7b7b7b;
 $activecolor: #13b113;
 .detail {
   background: #ffffff;
+  overflow-x: hidden;
   .title-desc {
     font-size: 28rpx;
     margin-left: 4%;
@@ -66,10 +67,13 @@ $activecolor: #13b113;
     float: left;
     width: 100%;
     padding-left: 33rpx;
-    padding-top: 40rpx;
-    padding-bottom: 10rpx;
+    margin-top: 22px;
     border-bottom: 1rpx #e5e5e5 solid;
-    background-color: aliceblue
+    background-color: aliceblue;
+    line-height: 100rpx;
+    &:first-child {
+      margin-top: 0;
+    }
   }
   .pic{
     font-size: 28rpx;
@@ -97,7 +101,7 @@ $activecolor: #13b113;
       }
       .delete_btn{
         position: absolute;
-        top:0rpx;
+        top:45rpx;
         right:0rpx;
         width:40rpx;
         height:40rpx; 

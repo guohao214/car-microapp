@@ -76,8 +76,7 @@
         <image class="select_img {{show&&'select_img_rotate'}}" src="/images/godown.png"></image>
       </view>
 
-      <view class="option_box" style="height:{{show?(item.list.length*80):0}}rpx;">
-        
+      <view class="option_box" style="height:{{show?(item.list.length*80):0}}rpx;">      
         <text class="option" wx:for="{{item.list}}" wx:key="index" wx:for-index="index" wx:for-item="v" @tap="optionTap({{index}})">
             {{v}}
         </text>
@@ -113,6 +112,16 @@
                 this.index = index;
                 this.show = false;
                 this.$apply();
+
+                let v = this.item.name + ":";
+                
+                if(this.index == 0){
+                  v = v + '';
+                }else{
+                  v = v + this.item.list[this.index];
+                }
+                
+                this.$emit('onDropDownSelect', v);
             },
         };
     }

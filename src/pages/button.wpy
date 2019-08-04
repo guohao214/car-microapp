@@ -4,25 +4,25 @@ $activecolor: #13b113;
 .detail {
   background: #ffffff;
   .button-list{
-      margin: 30rpx 20rpx ;
-      .content{
-          display:flex;
-          justify-content: space-between;
-          /* padding: 10rpx 25rpx; */
-          flex-wrap: wrap;
-          .box{
-              text-align:center;
-              height: 180rpx;
-              width:160rpx;
-              /* padding-right: 20rpx; */
-              image{                    
-                  width:110rpx;
-                  height: 110rpx;
-              }
-              .desc{
-                  font-size: 25rpx;
-              }
-          }
+        margin: 30rpx 20rpx;
+        .content{
+            display:flex;
+            justify-content: space-between;
+            /* padding: 10rpx 25rpx; */
+            flex-wrap: wrap;
+            .box{
+                text-align:center;
+                height: 180rpx;
+                width:160rpx;
+                /* padding-right: 20rpx; */
+                image{                    
+                    width:110rpx;
+                    height: 110rpx;
+                }
+                .desc{
+                    font-size: 25rpx;
+                }
+            }
           
       }
   }

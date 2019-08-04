@@ -1,12 +1,35 @@
 <style type="scss">
     .carList{
         width:100%;
+
+        .loadMoreGif {
+            margin: 15rpx auto;
+            width: 220rpx;
+            text {
+                font-size: 30rpx;
+                color: #999;
+                margin-left: 10rpx;
+            }
+            image {
+                width: 30rpx;
+                height: 30rpx;
+            }
+            position: absolute;
+            bottom:56rpx;
+            left:40%;
+        }
+
         .menu_row{
             display: flex;
             justify-content:center;            
             .dp-menu{
                 display: inline;
                 width:200rpx;
+            }
+            .color-menu{
+                .select{
+                    width:200rpx;
+                }
             }
         }
         .group-buy{
@@ -85,11 +108,13 @@
 <template>
     <view class="carList">
         <view class="menu_row">
-            <dropdown1 class="dp-menu" :item="menu1"></dropdown1>
-            <dropdown2 class="dp-menu" :item="menu2"></dropdown2>
-            <dropdown3 class="dp-menu" :item="menu3"></dropdown3>
+            <dropdown1 class="dp-menu" :item.sync="menu1" ></dropdown1>
+            <dropdown2 class="dp-menu color-menu" :item.sync="menu2" ></dropdown2>
+            <dropdown3 class="dp-menu" :item.sync="menu3" ></dropdown3>
         </view>
         <view class='group-buy car-detail'>
+
+
             <block wx:for="{{goods_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                 <view class="item" @tap='goto_detail({{item.goods_id}})' >
                     <view class='img'>
@@ -130,18 +155,29 @@
         };
         data = {
             menu1:{
-                name:"menu1",
+                name:"goods_type",
                 list:['全部','欧版','美版','中规'],
             },
             menu2:{
-                name:"menu2",
-                list:['颜色','黑','咖','白'],
+                name:"selected_color",
+                list:['颜色'],
             },
             menu3:{
-                name:"menu3",
+                name:"city",
                 list:['地区','北京','天津','杭州'],
             },
-            goods_list: []
+            goods_list: [],
+            searchKey:{
+                cate_type: '',
+                searchType:'search_by_brand', 
+                grade:'',
+                goods_type : '',
+                selected_color : '',
+                city : '',
+                page:1,
+                length:5000,
+            },
+            color_list:[],
         }
         
         onLoad(options){
@@ -149,27 +185,72 @@
                 title: options.brand_name,
             })
 
+            this.searchKey.cate_type = options.cate_type;
+            this.searchKey.grade = options.brand_id;
+
+            var self = this;
+            self.get_color_list();
+            self.goto_search();
+        };
+
+        get_color_list(){
             var self = this;
             wx.request({ 
-                url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
-                data:{cate_type: options.cate_type,grade:options.brand_id,searchType:'search_by_brand'},
+                url:api.baseUrl + "index.php?m=home&c=color&a=appColorList",//请求地址
+                data : {},
                 header:{"Content-Type":"applciation/json"},
                 method:"GET",//get为默认方法/POST
-                success:function(res){                  
-                    self.goods_list = res.data
-                    self.$apply()    
+                success:function(res){
+                    let list = res.data;
+                    for(let idx=0; idx<list.length; idx++){
+                        self.menu2.list.push(list[idx].name);
+                    }
+                    console.log(self.menu2);
+                    self.$apply();
                 },
                 fail:function(err){},//请求失败
                 complete:function(){}//请求完成后执行的函数
             });
-        }
+        };
+
+        goto_search () {
+            var self = this;
+            wx.request({ 
+                url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
+                // data:{
+                //     cate_type: options.cate_type,
+                //     grade:options.brand_id,
+                //     searchType:'search_by_brand',                    
+                //     page:1,
+                //     length:5000,
+                // },
+                data : self.searchKey,
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){
+                    self.goods_list = res.data.list;
+                    self.$apply();
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        };
+
         methods = {
             click (evt) {
                 
             },  
             goto_detail (id) {
                 this.$root.$navigate({url: 'car?goods_id=' + id});
-            },         
+            },
+        };
+
+        events = {
+            onDropDownSelect(key, event){
+                let arr = key.split(':');
+                this.searchKey[arr[0]] = arr[1];
+                this.goto_search();
+            },
         };
     }
 </script>

@@ -128,21 +128,6 @@
                 },
             ],
             color_list:[
-                {
-                    color:'#000000'
-                },
-                {
-                    color:'#ff00ff'
-                },
-                {
-                    color:'#ccaacc'
-                },
-                {
-                    color:'#aaaacc'
-                },
-                {
-                    color:'#abaacc'
-                }
             ]
         }
         onLoad(options) {
@@ -168,7 +153,8 @@
                 header:{"Content-Type":"applciation/json"},
                 method:"GET",//get为默认方法/POST
                 success:function(res){                    
-                    self.car_list = res.data;                    
+                    self.car_list = res.data;  
+                    self.color_list = self.car_list.color                  
                     console.log(res.data);
                     self.$apply();
                     //callback();

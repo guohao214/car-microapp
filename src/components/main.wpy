@@ -1,7 +1,26 @@
 <style type="scss">
     $fontcolor: #7b7b7b;
     $activecolor: #13b113;
-    .main {        
+
+    .main {
+        position: relative;
+        .loadMoreGif {
+            margin: 15rpx auto;
+            width: 220rpx;
+            text {
+                font-size: 30rpx;
+                color: #999;
+                margin-left: 10rpx;
+            }
+            image {
+                width: 30rpx;
+                height: 30rpx;
+            }
+            position: absolute;
+            bottom:56rpx;
+            left:40%;
+        }
+
         .group-buy{
             margin:20rpx 20rpx 20rpx 20rpx;
             padding:20rpx 20rpx 20rpx 20rpx;
@@ -74,11 +93,12 @@
             padding: 10rpx 25rpx;
             flex-basis:340rpx;
             flex-wrap: wrap;
-            padding-bottom: 130rpx;
+            margin-bottom: 130rpx;
+            background-color:#F0EFF5;
 
             .item{
                 width:340rpx;
-                height:330rpx;
+                height:420rpx;
                 display: inline-block;
                 /* margin-right:55rpx; */
                 /* marign-bottom:20rpx; */
@@ -135,6 +155,7 @@
 
 <template>
     <view class="main">
+         
         <swiper indicator-dots="{{swiper.indicatorDots}}" autoplay="{{swiper.autoplay}}" interval="{{swiper.interval}}" duration="{{swiper.duration}}" circular="{{swiper.circular}}">
             <repeat for="{{swiper.imgUrls}}">
                 <swiper-item>
@@ -167,17 +188,33 @@
             </view>            
         </view>
 
-        <view class='list'>
+        <!-- 加载动画结构代码 -->
+        <view class="loadMoreGif" wx:if="{{loadMoreShow}}">            
+            <image src="../images/loading.gif" wx:if="{{loadMoreFinish==false}}"/>
+            <text>{{loadMoreText}}</text>
+        </view>
+
+       <scroll-view scroll-y="true" style="height: 400px;" bindscrolltolower="loadMore" class="list">
+       <view class='list'>
             <block wx:for="{{goods_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                 <view class="item" @tap="goto_detail({{item.goods_id}})">
                     <image mode="aspectFill" src="{{item.thumb}}"/>
-                    <view class="title"><span class="brand_name">[{{item.brand_name}}]</span> {{item.goods_name}}</view>
+                    <view class="title">{{item.brand_name}} </view>
+                    <view class="title">{{item.goods_name}}</view>
+                    <view class="title"><span class="brand_name">售价：{{item.sell_price}}万</span> </view>
                 </view>
             </block>
         </view>
+        </scroll-view>
+
+
+        
+ 
 
         
     </view>
+
+    
 </template>
 
 <script>
@@ -185,8 +222,13 @@
     import api from '../common/api';
 
     export default class Main extends wepy.component {
+        
+
 
         data = {
+            loadMoreShow: false,
+            loadMoreIndex: 1,
+
             // 轮播图
             swiper:{
                 indicatorDots:true,
@@ -214,7 +256,10 @@
             // 主列表
             goods_list: [],
             buttonList: [],
-            buttonListAll: []
+            buttonListAll: [],
+            loadMoreFinish:false,
+            loadMoreText:'正在加载中',
+            pageSize:1,            
         };
 
         methods = {
@@ -247,6 +292,31 @@
                     })
                     return false
                 }
+            },
+
+            loadMore() {
+                console.log('页数：', this.loadMoreIndex)
+                // 开启加载动画
+                this.loadMoreShow = true;
+                this.loadMoreIndex++;
+
+                // setTimeout(() => {
+                //     // 模拟数据
+                //     //this.listSlice(this.currentPage)
+                //     // 模拟异步时差，3秒后关闭加载动画     
+                //     this.loadMoreShow = false;
+                //     // 记得重载dom，否则无效哦
+                //     this.$apply()
+                // }, 3000);
+
+                if(this.loadMoreIndex <= this.pageSize){                    
+                    this.loadGoodsList(this.loadMoreIndex);
+                }else{
+                    this.loadMoreFinish = true;
+                    this.loadMoreText = "全部已加载";
+                }
+                
+                this.$apply();
             }
         };
 
@@ -270,22 +340,30 @@
             });
         }
 
-        loadGoodsList(){
-
+        loadGoodsList(pageIndex){
             var self = this;
-            wx.request({ 
+            wx.request({
                 url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
-                data:{num:"14"},
+                data:{
+                    length:"10",
+                    page:pageIndex,
+                },
                 header:{"Content-Type":"applciation/json"},
                 method:"GET",//get为默认方法/POST
-                success:function(res){             
-                    if (Array.isArray(res.data)) {
-                        self.goods_list = res.data
-                        self.$apply()    
+                success:function(res){
+                    self.pageSize = res.data.pageSize;
+                    self.$apply();
+                    
+                    let list = res.data.list;
+                    if (Array.isArray(list)) {
+                        for(var idx=0; idx<list.length; idx++){
+                            self.goods_list.push(list[idx]);
+                        }
+                        self.loadMoreShow = false;
+                        self.$apply();
                     }
                 },
-                fail:function(err){
-                },//请求失败
+                fail:function(err){},//请求失败
                 complete:function(){}//请求完成后执行的函数
             });
         }
@@ -309,7 +387,7 @@
         async loadMainData() {
             let self = this;            
             self.loadGroupList(function(){
-                self.loadGoodsList();
+                self.loadGoodsList(self.loadMoreIndex);
                 self.loadButtonList()
             });
         }

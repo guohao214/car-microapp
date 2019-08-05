@@ -88,7 +88,7 @@
             <view class="desc">{{item.goods_title}}</view>
             <view class="price">售价：¥{{item.sell_price}}</view>
             <view class="marketPrice">市场价：¥{{item.market_price}}</view>
-            <view class='groupPrice'>拼团价：¥{{item.price}}</view>
+            <view class='groupPrice'>采集价：¥{{item.price}}</view>
         </view>                  
     </view>
 </template>

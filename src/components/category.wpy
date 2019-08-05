@@ -64,7 +64,7 @@
         }
         .cate-search{
             position: relative;
-            padding: 10rpx 40rpx;
+            padding-left: 40rpx;
             display: flex;        
             height:120rpx;  
             justify-content: space-between;
@@ -74,6 +74,8 @@
             /* text-align: center; */
             image{
                 flex-basic: 50%;
+                width:160rpx;
+                height: 60rpx;
                 flex-grow: 1;
                 flex-flow: 1;
                 /* width: 50%; */

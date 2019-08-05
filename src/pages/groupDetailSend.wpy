@@ -271,7 +271,7 @@
         data = {
             // 团购
             group_buy:{},
-            // 拼团列表
+            // 采集列表
             group_list: [
                
             ],
@@ -336,9 +336,9 @@
 
                         let group_buy = self.data.group_buy;
                         group_buy.group_name = '您已成功发起' + group_name;
-                        group_buy.price = '拼团成功可' + group_buy.price + '抢购';
-                        group_buy.desc = '邀请好友一起参加，增加拼团成功率';
-                        let title = '成功发起拼团';
+                        group_buy.price = '采集成功可' + group_buy.price + '抢购';
+                        group_buy.desc = '邀请好友一起参加，增加采集成功率';
+                        let title = '成功发起采集';
                         let content = group_buy;
                         if(res.data.status == 1){
                             self.$invoke('dialog', 'showDialog', title, content, {

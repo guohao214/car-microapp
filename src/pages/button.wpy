@@ -78,15 +78,13 @@ $activecolor: #13b113;
                 if(item.title == '车型大全'){
                     this.$root.$navigate({url: 'index?currentTab=1'});
                 }else if(item.title == '商务车定制'){
+                    this.$root.$navigate({url: 'carCategory?type=1'});
 
                 }else if(item.title == '平行进口车'){
+                    this.$root.$navigate({url: 'carCategory?type=2'});
 
                 }else if(item.title == '商户入驻'){
-                    console.log('商户入驻')
                     this.$root.$navigate({url: 'business'});
-                }else if(item.title == '更多'){
-                    console.log('更多')
-                    this.$root.$navigate({url: 'button?buttonList=' + JSON.stringify(this.buttonListAll)});
                 }else{
                     wx.showModal({
                         title: '提示',

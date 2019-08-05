@@ -366,7 +366,7 @@
 
                         let title = '提示';
                         let content = {
-                            'group_name':'拼团成功，',
+                            'group_name':'采集成功，',
                             'title':'销售顾问将在48小时内联系您'
                             };
                         if(res.data.status == 1){

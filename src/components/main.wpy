@@ -139,8 +139,8 @@
                     /* width:140rpx; */
                     /* padding-right: 20rpx; */
                     image{                    
-                        height:110rpx;
-                        width:110rpx;
+                        height:100rpx;
+                        width:100rpx;
                         /* height: 100rpx; */
                     }
                     .desc{
@@ -247,9 +247,9 @@
             // 团购
             group_buy:{
                 img:'/images/main/group_car.jpg',
-                title:'买路虎 拼团购 更优惠',
+                title:'买路虎 采集购 更优惠',
                 list:[],
-                desc4:'一键拼团',
+                desc4:'一键采集',
                 goods_id:112                 
             },
 

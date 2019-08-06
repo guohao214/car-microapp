@@ -15,7 +15,7 @@ $activecolor: #13b113;
     border-bottom: 1rpx #e5e5e5 solid;    
     image{
       width:160rpx;
-      height: 160rpx;      
+      max-height: 160rpx;      
     }
     .input-desc {
       float: right;
@@ -108,7 +108,7 @@ $activecolor: #13b113;
       }
       image{
         width:160rpx;
-        height: 160rpx; 
+        max-height: 160rpx; 
       }
       text{
         width: 100%;
@@ -314,6 +314,8 @@ $activecolor: #13b113;
                           self.$apply();
                         }
                         
+                      }else{
+                        console.log(res,'======upload error======')
                       }
                     }
                   })

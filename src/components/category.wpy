@@ -64,12 +64,12 @@
         }
         .cate-search{
             position: relative;
-            padding-left: 40rpx;
+            padding-left: 33rpx;
             display: flex;        
             height:120rpx;  
             justify-content: space-between;
             align-items: center;
-            width: 100%;
+            width: 96%;
             box-sizing: border-box;
             /* text-align: center; */
             image{

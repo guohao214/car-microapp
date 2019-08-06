@@ -22,7 +22,7 @@
         }
 
         .group-buy{
-            margin:20rpx 20rpx 20rpx 20rpx;
+            margin:10rpx 30rpx 20rpx 10rpx;
             padding:20rpx 20rpx 20rpx 20rpx;
             background-color: #fff; 
             border:0.5px #e5e5e5 solid;
@@ -65,7 +65,7 @@
                     width: 120px;
                     height: 50rpx;
                     line-height: 50rpx;
-                    margin:10rpx 10rpx 10rpx 10rpx;
+                    margin:10rpx 30rpx 10rpx 10rpx;
                     border-radius:40rpx;
                     text-align: center;
                     font-size:25rpx;
@@ -90,7 +90,7 @@
             /* margin-bottom:150rpx; */
             display:flex;
             justify-content: space-between;
-            padding: 10rpx 25rpx;
+            padding: 10rpx 30rpx 10rpx 10rpx;
             flex-basis:340rpx;
             flex-wrap: wrap;
             margin-bottom: 130rpx;
@@ -155,7 +155,7 @@
 
 <template>
     <view class="main">
-         
+        <scroll-view scroll-y="true"  bindscrolltolower="loadMore" class="list"> 
         <swiper indicator-dots="{{swiper.indicatorDots}}" autoplay="{{swiper.autoplay}}" interval="{{swiper.interval}}" duration="{{swiper.duration}}" circular="{{swiper.circular}}">
             <repeat for="{{swiper.imgUrls}}">
                 <swiper-item>
@@ -194,7 +194,7 @@
             <text>{{loadMoreText}}</text>
         </view>
 
-       <scroll-view scroll-y="true" style="height: 400px;" bindscrolltolower="loadMore" class="list">
+       
        <view class='list'>
             <block wx:for="{{goods_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                 <view class="item" @tap="goto_detail({{item.goods_id}})">
@@ -345,7 +345,7 @@
             wx.request({
                 url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
                 data:{
-                    length:"10",
+                    length:"100000",
                     page:pageIndex,
                 },
                 header:{"Content-Type":"applciation/json"},

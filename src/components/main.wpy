@@ -247,9 +247,9 @@
             // 团购
             group_buy:{
                 img:'/images/main/group_car.jpg',
-                title:'买路虎 采集购 更优惠',
+                title:'买路虎 集采购 更优惠',
                 list:[],
-                desc4:'一键采集',
+                desc4:'一键集采',
                 goods_id:112                 
             },
 

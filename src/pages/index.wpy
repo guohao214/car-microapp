@@ -7,6 +7,18 @@ page, .body{
     font-family: '\5FAE\8F6F\96C5\9ED1', arial;
     background-color: #f0eff5;
 }
+.firstView {
+  position: fixed;
+  height: 70rpx;
+  width: 70rpx;
+  padding: 10rpx;
+  /* background-color: skyblue; */
+  border-radius: 50%;
+}
+.kehuImg {
+  height: 70rpx;
+  width: 70rpx;
+}
 </style>
 <template>
     <view class="body">
@@ -29,6 +41,13 @@ page, .body{
     </view>
 
     <dialog :dialogInfo="dialogInfo"></dialog>
+
+    <view class="firstView" @tap='keFu()' catchtouchmove="setTouchMove" catchtouchend='setCoordinates' style="left: {{left||'86%'}};top: {{top||'50%'}};" >
+    <view>
+        <image class='kehuImg' src="/images/kefu.png"></image>
+        <view style="font-size:20rpx;text-align:center;color:blue">客服</view>
+    </view>
+    </view>
 </template>
 
 <script>
@@ -92,7 +111,20 @@ page, .body{
                 this.showLoginButton = !this.showLoginButton;
                 this.$apply();
             },
-            
+            keFu(){
+                this.$root.$navigate({url: 'keFu'});
+                // let title = '2';
+                // let content = '2';
+                // this.$invoke('dialog', 'showDialog', title, content, {
+                //     hasCancel:true,
+                //     hasOkCancel:false,
+                //     ok:'确定',
+                //     cancel:'取消',
+                //     finish:function(){
+                        
+                //     }
+                // }); 
+            }
         };
 
         events = {

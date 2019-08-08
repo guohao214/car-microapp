@@ -249,7 +249,7 @@
         </view>
         
         <view class='footer' hidden="{{is_me}}">
-            <button class='footer' open-type="share">邀请好友入团</button>
+            <button class='footer' open-type="share">邀请好友集采</button>
         </view>
 
         <view class='footer' @tap='goto_in({{is_me}})' hidden="{{!is_me}}">

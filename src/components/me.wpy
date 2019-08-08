@@ -235,7 +235,7 @@ $activecolor: #13b113;
 <template>    
     <view class='me'>
         <view class='right-top' @tap='goto_group()'>
-            我的采集
+            我的集采
         </view> 
         <view class='img'>
             <image src="{{userInfo.avatarurl}}"/>    
@@ -338,7 +338,7 @@ $activecolor: #13b113;
             // 是否在加载中
             isLoading: false ,
             page :1, // 页数 给予默认值1
-            // 采集列表
+            // 集采列表
             group_user_list: [
                 
             ],
@@ -496,7 +496,7 @@ $activecolor: #13b113;
                 let goods_id = self.goods_id
                 if(!self.goods_id){
                     wx.showToast({
-                        title: '无团',
+                        title: '集采',
                         icon: 'none',
                         duration: 1000
                     });

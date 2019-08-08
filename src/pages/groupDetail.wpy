@@ -191,7 +191,7 @@
 
         <!-- <view class='line'></view> -->
         <view class='years-list' style='font-size:11px;color:gray'>
-            <span style='color:red; font-size:30rpx;'>{{group_user_num}}</span> 人在采集，可直接参与
+            <span style='color:red; font-size:30rpx;'>{{group_user_num}}</span> 人在集采，可直接参与
         </view>
         <view class='line'></view>
 
@@ -206,12 +206,12 @@
                     </span>  
                 </view>
                 <view class="item-contact">
-                    <view class="btn" hidden="{{item.time_diff <= 0}}" @tap='goto_group({{item}})'>去采集</view>
+                    <view class="btn" hidden="{{item.time_diff <= 0}}" @tap='goto_group({{item}})'>去集采</view>
                 </view>
             </view>
         </view>
         <view class='footer' @tap='goto_send_group()'>
-            发起采集
+            发起集采
         </view>
     </view>
 </template>
@@ -232,7 +232,7 @@
             group_buy:{
                
             },
-            // 采集列表
+            // 集采列表
             group_user_list: [
                 {
                     header:'/images/main/header.png',

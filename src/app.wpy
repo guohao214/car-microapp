@@ -32,6 +32,7 @@ export default class extends wepy.app {
             'pages/business',
             'pages/carCategory',
             'pages/carList',
+            'pages/keFu',
         ],
         'window': {
             'backgroundTextStyle': 'light',

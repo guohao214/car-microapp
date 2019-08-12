@@ -22,7 +22,7 @@
         }
 
         .group-buy{
-            margin:10rpx 30rpx 20rpx 10rpx;
+            margin:10rpx 10rpx 20rpx 10rpx;
             padding:20rpx 20rpx 20rpx 20rpx;
             background-color: #fff; 
             border:0.5px #e5e5e5 solid;
@@ -90,11 +90,12 @@
             /* margin-bottom:150rpx; */
             display:flex;
             justify-content: space-between;
-            padding: 10rpx 30rpx 10rpx 10rpx;
+            padding: 10rpx;
             flex-basis:340rpx;
             flex-wrap: wrap;
             margin-bottom: 130rpx;
             background-color:#F0EFF5;
+            box-sizing: border-box;
 
             .item{
                 width:340rpx;
@@ -196,7 +197,7 @@
 
        
        <view class='list'>
-            <block wx:for="{{goods_list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
+            <block wx:for="{{goods_list}}" wx:key="index" wx:for-index="index" wx:for-item="item" class="items">
                 <view class="item" @tap="goto_detail({{item.goods_id}})">
                     <image mode="aspectFill" src="{{item.thumb}}"/>
                     <view class="title">{{item.brand_name}} </view>

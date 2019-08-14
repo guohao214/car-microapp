@@ -105,7 +105,7 @@
                 /* marign-bottom:20rpx; */
                 border:0rpx;
                 font-size: 26rpx;
-                margin-bottom:30rpx;
+                margin-bottom:14rpx;
 
                 image{
                     width:100%;
@@ -114,13 +114,18 @@
 
                 }
                 .title{
-                    padding: 10rpx 0;
+                    padding: 8rpx 0;
                     .brand_name{
                         color: rgba(209, 51, 34, 1);
                     }
-
                 }
-                
+                .title_1{
+                    padding: 10rpx 0;
+                    font-size: 30rpx;
+                }
+                .title_2{
+                    color:#404040
+                }
             }
         }
         .button-list{
@@ -200,8 +205,8 @@
             <block wx:for="{{goods_list}}" wx:key="index" wx:for-index="index" wx:for-item="item" class="items">
                 <view class="item" @tap="goto_detail({{item.goods_id}})">
                     <image mode="aspectFill" src="{{item.thumb}}"/>
-                    <view class="title">{{item.brand_name}} </view>
-                    <view class="title">{{item.goods_name}}</view>
+                    <view class="title_1">{{item.goods_name}} </view>
+                    <view class="title title_2">{{item.goods_title}}</view>
                     <view class="title"><span class="brand_name">售价：{{item.sell_price}}万</span> </view>
                 </view>
             </block>
@@ -247,8 +252,8 @@
 
             // 团购
             group_buy:{
-                img:'/images/main/group_car.jpg',
-                title:'买路虎 集采购 更优惠',
+                img:'http://www.maixc.cn/image/20190812/t1565593893_1024x0_1_q95_autohomecar__ChsEn10CXJmAZ5n4AAwtKfFL_y8357.jpg',
+                title:'买车 集采购 更优惠',
                 list:[],
                 desc4:'一键集采',
                 goods_id:112                 

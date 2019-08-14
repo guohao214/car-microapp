@@ -9,15 +9,18 @@ page, .body{
 }
 .firstView {
   position: fixed;
-  height: 70rpx;
-  width: 70rpx;
+  height: 100rpx;
+  width: 100rpx;
   padding: 10rpx;
   /* background-color: skyblue; */
   border-radius: 50%;
 }
 .kehuImg {
-  height: 70rpx;
+  height: 100rpx;
   width: 70rpx;
+}
+button::after{
+    border-style:none;
 }
 </style>
 <template>
@@ -41,11 +44,16 @@ page, .body{
     </view>
 
     <dialog :dialogInfo="dialogInfo"></dialog>
-
-    <view class="firstView" @tap='keFu()' catchtouchmove="setTouchMove" catchtouchend='setCoordinates' style="left: {{left||'86%'}};top: {{top||'50%'}};" >
+    <view class="firstView"  style="left: {{left||'86%'}};top: {{top||'50%'}};" >
     <view>
-        <image class='kehuImg' src="/images/kefu.png"></image>
-        <view style="font-size:20rpx;text-align:center;color:blue">客服</view>
+        <button class="action" open-type="contact" style="background:none;border-style :none;width:100rpx;height:100rpx;text-align:center;color:blue;float:right">
+            <view >
+                <image class='kehuImg' src="/images/kefu.png"></image>
+                客服
+            </view>
+        </button>
+        
+        
     </view>
     </view>
 </template>

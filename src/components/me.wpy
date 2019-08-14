@@ -493,10 +493,10 @@ $activecolor: #13b113;
             },
             goto_group() {
                 let self = this
-                let goods_id = self.goods_id
-                if(!self.goods_id){
+                let userInfo = wepy.getStorageSync('userInfo');
+                if(!userInfo.goods_id){
                     wx.showToast({
-                        title: '集采',
+                        title: '集采无',
                         icon: 'none',
                         duration: 1000
                     });
@@ -504,7 +504,7 @@ $activecolor: #13b113;
                     let group_user_list = {}
                     wx.request({
                         url:api.baseUrl + "index.php?m=home&c=group&a=appGroupUserList",//请求地址
-                        data:{group_id:self.group_id,goods_id:self.goods_id},
+                        data:{group_id:userInfo.group_id,goods_id:userInfo.goods_id},
                         header:{"Content-Type":"applciation/json"},
                         method:"GET",//get为默认方法/POST
                         success:function(res){                            
@@ -513,7 +513,7 @@ $activecolor: #13b113;
                             let group_buy = {}
                                 wx.requestLoad({
                                     url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsDetail",//请求地址
-                                    data:{goods_id:self.goods_id},
+                                    data:{goods_id:userInfo.goods_id},
                                     header:{"Content-Type":"applciation/json"},
                                     method:"GET",//get为默认方法/POST
                                     success:function(res){                            

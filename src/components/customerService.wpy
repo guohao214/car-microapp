@@ -1,0 +1,46 @@
+<style lang="scss">
+.firstView {
+  position: fixed; 
+  padding: 10rpx;
+  border-radius: 50%;
+  
+}
+.kehuImg {
+  height: 160rpx;
+  width: 100rpx;
+}
+button::after{
+    border-style:none;
+}
+</style>
+
+<template>
+<view class="firstView"  style="left: {{item.left || '78%'}};top: {{item.top || '50%'}};" >
+    <view>
+        <button class="action" open-type="contact" style="background:none;border-style :none;text-align:center;color:blue;float:right">
+            <view >
+                <image class='kehuImg' src="/images/kefu.png"></image>
+            </view>
+        </button>
+    </view>
+</view>
+</template>
+
+
+<script>
+  import wepy from 'wepy';
+  export default class CustomerService extends wepy.component {
+    config = {
+    }
+    data = {
+        show:false,
+    }
+    props = {
+        item: {}
+    }
+   
+    methods = {        
+        
+    }
+  }
+</script>

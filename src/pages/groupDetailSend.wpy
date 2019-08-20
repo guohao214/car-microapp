@@ -254,19 +254,22 @@
     </view>
 
     <dialog :dialogInfo="dialogInfo"></dialog>
+    <customerService></customerService>
 </template>
 <script>
     import wepy from 'wepy';
     import GroupDetailTop from '../components/groupDetailTop';
     import Dialog from '../components/dialog';
-    import api from '../common/api.js'
+    import api from '../common/api.js';
+    import CustomerService from '../components/customerService';
 
     export default class GroupDetailSend extends wepy.page {
 
         // 子组件
         components = {
             groupDetailTop: GroupDetailTop,
-            dialog:Dialog
+            dialog:Dialog,
+            customerService: CustomerService
         };
         data = {
             // 团购

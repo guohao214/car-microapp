@@ -43,10 +43,12 @@ $activecolor: #13b113;
             </view>            
         </view>
     </view>
+    <customerService></customerService>
 </template>
 <script>
     import wepy from 'wepy';
-    import api from '../common/api.js'
+    import api from '../common/api.js';
+    import CustomerService from '../components/customerService';
 
     export default class Contact extends wepy.page {
         config = {
@@ -58,7 +60,10 @@ $activecolor: #13b113;
             item: {},
             index: {},
         }
-
+        // 子组件
+        components = {           
+            customerService: CustomerService
+        }
         data = {
             buttonList: []  
         }
@@ -83,8 +88,14 @@ $activecolor: #13b113;
                 }else if(item.title == '平行进口车'){
                     this.$root.$navigate({url: 'carCategory?type=2'});
 
-                }else if(item.title == '商户入驻'){
+                }else if(item.title == '发布车源'){
                     this.$root.$navigate({url: 'business'});
+                }else if(item.title == '售后服务'){
+                    this.$root.$navigate({url: 'keFu?type=shouhoufuwu&pic=' + item.img_src});
+                }else if(item.title == '资金服务'){
+                    this.$root.$navigate({url: 'keFu?type=zijinfuwu&pic=' + item.img_src});
+                }else if(item.title == '汽车保险'){
+                    this.$root.$navigate({url: 'keFu?type=qichebaoxian&pic=' + item.img_src});
                 }else{
                     wx.showModal({
                         title: '提示',

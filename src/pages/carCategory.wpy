@@ -79,17 +79,20 @@
 
         <alpha />
     </view>
+    <customerService></customerService>
 </template>
 <script>
     import wepy from 'wepy';
     import api from '../common/api.js'
     import Alpha from '../components/alphaCate';
+    import CustomerService from '../components/customerService';
 
     export default class CarCategory extends wepy.page {
 
         // 子组件
         components = {
-            alpha: Alpha
+            alpha: Alpha,
+            customerService: CustomerService
         };
         props = {
             item: {},

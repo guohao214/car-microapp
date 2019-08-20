@@ -45,7 +45,7 @@
                 }
                 .btt{
                     color:white;
-                    background-color: darkblue;
+                    background-color: #1e1d1b;
                     width: 120px;
                     height: 15px;
                     margin:15rpx 15rpx 15rpx 15rpx;
@@ -181,7 +181,7 @@
         line-height: 90rpx;
         text-align: center;
         width:100%;
-        background:#1296db;
+        background:#1e1d1b;
         color:white;
     }
 </style>
@@ -214,20 +214,24 @@
             发起集采
         </view>
     </view>
+    <customerService></customerService>
 </template>
 <script>
     import wepy from 'wepy';
     import GroupDetailTop from '../components/groupDetailTop';
-    import api from '../common/api.js'
+    import api from '../common/api.js';
+    import CustomerService from '../components/customerService';
 
     export default class GroupDetail extends wepy.page {
 
         // 子组件
         components = {
-            groupDetailTop: GroupDetailTop
+            groupDetailTop: GroupDetailTop,
+            customerService: CustomerService
         };
 
         data = {
+            
             // 团购
             group_buy:{
                
@@ -259,6 +263,7 @@
                 fail:function(err){},//请求失败
                 complete:function(){}//请求完成后执行的函数
             });
+            console.log(options,'options')
             wx.requestLoad({
                 url:api.baseUrl + "index.php?m=home&c=group&a=appGroupUserList",//请求地址
                 data:{goods_id:options.goods_id},

@@ -494,42 +494,55 @@ $activecolor: #13b113;
             goto_group() {
                 let self = this
                 let userInfo = wepy.getStorageSync('userInfo');
-                if(!userInfo.goods_id){
-                    wx.showToast({
-                        title: '集采无',
-                        icon: 'none',
-                        duration: 1000
-                    });
-                }else{
-                    let group_user_list = {}
-                    wx.request({
-                        url:api.baseUrl + "index.php?m=home&c=group&a=appGroupUserList",//请求地址
-                        data:{group_id:userInfo.group_id,goods_id:userInfo.goods_id},
+                wx.request({
+                        url:api.baseUrl + "index.php?m=home&c=user&a=appUserDetail",//请求地址
+                        data:{open_id:userInfo.open_id,uid:userInfo.uid},
                         header:{"Content-Type":"applciation/json"},
                         method:"GET",//get为默认方法/POST
-                        success:function(res){                            
-                            group_user_list = res.data.group_user_list[0]; 
-                            self.$apply()
-                            let group_buy = {}
-                                wx.requestLoad({
-                                    url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsDetail",//请求地址
-                                    data:{goods_id:userInfo.goods_id},
+                        success:function(res0){  
+                            let user = res0.data.data                        
+                            if(typeof user.goods_id == 'undefined'  || !user.goods_id){
+                                wx.showToast({
+                                    title: '集采无',
+                                    icon: 'none',
+                                    duration: 1000
+                                });
+                            }else{
+                                let group_user_list = {}
+                                wx.request({
+                                    url:api.baseUrl + "index.php?m=home&c=group&a=appGroupUserList",//请求地址
+                                    data:{group_id:user.group_id,goods_id:user.goods_id},
                                     header:{"Content-Type":"applciation/json"},
                                     method:"GET",//get为默认方法/POST
                                     success:function(res){                            
-                                        group_buy = res.data; 
+                                        group_user_list = res.data.group_user_list[0]; 
                                         self.$apply()
-                                        self.$root.$navigate({url: 'group?group=' + JSON.stringify(group_user_list) + '&group_buy=' + JSON.stringify(group_buy)});
+                                        let group_buy = {}
+                                            wx.requestLoad({
+                                                url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsDetail",//请求地址
+                                                data:{goods_id:user.goods_id},
+                                                header:{"Content-Type":"applciation/json"},
+                                                method:"GET",//get为默认方法/POST
+                                                success:function(res){                            
+                                                    group_buy = res.data; 
+                                                    self.$apply()
+                                                    self.$root.$navigate({url: 'group?group=' + JSON.stringify(group_user_list) + '&group_buy=' + JSON.stringify(group_buy)});
+                                                },
+                                                fail:function(err){},//请求失败
+                                                complete:function(){}//请求完成后执行的函数
+                                        });
                                     },
                                     fail:function(err){},//请求失败
                                     complete:function(){}//请求完成后执行的函数
-                            });
+                                }); 
+                                
+                            } 
                         },
                         fail:function(err){},//请求失败
                         complete:function(){}//请求完成后执行的函数
-                    }); 
-                    
-                }                
+                    });
+                
+                               
             },
             get_phone_fee(uid){
                 var self = this;

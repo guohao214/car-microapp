@@ -7,21 +7,7 @@ page, .body{
     font-family: '\5FAE\8F6F\96C5\9ED1', arial;
     background-color: #f0eff5;
 }
-.firstView {
-  position: fixed;
-  height: 100rpx;
-  width: 100rpx;
-  padding: 10rpx;
-  /* background-color: skyblue; */
-  border-radius: 50%;
-}
-.kehuImg {
-  height: 100rpx;
-  width: 70rpx;
-}
-button::after{
-    border-style:none;
-}
+
 </style>
 <template>
     <view class="body">
@@ -41,21 +27,11 @@ button::after{
 
         <tab :active.sync="currentTab" />
         <tab />
-    </view>
+    </view>                 
 
     <dialog :dialogInfo="dialogInfo"></dialog>
-    <view class="firstView"  style="left: {{left||'86%'}};top: {{top||'50%'}};" >
-    <view>
-        <button class="action" open-type="contact" style="background:none;border-style :none;width:100rpx;height:100rpx;text-align:center;color:blue;float:right">
-            <view >
-                <image class='kehuImg' src="/images/kefu.png"></image>
-                客服
-            </view>
-        </button>
-        
-        
-    </view>
-    </view>
+    <customerService></customerService>
+    
 </template>
 
 <script>
@@ -67,6 +43,8 @@ button::after{
     import Toast from 'wepy-com-toast';
     import api from '../common/api.js';
     import Dialog from '../components/dialog';
+    import CustomerService from '../components/customerService';
+    
 
 
 
@@ -84,7 +62,8 @@ button::after{
             me: Me,
             tab: Tab,
             toast: Toast,
-            dialog: Dialog
+            dialog: Dialog,
+            customerService: CustomerService
         };
 
         data = {

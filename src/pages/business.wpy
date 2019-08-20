@@ -57,7 +57,7 @@ $activecolor: #13b113;
         line-height: 90rpx;
         text-align: center;
         width:100%;
-        background:#1296db;
+        background:#1e1d1b;
         color:white;
         font-size: 28rpx;
       }
@@ -207,13 +207,18 @@ $activecolor: #13b113;
             <image src="/images/up.png" mode="widthFix" @tap="upload_image('luby')"/>
           </view>    
         </view>
-        <view class="btn" @tap='send()' hidden="{{checking}}">提交审核</view> 
-        <view class="btn" hidden="{{!checking}}">审核中</view>
+        <view class="btn" @tap='send()' wx:if="{{checking_status == 0}}">提交审核</view> 
+        <view class="btn" wx:if="{{checking_status == 1}}">审核中</view>
+        <view class="btn" wx:if="{{checking_status == 2}}">审核通过</view>
+        <view class="btn" wx:if="{{checking_status == 3}}">未审核通过</view>
+        <view class="btn" wx:if="{{checking_status == 4}}">已删除</view>
     </view>
+    <customerService :item.sync= "styleInfo"></customerService>
 </template>
 <script>
     import wepy from 'wepy';
-    import api from '../common/api.js'
+    import api from '../common/api.js';
+    import CustomerService from '../components/customerService';
 
     export default class Business extends wepy.page {
         config = {
@@ -221,6 +226,10 @@ $activecolor: #13b113;
             'navigationBarTextStyle': 'white',
             'navigationBarBackgroundColor': '#3b3a40'
         };
+        // 子组件
+        components = {           
+            customerService: CustomerService
+        }
         props = {
             item: {},
             index: {},
@@ -233,7 +242,7 @@ $activecolor: #13b113;
             idcard_back_flag:false,
             idcard_back:'',
 
-            checking : false,
+            checking_status : 0,
 
             company_flag:false,
             company:'',
@@ -241,34 +250,52 @@ $activecolor: #13b113;
             address:'',
             name:'',
             luby:[],
-            info: {}
+            info: {},
+            styleInfo:{
+              left:'78%',
+              top:'30%'
+            }
         }
         
         onLoad(options) {
             let userInfo = wx.getStorageSync('userInfo');
-            console.log(userInfo,'business')
-            if(userInfo.business){    
-              let business = userInfo.business
-              this.name = business.name
-              this.company_name = business.company_name
-              this.address = business.address   
-              this.idcard_front_flag = true
-              this.idcard_back_flag = true
-              this.company_flag = true
-              this.$apply()
-
-              this.idcard_front = business.idcard_front
-              this.idcard_back = business.idcard_back
-              this.company = business.business_license_pic
-              if(typeof business.showroom_pic != 'array')
-                this.luby = [business.showroom_pic]
-              else
-                this.luby = business.showroom_pic
-              this.checking = true
-              this.$apply()
-            }
+            let self = this;
+            wx.request({
+                url:api.baseUrl + "index.php?m=home&c=user&a=appBusniessDetail",//请求地址
+                data:{uid:userInfo.uid},
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){    
+                    if(res.data.data != null){
+                      self.checkSet(res.data.data)
+                      self.checking_status = res.data.data.status
+                    } 
+                    self.$apply()
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+            
         }
-                
+        checkSet(business){         
+          //let business = userInfo.business
+          this.name = business.name
+          this.company_name = business.company_name
+          this.address = business.address   
+          this.idcard_front_flag = true
+          this.idcard_back_flag = true
+          this.company_flag = true
+          this.$apply()
+
+          this.idcard_front = business.idcard_front
+          this.idcard_back = business.idcard_back
+          this.company = business.business_license_pic
+          if(typeof business.showroom_pic != 'array')
+            this.luby = [business.showroom_pic]
+          else
+            this.luby = business.showroom_pic
+          this.$apply()
+        }        
         methods = {
             click (evt) {
                 

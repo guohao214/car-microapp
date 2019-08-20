@@ -22,7 +22,7 @@ $activecolor: #13b113;
     text-align: center;
     font-size: 28rpx;
     /* font-weight: bold; */
-    background: #1296db;
+    background: #1e1d1b;
     margin-left: 5%;
     margin-bottom:40rpx;
   }
@@ -83,7 +83,7 @@ $activecolor: #13b113;
       }
       .btt {
         color: white;
-        background-color: darkblue;
+        background-color: #1e1d1b;
         width: 120px;
         height: 15px;
         margin: 15rpx 15rpx 15rpx 15rpx;
@@ -189,7 +189,7 @@ $activecolor: #13b113;
       width: 25%;
       .btn {
         color: white;
-        background-color: blue;
+        background-color: #1e1d1b;
         height: 20px;
         line-height: 20px;
         border-radius: 35px;
@@ -205,7 +205,7 @@ $activecolor: #13b113;
     <view class="detail">
         <view class='group-buy car-detail'>
             <view class='img'>
-                <image src="{{group_buy.thumb}}"  @tap='goto_picture({{group_buy.goods_id}})'/>
+                <image src="{{group_buy.thumb}}" mode="aspectFit" @tap='goto_picture({{group_buy.goods_id}})'/>
                 <view class='car-num'>{{group_buy.num}}张</view>                
             </view>            
             <view class="content car-title">
@@ -233,41 +233,42 @@ $activecolor: #13b113;
            <span class='input-desc'><input @input="input" id='city' bindinput='inputWacth' placeholder="输入城市" class="input_text{{focusFlag ? ' focusFlag' : ''}}" @focus="focus" @blur="blur" @type="input"></input></span>
         </view>
 
-        <view class='h2' hidden="{{'平行进口车' == group_buy.goods_category}}">
+        <view class='h2'>
           定制详情
         </view>
 
 
-        <view class='black' hidden="{{'平行进口车' == group_buy.goods_category}}">
+        <view class='black'>
           基本配置
         </view>        
 
-        <view class='gray' hidden="{{'平行进口车' == group_buy.goods_category}}">
+        <view class='gray'>
           <view wx:for="{{group_buy.goods_category_desc}}" wx:key="index" wx:for-index="index" wx:for-item="item">
             {{item}}
           </view>
         </view>
 
-        <view class='black' hidden="{{'平行进口车' == group_buy.goods_category}}">
+        <view class='black'>
           定制加装
         </view>
 
-        <view class='gray' hidden="{{'平行进口车' == group_buy.goods_category}}">
+        <view class='gray'>
           <!-- {{group_buy.goods_category_custom}} -->
           <checkbox-group @tap="checkCustom">
             <view class="checkCustomItem" wx:for="{{group_buy.goods_category_custom}}" wx:key="index" wx:for-index="index" wx:for-item="item">
-              <checkbox value='{{item}}' checked="{{item}}">{{item}}</checkbox>
+              <checkbox value='{{item}}' checked="{{item}}" wx:if="{{item}}">{{item}}</checkbox>
             </view>
           </checkbox-group>
         </view>
 
-        <view class="btn" @tap='send()' hidden="{{'平行进口车' == group_buy.goods_category}}">提交</view> 
-        <view class="btn2" @tap='send()' hidden="{{'平行进口车' != group_buy.goods_category}}">提交</view> 
+        <view class="btn" @tap='send()'>提交</view> 
     </view>
+    <customerService></customerService>
 </template>
 <script>
     import wepy from 'wepy';
-    import api from '../common/api.js'
+    import api from '../common/api.js';
+    import CustomerService from '../components/customerService';
 
     export default class Contact extends wepy.page {
 
@@ -275,7 +276,10 @@ $activecolor: #13b113;
             item: {},
             index: {},
         }
-
+        // 子组件
+        components = {           
+            customerService: CustomerService
+        }
         data = {
             // 团购
             group_buy:{

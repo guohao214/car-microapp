@@ -59,7 +59,7 @@
         line-height: 90rpx;
         text-align: center;
         width:100%;
-        background:#1296db;
+        background:#1e1d1b;
         color:white;
         font-size: 28rpx;
     }
@@ -68,9 +68,18 @@
 <template>
     <view class="car-detail">
         <view class='group-buy' style="text-align:center">
-            <view class='img'>
+            <swiper style="height:500rpx" indicator-dots="{{swiper.indicatorDots}}" autoplay="{{swiper.autoplay}}" interval="{{swiper.interval}}" duration="{{swiper.duration}}" circular="{{swiper.circular}}">
+                <repeat for="{{swiper.imgUrls}}">
+                    <swiper-item>
+                    <!--{{item}}-->
+                    <image mode="widthFix" src="{{item}}" class="slide-image" style="width:100%"/>
+                    </swiper-item>
+                </repeat>
+            </swiper>
+         
+            <!-- <view class='img'>
                 <image src="{{group_buy.thumb}}" mode='widthFix' style='width:100%'/>               
-            </view>          
+            </view>  -->
                       
         </view>
         <!-- <view class='line'></view> -->
@@ -103,10 +112,12 @@
             联系看车
         </view>
     </view>
+    <customerService></customerService>
 </template>
 <script>
     import wepy from 'wepy';
-    import api from '../common/api.js'
+    import api from '../common/api.js';
+    import CustomerService from '../components/customerService';
 
     export default class Detail extends wepy.page {
 
@@ -114,11 +125,30 @@
             item: {},
             index: {},
         }
-
+        // 子组件
+        components = {           
+            customerService: CustomerService
+        }
         data = {
+            loadMoreShow: false,
+            loadMoreIndex: 1,
+
+            // 轮播图
+            swiper:{
+                indicatorDots:true,
+                autoplay:true,
+                circular:true,
+                interval:2000,
+                duration:500,
+                imgUrls:[
+                    // 'http://www.maixc.cn/image/index/AA.jpg',
+                    // 'http://www.maixc.cn/image/index/BB.jpg',
+                    // 'http://www.maixc.cn/image/index/CC.jpg',
+                    // 'http://www.maixc.cn/image/index/DD.jpg',
+                ]
+            },
             // 团购
             group_buy:{},
-            
             //车详情
             car_list: [
                 {
@@ -139,10 +169,33 @@
                 header:{"Content-Type":"applciation/json"},
                 method:"GET",//get为默认方法/POST
                 success:function(res){                    
-                    self.group_buy = res.data;                    
-                    //console.log(res.data);
+                    self.group_buy = res.data;
+                    let a =  self.swiper.imgUrls;
+                    if(self.group_buy.upload_list_1 != null){
+                        let b = self.group_buy.upload_list_1
+                        for(var i in b){
+                            a.push(b[i]);
+                        }
+                    }  
+                    if(self.group_buy.upload_list_2 != null){
+                        let b = self.group_buy.upload_list_2
+                        for(var i in b){
+                            a.push(b[i]);
+                        }
+                    } 
+                    if(self.group_buy.upload_list_3 != null){
+                        let b = self.group_buy.upload_list_3
+                        for(var i in b){
+                            a.push(b[i]);
+                        }
+                    } 
+                    if(self.group_buy.upload_list_4 != null){
+                        let b = self.group_buy.upload_list_4
+                        for(var i in b){
+                            a.push(b[i]);
+                        }
+                    }                
                     self.$apply();
-                    //callback();
                 },
                 fail:function(err){},//请求失败
                 complete:function(){}//请求完成后执行的函数

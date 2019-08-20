@@ -1,0 +1,75 @@
+<style type="scss">
+    $fontcolor: #7b7b7b;
+    $activecolor: #13b113;
+    .kefu-detail {
+        padding-bottom: 100rpx;
+        padding-top: 100rpx;
+        .wechat-font{
+            font-size: 30rpx;
+            height: 100rpx;
+        }
+        .wechat-image{
+            font-size: 30rpx;
+            height: 560rpx;
+        }
+    }
+</style>
+
+<template>
+    <view class="kefu-detail">
+        <view style="text-align:center">
+            <view class='wechat-image'>
+                <image src="{{pic}}" mode='heightFix' style='height:100%'/> 
+            </view>           
+        </view>
+       
+    </view>
+    <customerService></customerService>
+</template>
+<script>
+    import wepy from 'wepy';
+    import api from '../common/api.js'
+    import CustomerService from '../components/customerService';
+    export default class keFu extends wepy.page {
+
+        props = {
+            item: {},
+            index: {},
+        }
+        components = {
+            customerService: CustomerService
+        };
+        config = {
+            'navigationBarTitleText': '',
+            'navigationBarTextStyle': 'white',
+            'navigationBarBackgroundColor': '#3b3a40'
+        };
+        data = {
+            'pic':''
+        }
+
+        onLoad(options) {
+            this.type = options.type
+            this.pic = options.pic
+            
+            if(options.type == 'qichebaoxian'){
+                wx.setNavigationBarTitle({
+                    title: '汽车保险',
+                }) 
+            }else if(options.type == 'shouhoufuwu'){
+                wx.setNavigationBarTitle({
+                    title: '售后服务',
+                })
+            }else if(options.type == 'zijinfuwu'){
+                wx.setNavigationBarTitle({
+                    title: '资金服务',
+                })
+            }
+        }
+        methods = {
+            click (evt) {
+                
+            },
+        };
+    }
+</script>

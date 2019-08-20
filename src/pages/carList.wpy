@@ -137,14 +137,15 @@
                 暂无数据
             </view>           
            
-        </view>           
-        </view>
+        </view> 
     </view>
+    <customerService></customerService>
 </template>
 <script>
     import wepy from 'wepy';
     import api from '../common/api.js'
-    import Dropdown from '../components/dropdown'
+    import Dropdown from '../components/dropdown';
+    import CustomerService from '../components/customerService';
 
     export default class CarList extends wepy.page {
         // 子组件
@@ -152,6 +153,7 @@
             dropdown1: Dropdown,
             dropdown2: Dropdown,
             dropdown3: Dropdown,
+            customerService: CustomerService
         };
         data = {
             menu1:{

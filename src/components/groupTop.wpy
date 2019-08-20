@@ -80,7 +80,7 @@
 <template>    
     <view class='group-top'>
         <view class='img'>
-            <image src="{{item.thumb}}" @tap='goto_picture({{item.goods_id}})'/>
+            <image src="{{item.thumb}}" mode="aspectFit" @tap='goto_picture({{item.goods_id}})'/>
             <view class='car-num'>{{item.num}}张</view>                
         </view>            
         <view class="content">

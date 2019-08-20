@@ -79,10 +79,12 @@
             </view>
         </view>
     </view>
+    <customerService></customerService>
 </template>
 <script>
     import wepy from 'wepy';
-    import api from '../common/api.js'
+    import api from '../common/api.js';
+    import CustomerService from '../components/customerService';
 
     export default class Detail extends wepy.page {
 
@@ -90,7 +92,10 @@
             item: {},
             index: {},
         }
-
+        // 子组件
+        components = {
+            customerService: CustomerService
+        };
         data = {
             currentItem: 'upload_list_1',
             // 团购

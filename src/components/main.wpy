@@ -38,19 +38,7 @@
             .img{
                 float:left;
                 position:relative;
-            }
-
-            .car-num{
-                position:absolute;
-                bottom:0;
-                height:15px;
-                width:38px;
-                background-color:#cfd4d4;
-                right:0;
-                overflow:hidden;
-                font-size:10px;
-                opacity:0.6;
-                }            
+            }           
             .content{
                 margin-left:280rpx;
                 .title{
@@ -61,12 +49,12 @@
                 }
                 .btn{
                     color:white;
-                    background-color: darkblue;
-                    width: 120px;
+                    background-color: #1e1d1b;
+                    width: 260rpx;
                     height: 50rpx;
                     line-height: 50rpx;
                     margin:10rpx 30rpx 10rpx 10rpx;
-                    border-radius:40rpx;
+                    border-radius:10rpx;
                     text-align: center;
                     font-size:25rpx;
                 }                
@@ -94,7 +82,7 @@
             flex-basis:340rpx;
             flex-wrap: wrap;
             margin-bottom: 130rpx;
-            background-color:#F0EFF5;
+            background-color:#1e1d1b;
             box-sizing: border-box;
 
             .item{
@@ -105,26 +93,26 @@
                 /* marign-bottom:20rpx; */
                 border:0rpx;
                 font-size: 26rpx;
-                margin-bottom:14rpx;
+                margin-bottom:10rpx;
 
                 image{
                     width:100%;
                     height:260rpx;
-                     box-shadow: 5rpx 6rpx 20rpx #e5e5e5;
+                    box-shadow: 5rpx 6rpx 20rpx #353330;
 
                 }
                 .title{
-                    padding: 8rpx 0;
+                    padding: 5rpx 0;
                     .brand_name{
                         color: rgba(209, 51, 34, 1);
                     }
                 }
                 .title_1{
-                    padding: 10rpx 0;
-                    font-size: 30rpx;
+                    padding: 5rpx 0;
+                    color:#fff
                 }
                 .title_2{
-                    color:#404040
+                    color:#fff
                 }
             }
         }
@@ -161,12 +149,12 @@
 
 <template>
     <view class="main">
-        <scroll-view scroll-y="true"  bindscrolltolower="loadMore" class="list"> 
+        <scroll-view scroll-y="true"  bindscrolltolower="loadMore" > 
         <swiper indicator-dots="{{swiper.indicatorDots}}" autoplay="{{swiper.autoplay}}" interval="{{swiper.interval}}" duration="{{swiper.duration}}" circular="{{swiper.circular}}">
             <repeat for="{{swiper.imgUrls}}">
                 <swiper-item>
                 <!--{{item}}-->
-                <image mode="widthFix" src="{{item}}" class="slide-image" style="width:100%"/>
+                <image mode="widthFix" src="{{item.logo}}" class="slide-image" style="width:100%"/>
                 </swiper-item>
             </repeat>
         </swiper>
@@ -182,15 +170,16 @@
                 </block>
             </view>            
         </view>
-
+        <view style="background:#1e1d1b">
+        <view style='height:60rpx'></view>
         <view class='group-buy'>
-            <image mode="aspectFill" src="{{group_buy.img}}"/>
+            <image mode="aspectFill" src="{{group_one.group_thumb}}"/>
             <view class="content">
                 <view class="title">{{group_buy.title}}</view>
                 <block wx:for="{{group_buy.list}}" wx:key="index" wx:for-index="index" wx:for-item="item">
                     <view class="desc">{{item}}</view>
                 </block>
-                <view class="btn desc" @tap="goto_group_detail({{group_buy.goods_id}})">{{group_buy.desc4}}</view>
+                <view class="btn desc" @tap="goto_group_detail({{group_one.goods_id}})">{{group_buy.desc4}}</view>
             </view>            
         </view>
 
@@ -200,7 +189,8 @@
             <text>{{loadMoreText}}</text>
         </view>
 
-       
+       <text style="font-size:26rpx;color:white;padding-left:20rpx;margin-bottom:20rpx">热卖车型推荐</text>
+       <view style='height:16rpx'></view>
        <view class='list'>
             <block wx:for="{{goods_list}}" wx:key="index" wx:for-index="index" wx:for-item="item" class="items">
                 <view class="item" @tap="goto_detail({{item.goods_id}})">
@@ -210,6 +200,7 @@
                     <view class="title"><span class="brand_name">售价：{{item.sell_price}}万</span> </view>
                 </view>
             </block>
+        </view>
         </view>
         </scroll-view>
 
@@ -243,20 +234,22 @@
                 interval:2000,
                 duration:500,
                 imgUrls:[
-                    'http://www.maixc.cn/image/index/AA.jpg',
-                    'http://www.maixc.cn/image/index/BB.jpg',
-                    'http://www.maixc.cn/image/index/CC.jpg',
-                    'http://www.maixc.cn/image/index/DD.jpg',
+                    // 'http://www.maixc.cn/image/index/AA.jpg',
+                    // 'http://www.maixc.cn/image/index/BB.jpg',
+                    // 'http://www.maixc.cn/image/index/CC.jpg',
+                    // 'http://www.maixc.cn/image/index/DD.jpg',
                 ]
             },
 
             // 团购
             group_buy:{
-                img:'http://www.maixc.cn/image/20190812/t1565593893_1024x0_1_q95_autohomecar__ChsEn10CXJmAZ5n4AAwtKfFL_y8357.jpg',
-                title:'买车 集采购 更优惠',
+                title:'买鑫车 集采购 更优惠',
                 list:[],
-                desc4:'一键集采',
-                goods_id:112                 
+                desc4:'一键集采',              
+            },
+            group_one:{
+                goods_id:0,
+                group_thumb:''
             },
 
             // 主列表
@@ -285,12 +278,18 @@
                 }else if(item.title == '平行进口车'){
                     this.$root.$navigate({url: 'carCategory?type=2'});
 
-                }else if(item.title == '商户入驻'){
+                }else if(item.title == '发布车源'){
 
                     this.$root.$navigate({url: 'business'});
                 }else if(item.title == '更多'){
 
                     this.$root.$navigate({url: 'button?buttonList=' + JSON.stringify(this.buttonListAll)});
+                }else if(item.title == '售后服务'){
+                    this.$root.$navigate({url: 'keFu?type=shouhoufuwu&pic=' + item.img_src});
+                }else if(item.title == '资金服务'){
+                    this.$root.$navigate({url: 'keFu?type=zijinfuwu&pic=' + item.img_src});
+                }else if(item.title == '汽车保险'){
+                    this.$root.$navigate({url: 'keFu?type=qichebaoxian&pic=' + item.img_src});
                 }else{
                     wx.showModal({
                         title: '提示',
@@ -326,11 +325,11 @@
             }
         };
 
-        loadGroupList(callback){
+        loadGroupList(){
             var self = this;
             wx.request({
                 url:api.baseUrl + "index.php?m=home&c=group&a=appGroupList",//请求地址
-                data:{num:"3"},
+                data:{num:"3",goods_id:self.group_one.goods_id},
                 header:{"Content-Type":"applciation/json"},
                 method:"GET",//get为默认方法/POST
                 success:function(res){    
@@ -339,7 +338,6 @@
                         self.group_buy.list.push(element.group_name + ' 每车优惠'+element.price+'万')
                     });
                     // self.$apply()
-                    callback();
                 },
                 fail:function(err){},//请求失败
                 complete:function(){}//请求完成后执行的函数
@@ -361,6 +359,7 @@
                     self.$apply();
                     
                     let list = res.data.list;
+                    self.goods_list = []
                     if (Array.isArray(list)) {
                         for(var idx=0; idx<list.length; idx++){
                             self.goods_list.push(list[idx]);
@@ -373,7 +372,21 @@
                 complete:function(){}//请求完成后执行的函数
             });
         }
-
+        loadGroupOneGoods(callback){
+            var self = this;
+            wx.request({ 
+                url:api.baseUrl + "index.php?m=home&c=group&a=appGroupOneGoods",//请求地址
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){
+                    self.group_one = res.data
+                    self.$apply() ; 
+                    callback();  
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
         loadButtonList(){
             var self = this;
             wx.request({ 
@@ -389,10 +402,26 @@
                 complete:function(){}//请求完成后执行的函数
             });
         }
+        async loadAds(){
+            var self = this;
+            wx.request({ 
+                url:api.baseUrl + "index.php?m=home&c=ad&a=appAdList",//请求地址
+                header:{"Content-Type":"applciation/json"},
+                method:"GET",//get为默认方法/POST
+                success:function(res){
+                    self.swiper.imgUrls = res.data
+                    self.$apply()    
+                },
+                fail:function(err){},//请求失败
+                complete:function(){}//请求完成后执行的函数
+            });
+        }
 
         async loadMainData() {
             let self = this;            
-            self.loadGroupList(function(){
+            self.loadGroupOneGoods(function(){
+                self.loadGroupList();
+                self.loadAds();
                 self.loadGoodsList(self.loadMoreIndex);
                 self.loadButtonList()
             });

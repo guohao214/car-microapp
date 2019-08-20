@@ -5,7 +5,7 @@
         background: #ffffff;
         .group-buy{
             margin:20rpx 20rpx 20rpx 20rpx;
-            padding:20rpx 20rpx 20rpx 20rpx;
+            padding:20rpx 20rpx 20rpx 0rpx;
             border:0.5px #e5e5e5 solid;
             height:190rpx;
             font-size:13px;
@@ -16,10 +16,10 @@
                 position:relative;
 
                 image{
-                    width:250rpx;
                     height:190rpx;
+                    width: 300rpx;
+                    display:flex;
                     float:left;
-                    display:block;
                 }
 
                 .car-num{
@@ -149,14 +149,14 @@
     <view class="detail">
         <view class='group-buy car-detail'>
             <view class='img'>
-                <image src="{{group_buy.thumb}}"  @tap='goto_picture({{group_buy.goods_id}})'/>
+                <image src="{{group_buy.thumb}}"  mode="aspectFit" @tap='goto_picture({{group_buy.goods_id}})'/>
                 <view class='car-num'>{{group_buy.num}}张</view>                
             </view>            
             <view class="content car-title">
                 <view class="title">[{{group_buy.brand_name}}] {{group_buy.goods_name}}</view>
                 <view class="desc">售价：{{group_buy.sell_price}}万 - {{group_buy.market_price}}万</view>
-                <view class="desc">发布者名称:{{group_buy.nickname}}</view>
-                <view class="desc">车辆所在地:{{group_buy.city}}</view>
+                <view class="desc">发布者名称：{{group_buy.nickname}}</view>
+                <view class="desc">车辆所在地：{{group_buy.city}}</view>
             </view>
         </view>
         <!-- <view class='line line-margin'></view> -->
@@ -180,10 +180,12 @@
             </view>
         </view>
     </view>
+    <customerService></customerService>
 </template>
 <script>
     import wepy from 'wepy';
-    import api from '../common/api.js'
+    import api from '../common/api.js';
+    import CustomerService from '../components/customerService';
 
     export default class Detail extends wepy.page {
 
@@ -191,7 +193,10 @@
             item: {},
             index: {},
         }
-
+        // 子组件
+        components = {           
+            customerService: CustomerService
+        }
         data = {
             currentItem: '全部在售',
             // 团购
@@ -275,25 +280,25 @@
                 method:"GET",//get为默认方法/POST
                 success:function(res){                    
                     self.group_buy = res.data;                    
-                    //console.log(res.data);
+                    wx.requestLoad({ 
+                        url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
+                        data:{'brand_sub':self.group_buy.brand_sub},
+                        header:{"Content-Type":"applciation/json"},
+                        method:"GET",//get为默认方法/POST
+                        success:function(res){                 
+                            self.car_list = res.data.list
+                            self.$apply()    
+                        },
+                        fail:function(err){},//请求失败
+                        complete:function(){}//请求完成后执行的函数
+                    });
                     self.$apply();
                     //callback();
                 },
                 fail:function(err){},//请求失败
                 complete:function(){}//请求完成后执行的函数
             });
-            wx.requestLoad({ 
-                url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
-                data:{},
-                header:{"Content-Type":"applciation/json"},
-                method:"GET",//get为默认方法/POST
-                success:function(res){                 
-                    self.car_list = res.data.list
-                    self.$apply()    
-                },
-                fail:function(err){},//请求失败
-                complete:function(){}//请求完成后执行的函数
-            });
+            
         }
 
         methods = {
@@ -302,8 +307,10 @@
             },
             goto_year(title){
                 this.currentItem = title
+                let searchType = 'search_by_grade'
                 if(title == '全部在售'){
                     title = ''
+                    searchType = ''
                 }      
                 
                 
@@ -311,7 +318,7 @@
                 var self = this;
                 wx.requestLoad({ 
                     url:api.baseUrl + "index.php?m=home&c=goods&a=appGoodsList",//请求地址
-                    data:{year:title,searchType:'search_by_grade'},
+                    data:{year:title,searchType:searchType,'brand_sub':self.group_buy.brand_sub},
                     header:{"Content-Type":"applciation/json"},
                     method:"GET",//get为默认方法/POST
                     success:function(res){                  

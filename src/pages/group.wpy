@@ -51,7 +51,7 @@
                 }
                 .btt{
                     color:white;
-                    background-color: darkblue;
+                    background-color: #1e1d1b;
                     width: 120px;
                     height: 15px;
                     margin:15rpx 15rpx 15rpx 15rpx;
@@ -225,7 +225,7 @@
         line-height: 90rpx;
         text-align: center;
         width:100%;
-        background:#1296db;
+        background:#1e1d1b;
         color:white;
     }
 </style>
@@ -257,17 +257,20 @@
         </view>
         
     </view>
+    <customerService></customerService>
 </template>
 <script>
     import wepy from 'wepy';
     import GroupTop from '../components/groupTop';
-    import api from '../common/api.js'
+    import api from '../common/api.js';
+    import CustomerService from '../components/customerService';
 
     export default class Group extends wepy.page {
 
         // 子组件
         components = {
-            groupTop: GroupTop
+            groupTop: GroupTop,            
+            customerService: CustomerService
         }
         data = {
             // 团购
@@ -310,7 +313,7 @@
             var self = this;    
             let _userInfo = wepy.getStorageSync('userInfo');  
             console.log(_userInfo,'分享1')    
-            if(typeof options.userInfo != 'undefined'){
+            if(typeof options !='undefined' && options.userInfo != 'undefined'){
                 let userInfo = JSON.parse(options.userInfo)
                 console.log(userInfo,'分享2') 
                 if(wepy.getStorageSync('openId') !== userInfo.open_id){
